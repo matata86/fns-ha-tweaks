@@ -1,0 +1,84 @@
+{
+ "type": "custom:mushroom-template-card",
+ "primary": "",
+ "secondary": "",
+ "icon": "",
+ "tap_action": {
+  "action": "fire-dom-event",
+  "browser_mod": {
+   "service": "browser_mod.popup",
+   "data": {
+    "title": "Slunce a měsíc",
+    "content": {
+     "type": "grid",
+     "columns": 2,
+     "square": false,
+     "cards": [
+      {
+       "type": "custom:mushroom-template-card",
+       "icon": "mdi:weather-sunset-up",
+       "icon_color": "amber",
+       "primary": "{% set n = now() %}{% set t = n.date() %}{% set r = state_attr('sun.sun', 'next_rising') | as_datetime | as_local %}{% set st = state_attr('sun.sun', 'next_setting') | as_datetime | as_local %}{% set dw = state_attr('sun.sun', 'next_dawn') | as_datetime | as_local %}{% set dk = state_attr('sun.sun', 'next_dusk') | as_datetime | as_local %}{% set sr = r if r.date() == t else r - timedelta(days=1) %}{% set ss = st if st.date() == t else st - timedelta(days=1) %}{% set da = dw if dw.date() == t else dw - timedelta(days=1) %}{% set du = dk if dk.date() == t else dk - timedelta(days=1) %}Východ {{ sr.strftime('%-H:%M') }}",
+       "secondary": "{% set n = now() %}{% set t = n.date() %}{% set r = state_attr('sun.sun', 'next_rising') | as_datetime | as_local %}{% set st = state_attr('sun.sun', 'next_setting') | as_datetime | as_local %}{% set dw = state_attr('sun.sun', 'next_dawn') | as_datetime | as_local %}{% set dk = state_attr('sun.sun', 'next_dusk') | as_datetime | as_local %}{% set sr = r if r.date() == t else r - timedelta(days=1) %}{% set ss = st if st.date() == t else st - timedelta(days=1) %}{% set da = dw if dw.date() == t else dw - timedelta(days=1) %}{% set du = dk if dk.date() == t else dk - timedelta(days=1) %}Rozbřesk {{ da.strftime('%-H:%M') }}",
+       "multiline_secondary": true,
+       "tap_action": {
+        "action": "none"
+       },
+       "uix": {
+        "class": "no-shadow"
+       }
+      },
+      {
+       "type": "custom:mushroom-template-card",
+       "icon": "mdi:weather-sunset-down",
+       "icon_color": "orange",
+       "primary": "{% set n = now() %}{% set t = n.date() %}{% set r = state_attr('sun.sun', 'next_rising') | as_datetime | as_local %}{% set st = state_attr('sun.sun', 'next_setting') | as_datetime | as_local %}{% set dw = state_attr('sun.sun', 'next_dawn') | as_datetime | as_local %}{% set dk = state_attr('sun.sun', 'next_dusk') | as_datetime | as_local %}{% set sr = r if r.date() == t else r - timedelta(days=1) %}{% set ss = st if st.date() == t else st - timedelta(days=1) %}{% set da = dw if dw.date() == t else dw - timedelta(days=1) %}{% set du = dk if dk.date() == t else dk - timedelta(days=1) %}Západ {{ ss.strftime('%-H:%M') }}",
+       "secondary": "{% set n = now() %}{% set t = n.date() %}{% set r = state_attr('sun.sun', 'next_rising') | as_datetime | as_local %}{% set st = state_attr('sun.sun', 'next_setting') | as_datetime | as_local %}{% set dw = state_attr('sun.sun', 'next_dawn') | as_datetime | as_local %}{% set dk = state_attr('sun.sun', 'next_dusk') | as_datetime | as_local %}{% set sr = r if r.date() == t else r - timedelta(days=1) %}{% set ss = st if st.date() == t else st - timedelta(days=1) %}{% set da = dw if dw.date() == t else dw - timedelta(days=1) %}{% set du = dk if dk.date() == t else dk - timedelta(days=1) %}Soumrak {{ du.strftime('%-H:%M') }}",
+       "multiline_secondary": true,
+       "tap_action": {
+        "action": "none"
+       },
+       "uix": {
+        "class": "no-shadow"
+       }
+      },
+      {
+       "type": "custom:mushroom-template-card",
+       "icon": "mdi:sun-clock",
+       "icon_color": "amber",
+       "primary": "{% set n = now() %}{% set t = n.date() %}{% set r = state_attr('sun.sun', 'next_rising') | as_datetime | as_local %}{% set st = state_attr('sun.sun', 'next_setting') | as_datetime | as_local %}{% set dw = state_attr('sun.sun', 'next_dawn') | as_datetime | as_local %}{% set dk = state_attr('sun.sun', 'next_dusk') | as_datetime | as_local %}{% set sr = r if r.date() == t else r - timedelta(days=1) %}{% set ss = st if st.date() == t else st - timedelta(days=1) %}{% set da = dw if dw.date() == t else dw - timedelta(days=1) %}{% set du = dk if dk.date() == t else dk - timedelta(days=1) %}{% set dl = (ss - sr).total_seconds() / 60 %}Den {{ (dl // 60) | int }} h {{ (dl % 60) | int }} min",
+       "secondary": "Výška slunce {{ state_attr('sun.sun', 'elevation') | round(1) }}°, azimut {{ state_attr('sun.sun', 'azimuth') | round(0) | int }}°",
+       "multiline_secondary": true,
+       "tap_action": {
+        "action": "none"
+       },
+       "uix": {
+        "class": "no-shadow"
+       }
+      },
+      {
+       "type": "custom:mushroom-template-card",
+       "icon": "{% set faze = states('sensor.moon_faze') %}{{ {'new_moon':'mdi:moon-new','waxing_crescent':'mdi:moon-waxing-crescent','first_quarter':'mdi:moon-first-quarter','waxing_gibbous':'mdi:moon-waxing-gibbous','full_moon':'mdi:moon-full','waning_gibbous':'mdi:moon-waning-gibbous','last_quarter':'mdi:moon-last-quarter','waning_crescent':'mdi:moon-waning-crescent'}.get(faze, 'mdi:moon-waning-crescent') }}",
+       "icon_color": "indigo",
+       "primary": "{% set faze = states('sensor.moon_faze') %}{{ {'new_moon': 'Nov', 'waxing_crescent': 'Dorůstající srpek', 'first_quarter': 'První čtvrť', 'waxing_gibbous': 'Dorůstající měsíc', 'full_moon': 'Úplněk', 'waning_gibbous': 'Couvající měsíc', 'last_quarter': 'Poslední čtvrť', 'waning_crescent': 'Couvající srpek'}.get(faze, faze) }}",
+       "secondary": "{% set n = now() %}{% set t = n.date() %}{% set r = state_attr('sun.sun', 'next_rising') | as_datetime | as_local %}{% set st = state_attr('sun.sun', 'next_setting') | as_datetime | as_local %}{% set dw = state_attr('sun.sun', 'next_dawn') | as_datetime | as_local %}{% set dk = state_attr('sun.sun', 'next_dusk') | as_datetime | as_local %}{% set sr = r if r.date() == t else r - timedelta(days=1) %}{% set ss = st if st.date() == t else st - timedelta(days=1) %}{% set da = dw if dw.date() == t else dw - timedelta(days=1) %}{% set du = dk if dk.date() == t else dk - timedelta(days=1) %}{% set faze = states('sensor.moon_faze') %}{% set seznam = ['new_moon','waxing_crescent','first_quarter','waxing_gibbous','full_moon','waning_gibbous','last_quarter','waning_crescent'] %}{% set idx = seznam.index(faze) if faze in seznam else 0 %}{% set age = idx * 29.53 / 8 + 1.85 %}{% set illum = ((1 - cos(2 * pi * age / 29.53)) / 2 * 100) | round(0) | int %}{% set mr = sr + timedelta(minutes=age * 50) %}{% set mr = mr - timedelta(days=1) if mr.date() > t else mr %}Osvětlení ≈ {{ illum }} %, východ ≈ {{ mr.strftime('%-H:%M') }}",
+       "multiline_secondary": true,
+       "tap_action": {
+        "action": "none"
+       },
+       "uix": {
+        "class": "no-shadow"
+       }
+      }
+     ]
+    }
+   }
+  }
+ },
+ "hold_action": {
+  "action": "none"
+ },
+ "uix": {
+  "style": "{% set n = now() %}{% set today = n.date() %}\n{% set r = state_attr('sun.sun', 'next_rising') | as_datetime | as_local %}\n{% set st = state_attr('sun.sun', 'next_setting') | as_datetime | as_local %}\n{% set dw = state_attr('sun.sun', 'next_dawn') | as_datetime | as_local %}\n{% set dk = state_attr('sun.sun', 'next_dusk') | as_datetime | as_local %}\n{% set sr = r if r.date() == today else r - timedelta(days=1) %}\n{% set ss = st if st.date() == today else st - timedelta(days=1) %}\n{% set da = dw if dw.date() == today else dw - timedelta(days=1) %}\n{% set du = dk if dk.date() == today else dk - timedelta(days=1) %}\n{% macro X(t) %}{{ ((t.hour * 60 + t.minute) / 14.4) | round(1) }}{% endmacro %}\n{% set x = X(n) | float %}{% set a = X(sr) | float %}{% set b = X(ss) | float %}{% set ad = X(da) | float %}{% set bd = X(du) | float %}\n{% set el = state_attr('sun.sun', 'elevation') | float(0) %}\n{% set w = states('weather.openweathermap') %}\n{% set prsi = w in ['rainy', 'pouring', 'lightning-rainy', 'hail', 'snowy', 'snowy-rainy'] %}\n{# (3) noc tmavne k solárnímu středu noci #}\n{% set half = (100 - bd + ad) / 2 %}{% set mid = (bd + half) % 100 %}\n{% macro na(px) %}{% set d = [(px - mid) | abs, (px - mid + 100) | abs, (px - mid - 100) | abs] | min %}{{ (0.18 + 0.16 * (1 - [d / half, 1] | min)) | round(3) }}{% endmacro %}\n{% set ind = 'var(--mush-rgb-indigo, 99, 102, 241)' %}\n{# (4) měsíc: východ ≈ východ slunce + 50 min × stáří, nad obzorem 12,4 h #}\n{% set faze = states('sensor.moon_faze') %}\n{% set seznam = ['new_moon','waxing_crescent','first_quarter','waxing_gibbous','full_moon','waning_gibbous','last_quarter','waning_crescent'] %}\n{% set age = (seznam.index(faze) if faze in seznam else 0) * 29.53 / 8 + 1.85 %}\n{% set mr = sr + timedelta(minutes=age * 50) %}{% set mr = mr - timedelta(days=1) if mr.date() > today else mr %}\n{% set mrx = X(mr) | float %}{% set mlen = 744 / 14.4 %}{% set msx = mrx + mlen %}\n{% set moonc = 'rgba(var(--mush-rgb-indigo, 99, 102, 241), .5)' %}\n{# (6) déšť dnes z předpovědi #}\n{% set nd = namespace(l=[]) %}{% for d in (state_attr('sensor.pocasi_predpoved_2h', 'srazky_hodiny') or []) %}{% set t = d.t | as_datetime | as_local %}{% if t.date() == today %}{% set nd.l = nd.l + [[X(t) | float, d.mm | float(0), d.p | int(0)]] %}{% endif %}{% endfor %}{% set drops = nd.l %}\n:host { display: block; }\n/* desktop: šířka jako první sloupec sekcí (3 sloupce), na mobilu celá */\n@media (min-width: 870px) { :host { width: 70%; } }  /* hlavička view je užší než mřížka sekcí (66 % ≈ 460 px, sloupec Notifikace ≈ 490 px) → 70 % */\n/* ha-card = samotná linka (6 px, kulaté konce přes border-radius); pozadí = hodinové dílky + barevný průběh dne */\nha-card {\n  height: 6px !important; min-height: 6px; padding: 0 !important; margin: 24px 0 20px 0; box-shadow: none !important; border: none !important;\n  border-radius: 3px; position: relative; overflow: visible !important; cursor: pointer; background-color: transparent !important;\n  background-image:\n    linear-gradient(var(--primary-background-color), var(--primary-background-color)),\n    repeating-linear-gradient(90deg, transparent 0 calc(100% / 24 - 1px), rgba(0, 0, 0, .16) calc(100% / 24 - 1px) calc(100% / 24)),\n    linear-gradient(90deg,\n      rgba({{ ind }}, {{ na(0) }}) 0,\n      {% if mid < ad %}rgba({{ ind }}, .34) {{ mid | round(1) }}%,{% endif %}\n      rgba({{ ind }}, .18) {{ ad }}%,\n      rgba(var(--mush-rgb-orange, 249, 115, 22), .45) {{ a }}%,\n      rgba(var({{ '--mush-rgb-blue-grey, 120, 144, 156' if prsi else '--mush-rgb-amber, 251, 191, 36' }}), .55) {{ ((a + b) / 2) | round(1) }}%,\n      rgba(var(--mush-rgb-orange, 249, 115, 22), .45) {{ b }}%,\n      rgba({{ ind }}, .18) {{ bd }}%,\n      {% if mid > bd %}rgba({{ ind }}, .34) {{ mid | round(1) }}%,{% endif %}\n      rgba({{ ind }}, {{ na(100) }}) 100%);\n  background-size: 2px 6px, calc(100% - 8px) 2px, 100% 6px;\n  background-position: 50% 0, 4px 100%, 0 0;\n  background-repeat: no-repeat;\n}\n/* východ / západ pod linkou */\nha-card::before { content: '{{ sr.strftime('%-H:%M') }}'; position: absolute; left: {{ a }}%; top: 9px; opacity: .7; font-size: 9px; letter-spacing: .02em; color: var(--secondary-text-color); white-space: nowrap; transform: translateX(-50%); }\nha-card::after  { content: '{{ ss.strftime('%-H:%M') }}'; position: absolute; left: {{ b }}%; top: 9px; opacity: .7; font-size: 9px; letter-spacing: .02em; color: var(--secondary-text-color); white-space: nowrap; transform: translateX(-50%); }\n/* .background = klikací vrstva (mushroom actionHandler) přes linku i okolí; nese stopu měsíce nad linkou a srážky pod ní; ::before/::after = rozbřesk / soumrak */\nha-card .background { position: absolute !important; inset: -12px 0 -12px 0 !important; background-color: transparent !important; border-radius: 0; overflow: visible;\n  background-image:\n    repeating-linear-gradient(90deg, {{ moonc }} 0 2px, transparent 2px 7px){% if msx > 100 %},\n    repeating-linear-gradient(90deg, {{ moonc }} 0 2px, transparent 2px 7px){% endif %}{% for dx, mm, p in drops %},\n    linear-gradient(rgba(96, 165, 250, {{ (0.45 + 0.5 * p / 100) | round(2) }}), rgba(96, 165, 250, {{ (0.45 + 0.5 * p / 100) | round(2) }})){% endfor %};\n  background-size:\n    {{ ([mlen, 100 - mrx] | min) | round(1) }}% 3px{% if msx > 100 %}, {{ (msx - 100) | round(1) }}% 3px{% endif %}{% for dx, mm, p in drops %}, 4.1% {{ ([3 + mm * 1.5, 6] | min) | round(1) }}px{% endfor %};\n  background-position:\n    {{ mrx }}% 8px{% if msx > 100 %}, 0 8px{% endif %}{% for dx, mm, p in drops %}, {{ dx }}% 100%{% endfor %};\n  background-repeat: no-repeat;\n}\nha-card ha-ripple { display: none !important; }\nha-card .background::before { content: '{{ da.strftime('%-H:%M') }}'; position: absolute; left: {{ ad }}%; top: -6px; opacity: .55; font-size: 9px; letter-spacing: .02em; color: var(--secondary-text-color); white-space: nowrap; transform: translateX(-50%); }\nha-card .background::after  { content: '{{ du.strftime('%-H:%M') }}'; position: absolute; left: {{ bd }}%; top: -6px; opacity: .55; font-size: 9px; letter-spacing: .02em; color: var(--secondary-text-color); white-space: nowrap; transform: translateX(-50%); }\n/* .container (prázdný) = tečka „teď“ (den) / měsíc (noc) */\n{% set lit = 'rgb(222, 228, 255)' %}{% set dark = 'rgb(38, 42, 70)' %}\n{% set base = {'new_moon': dark, 'first_quarter': 'linear-gradient(90deg, ' ~ dark ~ ' 50%, ' ~ lit ~ ' 50%)', 'last_quarter': 'linear-gradient(90deg, ' ~ lit ~ ' 50%, ' ~ dark ~ ' 50%)'}.get(faze, lit) %}\n{% set shift = {'waxing_crescent': '-38%', 'waxing_gibbous': '-78%', 'waning_gibbous': '78%', 'waning_crescent': '38%'}.get(faze) %}\nha-card .container { position: absolute !important; inset: auto !important; left: {{ x }}% !important; top: 3px !important; padding: 0 !important; margin: 0 !important; min-height: 0 !important;\n  transform: translate(-50%, -50%); border-radius: 50%; overflow: hidden; box-sizing: border-box; transition: left 2s ease; pointer-events: none;\n{% if el > 0 %}\n  width: 12px; height: 12px; background: rgb(var(--mush-rgb-amber, 251, 191, 36)) !important; box-shadow: 0 0 0 3px var(--primary-background-color), 0 0 10px 2px rgba(251, 191, 36, .6);\n{% else %}\n  width: 14px; height: 14px; background: {{ base }} !important; border: 1px solid rgba(222, 228, 255, .45); box-shadow: 0 0 0 3px var(--primary-background-color), 0 0 8px 2px rgba(140, 150, 255, .45);\n{% endif %}\n}\n{% if el <= 0 and shift %}\nha-card .container::before { content: ''; position: absolute; inset: -1px; border-radius: 50%; background: {{ dark }}; transform: translateX({{ shift }}); }\n{% endif %}\n"
+ }
+}

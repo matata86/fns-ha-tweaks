@@ -1,0 +1,18 @@
+uix_foundries:
+  alert_row:
+    element:
+      entity: '{{ config.entity }}'
+      icon: '{% set t = state_attr(config.entity, ''type'') %}{{ state_attr(config.entity, ''ikona'') or {''error'':''mdi:alert-circle'',''warning'':''mdi:alert'',''info'':''mdi:information'',''success'':''mdi:check-circle''}.get(t, ''mdi:bell'') }}'
+      icon_color: '{% set t = state_attr(config.entity, ''type'') %}{{ {''error'':''red'',''warning'':''orange'',''info'':''blue'',''success'':''green''}.get(t, ''grey'') }}'
+      multiline_secondary: true
+      primary: '{{ state_attr(config.entity, ''title'') }}'
+      secondary: '{{ state_attr(config.entity, ''message'') }}'
+      tap_action:
+        action: more-info
+        entity: '{% set e = state_attr(config.entity, ''entity'') %}{{ e if e else config.entity }}'
+      type: custom:mushroom-template-card
+      uix:
+        style: "{% set t = state_attr(config.entity,'type') %}\n{% set c = 'red' if t == 'error' else 'orange' if t == 'warning' else 'blue' if t == 'info' else 'green' %}\n@keyframes fns-pulse-error { 0%, 100% { box-shadow: var(--box-shadow), 0 0 0 0 rgba(var(--mush-rgb-red), 0); } 50% { box-shadow: var(--box-shadow), 0 0 0 1px rgba(var(--mush-rgb-red), .55), 0 0 0 6px rgba(var(--mush-rgb-red), .12); } }\nha-card {\n  position: relative; isolation: isolate;\n  background: var(--ha-card-background, var(--card-background-color, #fff));\n  box-shadow: var(--box-shadow);\n  {% if t == 'error' %}animation: fns-pulse-error 2.4s ease-in-out .3s infinite;{% endif %}\n}\nha-card::before {\n  content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;\n  background-color: rgba(var(--mush-rgb-{{ c }}), .1);\n  transition: background-color .25s ease;\n}\nha-card:hover::before { background-color: rgba(var(--mush-rgb-{{ c }}), .18); }\nha-card .secondary { white-space:\
+          \ normal !important; font-size: 12px !important; }\n@media (prefers-reduced-motion: reduce) { ha-card { animation: none !important; } }\n"
+    forge:
+      mold: card

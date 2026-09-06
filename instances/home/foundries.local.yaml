@@ -1,0 +1,535 @@
+uix_foundries:
+  alert_row:
+    element:
+      entity: '{{ config.entity }}'
+      icon: << state_attr('{{ config.entity }}','icon') >>
+      icon_color: <% set t = state_attr('{{ config.entity }}','type') %><% if t == 'error' %>red<% elif t == 'warning' %>orange<% elif t == 'info' %>blue<% else %>green<% endif %>
+      multiline_secondary: true
+      primary: << state_attr('{{ config.entity }}','title') >>
+      secondary: << state_attr('{{ config.entity }}','message') >>
+      tap_action:
+        action: '{% set e = state_attr(config.entity,''entity'') %}{% set g = state_attr(config.entity,''glob'') %}{% set ct = state_attr(config.entity,''card_type'') %}{% set t = state_attr(config.entity,''tap'') %}{% if t == ''navigate'' and state_attr(config.entity,''path'') %}navigate{% elif t == ''popup'' or g %}fire-dom-event{% elif t is boolean %}none{% else %}more-info{% endif %}'
+        browser_mod:
+          data:
+            content:
+              card:
+                type: entities
+                uix:
+                  style: "ha-card {\n  background: transparent;\n  box-shadow: none;\n  border: none;\n}\nha-card #states {\n  padding: 4px 16px 12px !important;\n}\n"
+              content: << state_attr('{{ config.entity }}','message') >>
+              entity: '{{ state_attr(config.entity,''entity'') or config.entity }}'
+              filter:
+                exclude:
+                - entity_id: '{{ state_attr(config.entity,''popup_exclude'') or ''__zadna__'' }}'
+                include:
+                - entity_id: '{% set e = state_attr(config.entity,''entity'') %}{% set g = state_attr(config.entity,''glob'') %}{% set ct = state_attr(config.entity,''card_type'') %}{% set rt = state_attr(config.entity,''row_type'') %}{% if rt %}{{ g or e or config.entity }}{% else %}__zadna__{% endif %}'
+                  options:
+                    layout: horizontal
+                    show_buttons_control: true
+                    type: '{% set e = state_attr(config.entity,''entity'') %}{% set g = state_attr(config.entity,''glob'') %}{% set ct = state_attr(config.entity,''card_type'') %}{% set rt = state_attr(config.entity,''row_type'') %}{{ rt }}'
+                    uix:
+                      class: no-shadow
+                  state: '{{ state_attr(config.entity,''popup_state'') or ''*'' }}'
+                - entity_id: '{% set e = state_attr(config.entity,''entity'') %}{% set g = state_attr(config.entity,''glob'') %}{% set ct = state_attr(config.entity,''card_type'') %}{% set rt = state_attr(config.entity,''row_type'') %}{% if rt %}__zadna__{% else %}{{ g or e or config.entity }}{% endif %}'
+                  state: '{{ state_attr(config.entity,''popup_state'') or ''*'' }}'
+              type: '{% set e = state_attr(config.entity,''entity'') %}{% set g = state_attr(config.entity,''glob'') %}{% set ct = state_attr(config.entity,''card_type'') %}{% set rt = state_attr(config.entity,''row_type'') %}{% if ct %}{{ ct }}{% elif g or (e and '','' not in e) %}custom:auto-entities{% else %}markdown{% endif %}'
+            title: '{{ state_attr(config.entity,''title'') }}'
+          service: browser_mod.popup
+        entity: '{% set e = state_attr(config.entity,''entity'') %}{{ e if e and '','' not in e else config.entity }}'
+        navigation_path: '{{ state_attr(config.entity,''path'') or ''/lovelace/0'' }}'
+      type: custom:mushroom-template-card
+      uix:
+        class: alert-row
+        style: "{% set t = state_attr(config.entity,'type') %}\n{% set c = 'red' if t == 'error' else 'orange' if t == 'warning' else 'blue' if t == 'info' else 'green' %}\n@keyframes fns-alert-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }\n@keyframes fns-pulse-error { 0%, 100% { box-shadow: var(--box-shadow), 0 0 0 0 rgba(var(--mush-rgb-red), 0); } 50% { box-shadow: var(--box-shadow), 0 0 0 1px rgba(var(--mush-rgb-red), .55), 0 0 0 6px rgba(var(--mush-rgb-red), .12); } }\nha-card {\n  /* tint jako ::before nad neprusvitnym pozadim karty (bez toho prosvita ambient gradientu a oranzova je lososova); ::before proto, ze background-color ma transition, gradient ne */\n  position: relative; isolation: isolate;\n  background: var(--ha-card-background, var(--card-background-color, #fff));\n  box-shadow: var(--box-shadow);\n  transition: all .2s !important;\n  {% if t == 'error' %}animation: fns-pulse-error 2.4s ease-in-out .3s infinite;{% endif %}\n\
+          }\n@media (prefers-reduced-motion: reduce) { ha-card { animation: none !important; } }\nha-card::before {\n  content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;\n  background-color: rgba(var(--mush-rgb-{{ c }}), .1);\n  transition: background-color .25s ease;\n}\nha-card:hover::before {\n  background-color: rgba(var(--mush-rgb-{{ c }}), .18);\n}\nha-card .secondary { white-space: normal !important; font-size: 12px !important; }\nha-card .content {\n  align-items: flex-start !important;\n}\nha-card ha-tile-icon {\n  /* -6px je vlastni odsazeni nativni tile karty; spolu s align-items: flex-start */\n  /* vyjde ikona na 4px pod horni hranu karty, tedy presne jako u hui-tile-card, */\n  /* a zaroven nesjede na stred u dlouhych vicerakovych zprav */\n  margin-top: -6px !important;\n}\n"
+    forge:
+      mold: card
+  climate:
+    element:
+      cards:
+      - color: "<% if is_state('switch.boost_heating_{{ room }}', 'on') %>\n  yellow\n<% elif is_state('sensor.min_dif_room', '{{ name }}') or is_state('sensor.min_dif_room_2', '{{ name }}') %>\n  purple\n<% elif is_state(config.entity, 'off') %>\n  disabled\n<% elif is_state('switch.vetrani_{{ room }}', 'on') or is_state('{{ window }}', 'on') %>\n  black\n<% elif is_state('switch.sonoff_hlavice_{{ room }}', 'off') %>\n  blue\n<% elif is_state('switch.termostat_{{ room }}', 'on') %>\n  red\n<% else %>\n  orange\n<% endif %>\n"
+        entity: '{{ entity }}'
+        features:
+        - type: target-temperature
+        features_position: inline
+        grid_options:
+          columns: 12
+          rows: 1
+        icon: mdi:thermostat
+        primary: <<states('{{ temperature }}')|float(0)|round(1)>> °C ⸱ <<states('{{ humidity }}')|float(0)|round(1)>> %
+        type: custom:mushroom-template-card
+      - features:
+        - entries:
+          - entity_id: switch.sonoff_hlavice_{{ room }}
+            icon: mdi:radiator
+            styles: ":host {\n<% if is_state(config.entity, 'on')%>\n  --icon-color: var(--theme-amber);\n<% endif %>\n}"
+            tap_action:
+              action: more-info
+              data: {}
+              target:
+                entity_id: switch.sonoff_hlavice_{{ room }}
+            type: button
+            value_attribute: icon
+          - autofill_entity_id: true
+            entity_id: input_boolean.heating_auto_{{ room }}
+            icon: mdi:thermostat-auto
+            styles: ":host {\n<% if is_state(config.entity, 'on')%>\n  --icon-color: var(--theme-amber);\n<% endif %>\n}"
+            tap_action:
+              action: toggle
+              confirmation: false
+              data: {}
+              target:
+                entity_id: input_boolean.heating_auto_{{ room }}
+            type: button
+            value_attribute: editable
+          - entity_id: '{{ window }}'
+            icon: mdi:window-open
+            styles: ":host {\n<% if is_state(config.entity, 'on')%>\n  --icon-color: var(--theme-amber);\n<% else %>\n  display: none;\n<% endif %>\n}"
+            tap_action:
+              action: more-info
+              data: {}
+              target:
+                entity_id: '{{ window }}'
+            type: button
+          - entity_id: switch.vetrani_{{ room }}
+            icon: '<< state_attr(config.entity, ''icon'') >>
+
+              '
+            styles: ":host {\n<% if is_state(config.entity, 'on')%>\n  --icon-color: var(--theme-amber);\n<% else %>\n  display: none;\n<% endif %>\n}"
+            tap_action:
+              action: more-info
+              data: {}
+              target:
+                entity_id: switch.vetrani_{{ room }}
+            type: button
+          - entity_id: switch.boost_heating_{{ room }}
+            icon: '<< state_attr(config.entity, ''icon'') >>
+
+              '
+            styles: ":host {\n<% if is_state(config.entity, 'on')%>\n  --icon-color: var(--theme-amber);\n<% endif %>\n}"
+            tap_action:
+              action: toggle
+              data: {}
+              target:
+                entity_id: switch.boost_heating_{{ room }}
+            type: button
+          - entity_id: ''
+            icon: mdi:finance
+            styles: ":host {\n  position: absolute;\n  right: 10px;\n}"
+            tap_action:
+              action: fire-dom-event
+              local_conditional_card:
+                action: toggle
+                ids:
+                - climate_stats_{{ room }}
+            type: button
+          styles: ".row {\n  justify-content: start !important;\n}\n:host {\n  --feature-button-spacing: 8px;\n}\ncustom-feature-button {\n  flex-basis: unset !important;\n  width: 36px;\n  height: 36px;\n}"
+          type: custom:service-call
+        styles: "ha-card {\n  padding-top: 0px;\n}"
+        type: custom:custom-features-card
+      - card:
+          cards:
+          - cards:
+            - forge:
+                billets:
+                  c1: '#3b82f6'
+                  c2: '#22c55e'
+                  c3: '#22c55e'
+                  c4: '#f97316'
+                  c5: '#ef4444'
+                  card_style: 'ha-card { border: none; box-shadow: none; background: transparent; } ha-card .state__value { font-size: 14px !important; font-weight: bold; } ha-card .state__uom { font-size: 14px; position: relative; top: -4px; } ha-card .ellipsis { font-size: 14px; } ha-card .header { padding: 0 12px 12px 12px !important; } ha-card .states { padding: 0 12px 16px 12px !important; } ha-card .info { font-size: 10px; padding: 0 12px 12px 12px !important; } ha-card path.line { stroke-width: 2px; stroke-linecap: round; stroke-linejoin: round; } ha-card { padding-top: 0 !important; } ha-card .icon { position: absolute; top: 9px; right: 5px; }'
+                  css_class: no-name
+                  entity: '{{ temperature }}'
+                  fill: fade
+                  legend: false
+                  name: Teplota
+                  show_name: false
+                  v1: '{{ t1 }}'
+                  v2: '{{ t2 }}'
+                  v3: '{{ t3 }}'
+                  v4: '{{ t4 }}'
+                  v5: '{{ t5 }}'
+              foundry: mini_graph
+              type: custom:uix-forge
+            - forge:
+                billets:
+                  c1: '#f97316'
+                  c2: '#22c55e'
+                  c3: '#22c55e'
+                  c4: '#3b82f6'
+                  c5: '#ef4444'
+                  card_style: 'ha-card { border: none; box-shadow: none; background: transparent; } ha-card .state__value { font-size: 14px !important; font-weight: bold; } ha-card .state__uom { font-size: 14px; position: relative; top: -4px; } ha-card .ellipsis { font-size: 14px; } ha-card .header { padding: 0 12px 12px 12px !important; } ha-card .states { padding: 0 12px 16px 12px !important; } ha-card .info { font-size: 10px; padding: 0 12px 12px 12px !important; } ha-card path.line { stroke-width: 2px; stroke-linecap: round; stroke-linejoin: round; } ha-card { padding-top: 0 !important; } ha-card .icon { position: absolute; top: 9px; right: 5px; }'
+                  css_class: no-name
+                  entity: '{{ humidity }}'
+                  fill: fade
+                  legend: false
+                  name: Vlhkost
+                  show_name: false
+                  v1: '{{ h1 }}'
+                  v2: '{{ h2 }}'
+                  v3: '{{ h3 }}'
+                  v4: '{{ h4 }}'
+                  v5: '{{ h5 }}'
+              foundry: mini_graph
+              type: custom:uix-forge
+            keep:
+              margin: true
+              outer_padding: false
+            mode: horizontal
+            type: custom:stack-in-card
+          type: custom:stack-in-card
+          uix:
+            class: no-shadow
+        default: hide
+        id: climate_stats_{{ room }}
+        type: custom:local-conditional-card
+      type: custom:stack-in-card
+    forge:
+      billets:
+        entity: null
+        h1: 35
+        h2: 45
+        h3: 55
+        h4: 62
+        h5: 68
+        humidity: null
+        name: null
+        room: null
+        t1: 20
+        t2: 22
+        t3: 24
+        t4: 26
+        t5: 28
+        temperature: null
+        window: null
+      mold: card
+  device_battery:
+    element:
+      color: '<% if is_state(''sensor.{{ slug }}_battery_state'', ''charging'') %>
+
+        green
+
+        <% elif states(''sensor.{{ slug }}_battery_level'')|float(0) < 20 %>
+
+        red
+
+        <% else %>
+
+        blue
+
+        <% endif %>'
+      entity: '{{ entity }}'
+      features_position: bottom
+      icon: << state_attr('sensor.{{ slug }}_battery_level', 'icon')>>
+      primary: '{{ name }}'
+      secondary: <<states('sensor.{{ slug }}_battery_level')>>%
+      tap_action:
+        action: fire-dom-event
+        browser_mod:
+          data:
+            content:
+              card:
+                type: entities
+                uix:
+                  class: no-shadow
+              filter:
+                exclude: []
+                include:
+                - entity_id: '*{{ slug }}*'
+                  options:
+                    secondary_info: last-changed
+              type: custom:auto-entities
+            title: '{{ name }}'
+          service: browser_mod.popup
+      type: custom:mushroom-template-card
+    forge:
+      billets:
+        entity: null
+        name: null
+        slug: null
+      grid_options:
+        columns: 4
+        rows: 1
+      mold: card
+  energy_cell:
+    element:
+      entity: sensor.{{ medium }}_spotreba_{{ obdobi }}
+      icon: '{{ icon }}'
+      icon_color: '{{ color }}'
+      layout: vertical
+      primary: << (states('sensor.{{ medium }}_spotreba_{{ obdobi }}')|float(0) | round(3) * {{ factor }})|round({{ round }}) >> {{ unit }}
+      secondary: << states('sensor.{{ medium }}_cena_{{ obdobi }}')|float(0) | round(0) >> CZK
+      tap_action:
+        action: more-info
+      type: custom:mushroom-template-card
+      uix:
+        style: 'ha-card {background: none; box-shadow: none; border: none;}'
+    forge:
+      billets:
+        color: null
+        factor: 1
+        icon: mdi:calendar-today
+        medium: null
+        obdobi: den
+        round: 1
+        unit: m³
+      mold: card
+  energy_row:
+    element:
+      cards:
+      - forge:
+          billets:
+            color: '{{ color }}'
+            factor: '{{ factor_den }}'
+            icon: mdi:calendar-today
+            medium: '{{ medium }}'
+            obdobi: den
+            round: '{{ round_den }}'
+            unit: '{{ unit_den }}'
+        foundry: energy_cell
+        type: custom:uix-forge
+      - forge:
+          billets:
+            color: '{{ color }}'
+            icon: mdi:calendar-week
+            medium: '{{ medium }}'
+            obdobi: tyden
+            round: '{{ round_tyden }}'
+            unit: '{{ unit }}'
+        foundry: energy_cell
+        type: custom:uix-forge
+      - forge:
+          billets:
+            color: '{{ color }}'
+            icon: mdi:calendar-month
+            medium: '{{ medium }}'
+            obdobi: mesic
+            round: '{{ round_mesic }}'
+            unit: '{{ unit }}'
+        foundry: energy_cell
+        type: custom:uix-forge
+      type: horizontal-stack
+    forge:
+      billets:
+        color: null
+        factor_den: 1
+        medium: null
+        round_den: 1
+        round_mesic: 1
+        round_tyden: 1
+        unit: m³
+        unit_den: m³
+      mold: card
+  light_group:
+    element:
+      cards:
+      - color: << "amber" if is_state(entity, 'on') else "disabled" >>
+        entity: '{{ group }}'
+        features:
+        - entries:
+          - autofill_entity_id: false
+            entity_id: ''
+            haptics: true
+            icon: mdi:unfold-more-horizontal
+            styles: ''
+            tap_action:
+              action: fire-dom-event
+              local_conditional_card:
+                action: toggle
+                ids:
+                - '{{ id }}'
+            type: button
+          styles: ":host {\n  position: absolute !important;\n  top: 10px;\n  right: 12px;\n  width: 36px\n}"
+          type: custom:service-call
+        features_position: inline
+        icon: mdi:lightbulb-group
+        icon_tap_action:
+          action: call-service
+          service: script.light_group_toggle
+          service_data:
+            entity_group: '{{ group }}'
+            main_light: '{{ main_light }}'
+        multiline_secondary: false
+        primary: '{{ name }}'
+        secondary: "<% if is_state(entity, 'on') %>\nZapnuto - \n<< expand('{{ group }}') | selectattr('state', 'eq', 'on') | list\n| count >>/<< expand('{{ group }}') | list | count >>\n<% else %>\nVypnuto\n<% endif %>"
+        type: custom:mushroom-template-card
+      - card:
+          card:
+            type: entities
+            uix:
+              class: no-shadow
+          filter:
+            exclude: []
+            include:
+            - group: '{{ group }}'
+              options:
+                collapsible_controls: true
+                icon_color: amber
+                layout: horizontal
+                show_brightness_control: true
+                show_color_control: true
+                show_color_temp_control: true
+                type: custom:mushroom-light-card
+                uix:
+                  class: no-shadow
+                use_light_color: true
+          type: custom:auto-entities
+        default: hide
+        id: '{{ id }}'
+        type: custom:local-conditional-card
+      type: custom:stack-in-card
+    forge:
+      billets:
+        group: null
+        id: null
+        main_light: null
+        name: null
+      mold: card
+  room_heading:
+    element:
+      badges:
+      - color: state
+        entity: sensor.rising_15_{{ room }}
+        show_icon: true
+        show_state: true
+        tap_action:
+          action: more-info
+        type: entity
+      - color: state
+        entity: sensor.trend_vlhkosti_{{ room }}
+        show_icon: true
+        show_state: true
+        tap_action:
+          action: more-info
+        type: entity
+      heading: '{{ heading }}'
+      heading_style: subtitle
+      icon: '{{ icon }}'
+      type: heading
+    forge:
+      billets:
+        heading: null
+        icon: null
+        room: null
+      mold: card
+  temp_hum_graphs:
+    element:
+      cards:
+      - forge:
+          billets:
+            c1: '#3b82f6'
+            c2: '#22c55e'
+            c3: '#22c55e'
+            c4: '#f97316'
+            c5: '#ef4444'
+            card_style: 'ha-card .state__value { font-size: 14px !important; font-weight: bold; } ha-card .state__uom { font-size: 14px; position: relative; top: -4px; } ha-card .ellipsis { font-size: 14px; } ha-card .header { padding: 0 12px 12px 12px !important; } ha-card .states { padding: 0 12px 16px 12px !important; } ha-card .info { font-size: 10px; padding: 0 12px 12px 12px !important; } ha-card path.line { stroke-width: 2px; stroke-linecap: round; stroke-linejoin: round; } ha-card { padding-top: 0 !important; } ha-card .icon { position: absolute; top: 9px; right: 5px; }'
+            css_class: no-name
+            entity: '{{ temperature }}'
+            font_size: '{{ font_size }}'
+            hours: '{{ hours }}'
+            name: Teplota
+            pph: '{{ pph }}'
+            show_name: false
+            v1: '{{ t1 }}'
+            v2: '{{ t2 }}'
+            v3: '{{ t3 }}'
+            v4: '{{ t4 }}'
+            v5: '{{ t5 }}'
+        foundry: mini_graph
+        type: custom:uix-forge
+      - forge:
+          billets:
+            c1: '{{ hc1 }}'
+            c2: '{{ hc2 }}'
+            c3: '{{ hc3 }}'
+            c4: '{{ hc4 }}'
+            c5: '{{ hc5 }}'
+            card_style: 'ha-card .state__value { font-size: 14px !important; font-weight: bold; } ha-card .state__uom { font-size: 14px; position: relative; top: -4px; } ha-card .ellipsis { font-size: 14px; } ha-card .header { padding: 0 12px 12px 12px !important; } ha-card .states { padding: 0 12px 16px 12px !important; } ha-card .info { font-size: 10px; padding: 0 12px 12px 12px !important; } ha-card path.line { stroke-width: 2px; stroke-linecap: round; stroke-linejoin: round; } ha-card { padding-top: 0 !important; } ha-card .icon { position: absolute; top: 9px; right: 5px; }'
+            css_class: no-name
+            entity: '{{ humidity }}'
+            font_size: '{{ font_size }}'
+            hours: '{{ hours }}'
+            name: Vlhkost
+            pph: '{{ pph }}'
+            show_name: false
+            v1: '{{ h1 }}'
+            v2: '{{ h2 }}'
+            v3: '{{ h3 }}'
+            v4: '{{ h4 }}'
+            v5: '{{ h5 }}'
+        foundry: mini_graph
+        type: custom:uix-forge
+      columns: 2
+      square: false
+      type: grid
+    forge:
+      billets:
+        font_size: 100
+        h1: 35
+        h2: 45
+        h3: 55
+        h4: 62
+        h5: 68
+        hc1: '#f97316'
+        hc2: '#22c55e'
+        hc3: '#22c55e'
+        hc4: '#3b82f6'
+        hc5: '#ef4444'
+        hours: 12
+        humidity: null
+        pph: 2
+        t1: 20
+        t2: 22
+        t3: 24
+        t4: 26
+        t5: 28
+        temperature: null
+      mold: card
+  wifi_clients:
+    element:
+      entity: '{{ entity }}'
+      icon: '{{ icon }}'
+      name: '{{ name }}'
+      tap_action:
+        action: fire-dom-event
+        browser_mod:
+          data:
+            content:
+              card:
+                layout:
+                  cards: []
+                  grid-template-rows: auto
+                layout_type: custom:grid-layout
+                type: custom:layout-card
+              filter:
+                include:
+                - attributes:
+                    connection: '{{ connection }}'
+                  entity_id: device_tracker*
+                  options:
+                    state_content: '{{ state_content }}'
+                    type: tile
+                    uix:
+                      class: no-shadow
+                      style: "ha-tile-badge {\n  display: none;\n}\n"
+                  state: home
+              sort:
+                method: friendly_name
+              type: custom:auto-entities
+            title: '{{ name }}'
+          service: browser_mod.popup
+      type: tile
+      vertical: true
+    forge:
+      billets:
+        connection: null
+        entity: null
+        icon: null
+        name: null
+        state_content:
+        - ip
+        - band
+      grid_options:
+        columns: 4
+        rows: 2
+      mold: card

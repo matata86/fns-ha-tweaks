@@ -1,0 +1,796 @@
+fns_mushroom:
+  # ==========================================================================
+  # FNS Mushroom — modernizace 2026-09-02
+  # Základ: vlastní akcentová modř (indigo) místo HA cyan, dva odstíny
+  # povrchů (stránka / karta / sidebar), hairline okraje karet, měkké
+  # vrstvené stíny, glass hlavička a dialogy, ambientní záře pozadí,
+  # squircle ikony (12px) u tile i mushroom, silnější typografie.
+  # Barvy v modes: dole. Načítá se přes frontend.reload_themes.
+  # ==========================================================================
+
+  # --- Typografie -----------------------------------------------------------
+  ha-font-family-body: 'Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif'
+  ha-font-family-heading: "var(--ha-font-family-body)"
+  ha-font-weight-heading: 700
+  ha-font-weight-action: 600
+
+  # --- Akcent (indigo) — škála přebíjí HA primary tokeny, takže ji
+  #     převezmou i nové komponenty (switch, tlačítka, chipy, odkazy) ------
+  ha-color-primary-05: "#070d24"
+  ha-color-primary-10: "#0d1740"
+  ha-color-primary-20: "#14245f"
+  ha-color-primary-30: "#1d3a9a"
+  ha-color-primary-40: "#2b55d6"
+  ha-color-primary-50: "#3f6df5"
+  ha-color-primary-60: "#6b8cff"
+  ha-color-primary-70: "#93aaff"
+  ha-color-primary-80: "#bcc9ff"
+  ha-color-primary-90: "#dfe6ff"
+  ha-color-primary-95: "#eff2ff"
+  accent-color: "#ff8a4c"
+  rgb-accent-color: "255, 138, 76"
+  text-primary-color: "#ffffff"
+  theme-amber: "var(--amber-color)"
+
+  # --- Barevná sada (nahrazuje Material 2014 defaulty HA) -------------------
+  # 2026-09-06: hodnoty jsou v modes: light / dark jako --fns-*. Tady zůstávají jen aliasy,
+  # aby existující tokeny HA i mushroom braly barvu z jednoho místa.
+  red-color: "var(--fns-red)"
+  pink-color: "var(--fns-pink)"
+  purple-color: "var(--fns-purple)"
+  deep-purple-color: "var(--fns-deep-purple)"
+  indigo-color: "var(--fns-indigo)"
+  blue-color: "var(--fns-blue)"
+  light-blue-color: "var(--fns-light-blue)"
+  cyan-color: "var(--fns-cyan)"
+  teal-color: "var(--fns-teal)"
+  green-color: "var(--fns-green)"
+  light-green-color: "var(--fns-light-green)"
+  lime-color: "var(--fns-lime)"
+  yellow-color: "var(--fns-yellow)"
+  amber-color: "var(--fns-amber)"
+  orange-color: "var(--fns-orange)"
+  deep-orange-color: "var(--fns-deep-orange)"
+  brown-color: "var(--fns-brown)"
+  grey-color: "var(--fns-grey)"
+  light-grey-color: "var(--fns-light-grey)"
+  dark-grey-color: "var(--fns-dark-grey)"
+  blue-grey-color: "var(--fns-blue-grey)"
+  error-color: "var(--fns-danger)"
+  warning-color: "var(--fns-warning)"
+  success-color: "var(--fns-success)"
+  info-color: "var(--fns-info)"
+  rgb-red: "var(--fns-rgb-red)"
+  rgb-pink: "var(--fns-rgb-pink)"
+  rgb-purple: "var(--fns-rgb-purple)"
+  rgb-deep-purple: "var(--fns-rgb-deep-purple)"
+  rgb-indigo: "var(--fns-rgb-indigo)"
+  rgb-blue: "var(--fns-rgb-blue)"
+  rgb-light-blue: "var(--fns-rgb-light-blue)"
+  rgb-cyan: "var(--fns-rgb-cyan)"
+  rgb-teal: "var(--fns-rgb-teal)"
+  rgb-green: "var(--fns-rgb-green)"
+  rgb-light-green: "var(--fns-rgb-light-green)"
+  rgb-lime: "var(--fns-rgb-lime)"
+  rgb-yellow: "var(--fns-rgb-yellow)"
+  rgb-amber: "var(--fns-rgb-amber)"
+  rgb-orange: "var(--fns-rgb-orange)"
+  rgb-deep-orange: "var(--fns-rgb-deep-orange)"
+  rgb-brown: "var(--fns-rgb-brown)"
+  rgb-grey: "var(--fns-rgb-grey)"
+  rgb-error-color: "var(--fns-rgb-danger)"
+  rgb-warning-color: "var(--fns-rgb-warning)"
+  rgb-success-color: "var(--fns-rgb-success)"
+  rgb-info-color: "var(--fns-rgb-info)"
+
+  # --- State barvy (formát state-<domain>-<stav>-color) ---------------------
+  state-alarm_control_panel-disarmed-color: "var(--green-color)"
+  state-alarm_control_panel-armed_away-color: "var(--red-color)"
+  state-alarm_control_panel-arming-color: "var(--orange-color)"
+  state-alarm_control_panel-pending-color: "var(--orange-color)"
+  state-alarm_control_panel-triggered-color: "var(--red-color)"
+  state-climate-auto-color: "var(--green-color)"
+  state-climate-cool-color: "var(--blue-color)"
+  state-climate-dry-color: "var(--orange-color)"
+  state-climate-fan_only-color: "var(--blue-color)"
+  state-climate-heat-color: "var(--orange-color)"
+  state-climate-heat_cool-color: "var(--yellow-color)"
+  state-climate-idle-color: "var(--grey-color)"
+  state-fan-active-color: "var(--state-active-color)"
+  state-lock-jammed-color: "var(--red-color)"
+  state-lock-locked-color: "var(--red-color)"
+  state-lock-unlocked-color: "var(--green-color)"
+  state-media_player-active-color: "var(--state-active-color)"
+  state-media_player-on-color: "var(--state-active-color)"
+  state-media_player-idle-color: "var(--primary-color)"
+  state-person-home-color: "var(--green-color)"
+  state-sensor-battery-high-color: "var(--green-color)"
+  state-sensor-battery-low-color: "var(--red-color)"
+  state-sensor-battery-medium-color: "var(--orange-color)"
+  state-update-installing-color: "var(--orange-color)"
+  state-vacuum-active-color: "var(--state-active-color)"
+
+  # --- Mushroom -------------------------------------------------------------
+  # Aliasy na --fns-rgb-* — jeden zdroj pravdy pro HA i mushroom
+  mush-rgb-blue: "var(--fns-rgb-blue)"
+  mush-rgb-red: "var(--fns-rgb-red)"
+  mush-rgb-orange: "var(--fns-rgb-orange)"
+  mush-rgb-yellow: "var(--fns-rgb-yellow)"
+  mush-rgb-gray: "var(--fns-rgb-grey)"
+  mush-rgb-grey: "var(--fns-rgb-grey)"
+  mush-rgb-green: "var(--fns-rgb-green)"
+  mush-rgb-amber: "var(--fns-rgb-amber)"
+  mush-rgb-teal: "var(--fns-rgb-teal)"
+  mush-rgb-cyan: "var(--fns-rgb-cyan)"
+  mush-rgb-purple: "var(--fns-rgb-purple)"
+  mush-rgb-pink: "var(--fns-rgb-pink)"
+  mush-rgb-deep-orange: "var(--fns-rgb-deep-orange)"
+  mush-rgb-light-blue: "var(--fns-rgb-light-blue)"
+  mush-rgb-indigo: "var(--fns-rgb-indigo)"
+  # mush-rgb-state = akcent, definován v modes (světlý/tmavý odstín)
+  mush-spacing: 12px
+  mush-icon-size: 40px
+  mush-icon-border-radius: 12px
+  mush-control-border-radius: 12px
+  mush-card-primary-font-weight: 600
+  mush-card-primary-letter-spacing: "-0.1px"
+  mush-card-secondary-font-size: 12px
+  mush-title-font-weight: 700
+  mush-title-letter-spacing: "-0.4px"
+
+  # --- Karty ----------------------------------------------------------------
+  ha-card-border-radius: 16px
+  # Okraj karty je 0 — vnitřní karty ve stack-in-card by jinak měly každá
+  # svůj rámeček (dvojité linky). Hairline dělá první vrstva box-shadow
+  # (0 0 0 1px), kterou stack-in-card i třída no-shadow u vnitřních karet zruší.
+  ha-card-border-width: 0px
+  ha-card-box-shadow: "var(--box-shadow)"
+  ha-card-features-border-radius: 12px
+
+  # Tile (nativní) — squircle ikona, výraznější primární text
+  ha-tile-icon-border-radius: 12px
+  ha-tile-info-primary-font-weight: 600
+  ha-tile-info-primary-letter-spacing: "-0.1px"
+
+  # Heading karta — titulek těžší, podtitulek jako malý štítek (uppercase v CSS níže)
+  ha-heading-card-title-font-size: 18px
+  ha-heading-card-title-font-weight: 700
+  ha-heading-card-subtitle-font-size: 11px
+  ha-heading-card-subtitle-font-weight: 600
+
+  # --- Hlavička (glass) a sidebar --------------------------------------------
+  app-header-background-color: "var(--fns-header-bg)"
+  app-header-text-color: "var(--primary-text-color)"
+  app-header-backdrop-filter: "blur(18px) saturate(160%)"
+  app-header-selection-bar-color: "var(--primary-color)"
+  bar-box-shadow: "0 1px 0 var(--divider-color)"
+  sidebar-background-color: "var(--fns-sidebar-bg)"
+  sidebar-text-color: "var(--primary-text-color)"
+  sidebar-icon-color: "var(--secondary-text-color)"
+  sidebar-selected-text-color: "var(--primary-color)"
+  sidebar-selected-icon-color: "var(--primary-color)"
+
+  # --- Dialogy / popupy (glass) ------------------------------------------------
+  ha-dialog-border-radius: 24px
+  ha-dialog-surface-background: "var(--card-background-color)"
+  ha-dialog-scrim-backdrop-filter: "blur(10px)"
+  mdc-dialog-scrim-color: "var(--fns-scrim)"
+
+  # browser_mod popup se size: wide dává obsahu šířku --popup-wide-width
+  # (default 90vw), zatímco plocha dialogu je na mobilu přes celou obrazovku.
+  # Obsah není vycentrovaný, takže těch chybějících 10 % zbyde jako prázdno
+  # vpravo. 100% = obsah vyplní plochu dialogu, symetricky na mobilu i desktopu.
+  popup-wide-width: "100%"
+
+  # Pozadí view = statická denní záře (fns-ambient per mód) hned při načtení; uix-root-yaml ji pak
+  # přepíše cirkadiánní/počasím (stejné rozměry a polohy, takže nic neblikne). Dřív transparent → bílý záblesk.
+  lovelace-background: "var(--fns-ambient)"
+
+  uix-theme: "fns_mushroom"
+
+  # --- ROOT (hui-root: hlavička + kontejner view) ---------------------------
+  # 2026-09-05 (6): odstín záře jde s cirkadiánem — sensor.light_color 140 mired (den) = indigo + teal,
+  # 650 (noc) = jantar + oranžová; mezi tím lineárně. Průhlednost per mód přes fns-ambient-a1/a2.
+  # 2026-09-05 (počasí 1+2): stav weather.openweathermap barvu přimíchá (zataženo šedomodrá, déšť chladná,
+  # sníh bledá, mlha šedý závoj) a násobí alfu. Slunce = vlastní třetí teplá záře (oranžová nízko, žlutá vysoko),
+  # která putuje po horním okraji podle azimuth/elevation, slábne se zataženem (1 - váha počasí) a pod obzorem
+  # (-6°) zhasne; obě základní záře zůstávají v rozích (první pokus s posunem základní záře nebyl vidět).
+  uix-root-yaml: |
+    .: |
+      {# test denní doby (2026-09-05): input_boolean.denni_doba_test_zapnuto + input_number.denni_doba_test (0–24 h)
+         simuluje slunce (azimut 60° v 6 h → 300° v 18 h, výška 60·sin) i cirkadián (den 7:30–17:30, noc 21:30–4:00). #}
+      {% set test = is_state('input_boolean.denni_doba_test_zapnuto', 'on') %}
+      {% set th = states('input_number.denni_doba_test') | float(12) %}
+      {# 2026-09-06: stejný soubor běží na Home i Office — entita počasí se hledá, cirkadián má náhradu z výšky slunce #}
+      {% set went = 'weather.openweathermap' if has_value('weather.openweathermap') else (states.weather | map(attribute='entity_id') | list | first | default('')) %}
+      {% set m = states('sensor.light_color') | float(0) %}
+      {% if m <= 0 %}{% set el0 = state_attr('sun.sun', 'elevation') | float(0) %}{% set m = 140 + 510 * [[(6 - el0) / 12, 0] | max, 1] | min %}{% endif %}
+      {% set k = (([[(m - 140) / 510, 0] | max, 1] | min) * 20) | round(0) / 20 %}
+      {% if test %}
+        {% set k = 0 if 7.5 <= th <= 17.5 else (1 if th >= 21.5 or th < 4 else ((th - 17.5) / 4 if th > 17.5 else 1 - (th - 4) / 3.5)) %}
+      {% endif %}
+      {% set b1 = [63 + 182 * k, 109 + 49 * k, 245 - 182 * k] %}
+      {% set b2 = [20 + 229 * k, 184 - 69 * k, 166 - 144 * k] %}
+      {% set w = states(went) if went else 'unknown' %}
+      {% set W = {
+        'partlycloudy':    [[130, 140, 165], 0.25, 0.95],
+        'cloudy':          [[118, 132, 158], 0.55, 0.90],
+        'rainy':           [[58, 118, 168], 0.60, 1.00],
+        'pouring':         [[48, 100, 150], 0.75, 1.10],
+        'snowy':           [[188, 206, 232], 0.65, 1.15],
+        'snowy-rainy':     [[140, 170, 205], 0.60, 1.00],
+        'hail':            [[110, 130, 160], 0.60, 1.00],
+        'fog':             [[150, 156, 168], 0.70, 1.25],
+        'lightning':       [[120, 108, 190], 0.55, 1.10],
+        'lightning-rainy': [[90, 100, 170], 0.60, 1.10],
+        'windy':           [[120, 150, 170], 0.30, 0.95],
+        'windy-variant':   [[120, 140, 165], 0.35, 0.95],
+        'exceptional':     [[200, 120, 90], 0.40, 1.00] } %}
+      {% set wc, wg, wa = W.get(w, [[0, 0, 0], 0, 1]) %}
+      {% set c1 = (b1[0] * (1 - wg) + wc[0] * wg) | round(0) | int ~ ', ' ~ (b1[1] * (1 - wg) + wc[1] * wg) | round(0) | int ~ ', ' ~ (b1[2] * (1 - wg) + wc[2] * wg) | round(0) | int %}
+      {% set c2 = (b2[0] * (1 - wg) + wc[0] * wg) | round(0) | int ~ ', ' ~ (b2[1] * (1 - wg) + wc[1] * wg) | round(0) | int ~ ', ' ~ (b2[2] * (1 - wg) + wc[2] * wg) | round(0) | int %}
+      {% set el = state_attr('sun.sun', 'elevation') | float(-10) %}
+      {% set az = state_attr('sun.sun', 'azimuth') | float(180) %}
+      {% if test %}{% set az = (60 + (th - 6) / 12 * 240) % 360 %}{% set el = 60 * sin(pi * (th - 6) / 12) %}{% endif %}
+      {% set sx = [[(az - 60) / 240 * 90 + 5, 3] | max, 97] | min | round(0) | int %}
+      {% set sy = [[14 - el * 0.3, -4] | max, 14] | min | round(0) | int %}
+      {% set hi = [[el / 45, 0] | max, 1] | min %}
+      {% set sun = (255) ~ ', ' ~ ((150 + 70 * hi) / 10) | round(0) | int * 10 ~ ', ' ~ ((60 + 100 * hi) / 10) | round(0) | int * 10 %}
+      {% set sa = ((1 - wg) * (1 if el > 0 else [1 + el / 6, 0] | max)) | round(1) %}
+      #view {
+        background:
+          {% if sa > 0.02 %}radial-gradient(700px 480px at {{ sx }}% {{ sy }}%, rgba({{ sun }}, calc(var(--fns-ambient-a1) * {{ (sa * 1.7) | round(2) }})), transparent 65%),{% endif %}
+          radial-gradient(1100px 640px at 6% -6%, rgba({{ c1 }}, calc(var(--fns-ambient-a1) * {{ wa }})), transparent 62%),
+          radial-gradient(900px 560px at 100% 8%, rgba({{ c2 }}, calc(var(--fns-ambient-a2) * {{ wa }})), transparent 60%),
+          var(--primary-background-color) !important;
+        transition: background 2s ease;
+      }
+      {# ---- vrstvy počasí (2026-09-05 v2): částice = box-shadow na ::before/::after, pohyb jen transform (GPU).
+         Částice generuje pudorys_build sourozenec `pocasi_vrstvy.py` (seed 7, pole 2200×1300 px zdvojené v y pro plynulou smyčku).
+         Vrstva je pod kartami: #view isolate + z-index -1. Přepínač input_select.pocasi_vrstva, Auto = podle weather. #}
+      {% set sel = states('input_select.pocasi_vrstva') %}
+      {% set auto = {'rainy': 'rain', 'pouring': 'pour', 'snowy': 'snow', 'snowy-rainy': 'snow', 'hail': 'pour', 'fog': 'fog', 'lightning': 'storm', 'lightning-rainy': 'storm', 'sunny': 'sun', 'partlycloudy': 'clouds', 'windy': 'clouds', 'windy-variant': 'clouds', 'cloudy': 'overcast', 'clear-night': 'stars'} %}
+      {% set layer = {'Déšť': 'rain', 'Liják': 'pour', 'Sníh': 'snow', 'Mlha': 'fog', 'Bouřka': 'storm', 'Jasno': 'sun', 'Polojasno': 'clouds', 'Zataženo': 'overcast', 'Jasná noc': 'stars', 'Žádná': 'none'}.get(sel, auto.get(w, 'none')) %}
+      {# (5) předpověď: když do 2 h přijde déšť/sníh a teď nic nepadá, začne slabá vrstva dřív (jen v Auto) #}
+      {% set faint = false %}
+      {% set pre = states('sensor.pocasi_predpoved_2h') %}
+      {% if sel == 'Auto' and layer in ['none', 'sun', 'clouds', 'overcast', 'stars'] and pre in ['rainy', 'pouring', 'lightning-rainy', 'hail', 'snowy', 'snowy-rainy'] %}
+        {% set layer = 'snow' if pre in ['snowy', 'snowy-rainy'] else 'rain' %}{% set faint = true %}
+      {% endif %}
+      {% set ws = state_attr(went, 'wind_speed') | float(0) if went else 0 %}
+      {% set wb = state_attr(went, 'wind_bearing') | float(0) if went else 0 %}
+      {% set sg = 1 if wb < 180 else -1 %}
+      {% set tilt = (([ws / 50 * 14, 14] | min) * sg) | round(0) | int %}
+      {# vrstvy jen na Přehledu (+ view Debug s testovacími kartami): UIX předává panel.fullUrlPath; bez proměnné (jiný kontext) nic #}
+      {% set na_prehledu = (panel.fullUrlPath | default('') | lower) in ['lovelace', 'lovelace/prehled', 'lovelace/debug'] if panel is defined else false %}
+      {% if not na_prehledu %}{% set layer = 'none' %}{% endif %}
+      #view { position: relative; isolation: isolate; }
+      {% if layer != 'none' %}
+      #view::before, #view::after {
+        content: ''; position: fixed; left: -15vw; top: -1300px; width: 130vw; height: 2600px;
+        z-index: -1; pointer-events: none;
+      }
+      {% endif %}
+      {% if layer in ['rain', 'pour', 'storm'] %}
+      {% set heavy = layer != 'rain' %}
+      #view::before {
+        width: 2px; height: {{ '30px' if heavy else '24px' }}; border-radius: 1px; background: transparent;
+        box-shadow: 1126px 308px rgba(var(--fns-rain-rgb), 0.33), 1126px 1608px rgba(var(--fns-rain-rgb), 0.33), -3px 148px rgba(var(--fns-rain-rgb), 0.41), -3px 1448px rgba(var(--fns-rain-rgb), 0.41), 185px 748px rgba(var(--fns-rain-rgb), 0.37), 185px 2048px rgba(var(--fns-rain-rgb), 0.37), 1878px 439px rgba(var(--fns-rain-rgb), 0.26), 1878px 1739px rgba(var(--fns-rain-rgb), 0.26), 1576px 856px rgba(var(--fns-rain-rgb), 0.26), 1576px 2156px rgba(var(--fns-rain-rgb), 0.26), 171px 1128px rgba(var(--fns-rain-rgb), 0.33), 171px 2428px rgba(var(--fns-rain-rgb), 0.33), 2116px 253px rgba(var(--fns-rain-rgb), 0.44), 2116px 1553px rgba(var(--fns-rain-rgb), 0.44), 2187px 126px rgba(var(--fns-rain-rgb), 0.36), 2187px 1426px rgba(var(--fns-rain-rgb), 0.36), 1424px 101px rgba(var(--fns-rain-rgb), 0.45), 1424px 1401px rgba(var(--fns-rain-rgb), 0.45), -10px 1140px rgba(var(--fns-rain-rgb), 0.42), -10px 2440px rgba(var(--fns-rain-rgb), 0.42), 986px 858px rgba(var(--fns-rain-rgb), 0.28), 986px 2158px rgba(var(--fns-rain-rgb), 0.28), 282px 1169px rgba(var(--fns-rain-rgb), 0.31), 282px 2469px rgba(var(--fns-rain-rgb), 0.31), 540px 211px rgba(var(--fns-rain-rgb), 0.37), 540px 1511px rgba(var(--fns-rain-rgb), 0.37), 569px 762px rgba(var(--fns-rain-rgb), 0.27), 569px 2062px rgba(var(--fns-rain-rgb), 0.27), 57px 1155px rgba(var(--fns-rain-rgb), 0.26), 57px 2455px rgba(var(--fns-rain-rgb), 0.26), 643px 1016px rgba(var(--fns-rain-rgb), 0.39), 643px 2316px rgba(var(--fns-rain-rgb), 0.39), 1551px 643px rgba(var(--fns-rain-rgb), 0.34), 1551px 1943px rgba(var(--fns-rain-rgb), 0.34), 1656px 740px rgba(var(--fns-rain-rgb), 0.31), 1656px 2040px rgba(var(--fns-rain-rgb), 0.31), 536px 499px rgba(var(--fns-rain-rgb), 0.26), 536px 1799px rgba(var(--fns-rain-rgb), 0.26), 1029px 1075px rgba(var(--fns-rain-rgb), 0.35), 1029px 2375px rgba(var(--fns-rain-rgb), 0.35), 1206px 919px rgba(var(--fns-rain-rgb), 0.31), 1206px 2219px rgba(var(--fns-rain-rgb), 0.31), 99px 241px rgba(var(--fns-rain-rgb), 0.35), 99px 1541px rgba(var(--fns-rain-rgb), 0.35), 475px 700px rgba(var(--fns-rain-rgb), 0.28), 475px 2000px rgba(var(--fns-rain-rgb), 0.28), 1802px 863px rgba(var(--fns-rain-rgb), 0.26), 1802px 2163px rgba(var(--fns-rain-rgb), 0.26), 117px 1142px rgba(var(--fns-rain-rgb), 0.36), 117px 2442px rgba(var(--fns-rain-rgb), 0.36), 1085px 696px rgba(var(--fns-rain-rgb), 0.39), 1085px 1996px rgba(var(--fns-rain-rgb), 0.39), 1834px 1187px rgba(var(--fns-rain-rgb), 0.41), 1834px 2487px rgba(var(--fns-rain-rgb), 0.41), 81px 191px rgba(var(--fns-rain-rgb), 0.44), 81px 1491px rgba(var(--fns-rain-rgb), 0.44), 1741px 133px rgba(var(--fns-rain-rgb), 0.26), 1741px 1433px rgba(var(--fns-rain-rgb), 0.26), 1068px 1183px rgba(var(--fns-rain-rgb), 0.45), 1068px 2483px rgba(var(--fns-rain-rgb), 0.45), 1625px 582px rgba(var(--fns-rain-rgb), 0.39), 1625px 1882px rgba(var(--fns-rain-rgb), 0.39), 1221px 46px rgba(var(--fns-rain-rgb), 0.44), 1221px 1346px rgba(var(--fns-rain-rgb), 0.44), 1255px 344px rgba(var(--fns-rain-rgb), 0.37), 1255px 1644px rgba(var(--fns-rain-rgb), 0.37), 1822px 120px rgba(var(--fns-rain-rgb), 0.29), 1822px 1420px rgba(var(--fns-rain-rgb), 0.29), 977px 264px rgba(var(--fns-rain-rgb), 0.4), 977px 1564px rgba(var(--fns-rain-rgb), 0.4), 1429px 800px rgba(var(--fns-rain-rgb), 0.43), 1429px 2100px rgba(var(--fns-rain-rgb), 0.43), 1833px 165px rgba(var(--fns-rain-rgb), 0.28), 1833px 1465px rgba(var(--fns-rain-rgb), 0.28), 1445px 1125px rgba(var(--fns-rain-rgb), 0.3), 1445px 2425px rgba(var(--fns-rain-rgb), 0.3), 360px 881px rgba(var(--fns-rain-rgb), 0.42), 360px 2181px rgba(var(--fns-rain-rgb), 0.42), 940px 850px rgba(var(--fns-rain-rgb), 0.45), 940px 2150px rgba(var(--fns-rain-rgb), 0.45), 1358px 472px rgba(var(--fns-rain-rgb), 0.28), 1358px 1772px rgba(var(--fns-rain-rgb), 0.28), 521px 309px rgba(var(--fns-rain-rgb), 0.29), 521px 1609px rgba(var(--fns-rain-rgb), 0.29), 755px 24px rgba(var(--fns-rain-rgb), 0.35), 755px 1324px rgba(var(--fns-rain-rgb), 0.35), 546px 538px rgba(var(--fns-rain-rgb), 0.3), 546px 1838px rgba(var(--fns-rain-rgb), 0.3), 396px 858px rgba(var(--fns-rain-rgb), 0.36), 396px 2158px rgba(var(--fns-rain-rgb), 0.36), 2119px 652px rgba(var(--fns-rain-rgb), 0.44), 2119px 1952px rgba(var(--fns-rain-rgb), 0.44), 1911px 1264px rgba(var(--fns-rain-rgb), 0.38), 1911px 2564px rgba(var(--fns-rain-rgb), 0.38), 21px 935px rgba(var(--fns-rain-rgb), 0.43), 21px 2235px rgba(var(--fns-rain-rgb), 0.43), 2090px 803px rgba(var(--fns-rain-rgb), 0.33), 2090px 2103px rgba(var(--fns-rain-rgb), 0.33), 1414px 212px rgba(var(--fns-rain-rgb), 0.35), 1414px 1512px rgba(var(--fns-rain-rgb), 0.35), 1440px 127px rgba(var(--fns-rain-rgb), 0.29), 1440px 1427px rgba(var(--fns-rain-rgb), 0.29), 655px 902px rgba(var(--fns-rain-rgb), 0.28), 655px 2202px rgba(var(--fns-rain-rgb), 0.28), 1192px 1230px rgba(var(--fns-rain-rgb), 0.26), 1192px 2530px rgba(var(--fns-rain-rgb), 0.26), -200px 1160px rgba(var(--fns-rain-rgb), 0.28), -200px 2460px rgba(var(--fns-rain-rgb), 0.28), 215px 744px rgba(var(--fns-rain-rgb), 0.37), 215px 2044px rgba(var(--fns-rain-rgb), 0.37), 88px 425px rgba(var(--fns-rain-rgb), 0.37), 88px 1725px rgba(var(--fns-rain-rgb), 0.37), 408px 1299px rgba(var(--fns-rain-rgb), 0.3), 408px 2599px rgba(var(--fns-rain-rgb), 0.3), 1222px 1233px rgba(var(--fns-rain-rgb), 0.32), 1222px 2533px rgba(var(--fns-rain-rgb), 0.32), 303px 236px rgba(var(--fns-rain-rgb), 0.42), 303px 1536px rgba(var(--fns-rain-rgb), 0.42), 1708px 983px rgba(var(--fns-rain-rgb), 0.35), 1708px 2283px rgba(var(--fns-rain-rgb), 0.35), 151px 295px rgba(var(--fns-rain-rgb), 0.27), 151px 1595px rgba(var(--fns-rain-rgb), 0.27), 1203px 542px rgba(var(--fns-rain-rgb), 0.34), 1203px 1842px rgba(var(--fns-rain-rgb), 0.34), 461px 1057px rgba(var(--fns-rain-rgb), 0.25), 461px 2357px rgba(var(--fns-rain-rgb), 0.25), 1963px 740px rgba(var(--fns-rain-rgb), 0.28), 1963px 2040px rgba(var(--fns-rain-rgb), 0.28), 2024px 55px rgba(var(--fns-rain-rgb), 0.4), 2024px 1355px rgba(var(--fns-rain-rgb), 0.4), 1020px 186px rgba(var(--fns-rain-rgb), 0.39), 1020px 1486px rgba(var(--fns-rain-rgb), 0.39), 869px 1061px rgba(var(--fns-rain-rgb), 0.32), 869px 2361px rgba(var(--fns-rain-rgb), 0.32), 484px 728px rgba(var(--fns-rain-rgb), 0.4), 484px 2028px rgba(var(--fns-rain-rgb), 0.4), 1981px 1109px rgba(var(--fns-rain-rgb), 0.41), 1981px 2409px rgba(var(--fns-rain-rgb), 0.41), 1150px 456px rgba(var(--fns-rain-rgb), 0.37), 1150px 1756px rgba(var(--fns-rain-rgb), 0.37), 599px 490px rgba(var(--fns-rain-rgb), 0.41), 599px 1790px rgba(var(--fns-rain-rgb), 0.41), 728px 409px rgba(var(--fns-rain-rgb), 0.35), 728px 1709px rgba(var(--fns-rain-rgb), 0.35), 1256px 59px rgba(var(--fns-rain-rgb), 0.45), 1256px 1359px rgba(var(--fns-rain-rgb), 0.45), 944px 967px rgba(var(--fns-rain-rgb), 0.3), 944px 2267px rgba(var(--fns-rain-rgb), 0.3), 1210px 915px rgba(var(--fns-rain-rgb), 0.41), 1210px 2215px rgba(var(--fns-rain-rgb), 0.41), 1231px 746px rgba(var(--fns-rain-rgb), 0.26), 1231px 2046px rgba(var(--fns-rain-rgb), 0.26), 218px 464px rgba(var(--fns-rain-rgb), 0.34), 218px 1764px rgba(var(--fns-rain-rgb), 0.34), 1183px 418px rgba(var(--fns-rain-rgb), 0.35), 1183px 1718px rgba(var(--fns-rain-rgb), 0.35), -193px 981px rgba(var(--fns-rain-rgb), 0.43), -193px 2281px rgba(var(--fns-rain-rgb), 0.43), 1209px 173px rgba(var(--fns-rain-rgb), 0.42), 1209px 1473px rgba(var(--fns-rain-rgb), 0.42), 291px 795px rgba(var(--fns-rain-rgb), 0.41), 291px 2095px rgba(var(--fns-rain-rgb), 0.41), 616px 979px rgba(var(--fns-rain-rgb), 0.43), 616px 2279px rgba(var(--fns-rain-rgb), 0.43), 1577px 680px rgba(var(--fns-rain-rgb), 0.27), 1577px 1980px rgba(var(--fns-rain-rgb), 0.27), 1421px 948px rgba(var(--fns-rain-rgb), 0.33), 1421px 2248px rgba(var(--fns-rain-rgb), 0.33), 147px 325px rgba(var(--fns-rain-rgb), 0.28), 147px 1625px rgba(var(--fns-rain-rgb), 0.28), 320px 56px rgba(var(--fns-rain-rgb), 0.28), 320px 1356px rgba(var(--fns-rain-rgb), 0.28), 1706px 299px rgba(var(--fns-rain-rgb), 0.37), 1706px 1599px rgba(var(--fns-rain-rgb), 0.37), 1742px 717px rgba(var(--fns-rain-rgb), 0.28), 1742px 2017px rgba(var(--fns-rain-rgb), 0.28), 2045px 268px rgba(var(--fns-rain-rgb), 0.25), 2045px 1568px rgba(var(--fns-rain-rgb), 0.25), 220px 1078px rgba(var(--fns-rain-rgb), 0.4), 220px 2378px rgba(var(--fns-rain-rgb), 0.4), 370px 888px rgba(var(--fns-rain-rgb), 0.45), 370px 2188px rgba(var(--fns-rain-rgb), 0.45), 597px 432px rgba(var(--fns-rain-rgb), 0.25), 597px 1732px rgba(var(--fns-rain-rgb), 0.25), 671px 599px rgba(var(--fns-rain-rgb), 0.35), 671px 1899px rgba(var(--fns-rain-rgb), 0.35), 1135px 531px rgba(var(--fns-rain-rgb), 0.36), 1135px 1831px rgba(var(--fns-rain-rgb), 0.36), 336px 124px rgba(var(--fns-rain-rgb), 0.43), 336px 1424px rgba(var(--fns-rain-rgb), 0.43), 1249px 938px rgba(var(--fns-rain-rgb), 0.38), 1249px 2238px rgba(var(--fns-rain-rgb), 0.38), 1916px 861px rgba(var(--fns-rain-rgb), 0.41), 1916px 2161px rgba(var(--fns-rain-rgb), 0.41), 1854px 267px rgba(var(--fns-rain-rgb), 0.36), 1854px 1567px rgba(var(--fns-rain-rgb), 0.36), 1944px 1045px rgba(var(--fns-rain-rgb), 0.25), 1944px 2345px rgba(var(--fns-rain-rgb), 0.25), 1602px 375px rgba(var(--fns-rain-rgb), 0.37), 1602px 1675px rgba(var(--fns-rain-rgb), 0.37), 413px 352px rgba(var(--fns-rain-rgb), 0.28), 413px 1652px rgba(var(--fns-rain-rgb), 0.28), 292px 1139px rgba(var(--fns-rain-rgb), 0.26), 292px 2439px rgba(var(--fns-rain-rgb), 0.26), 1923px 1086px rgba(var(--fns-rain-rgb), 0.36), 1923px 2386px rgba(var(--fns-rain-rgb), 0.36), 234px 1147px rgba(var(--fns-rain-rgb), 0.26), 234px 2447px rgba(var(--fns-rain-rgb), 0.26), 583px 567px rgba(var(--fns-rain-rgb), 0.26), 583px 1867px rgba(var(--fns-rain-rgb), 0.26), 200px 1039px rgba(var(--fns-rain-rgb), 0.34), 200px 2339px rgba(var(--fns-rain-rgb), 0.34), -86px 129px rgba(var(--fns-rain-rgb), 0.34), -86px 1429px rgba(var(--fns-rain-rgb), 0.34), 1870px 1241px rgba(var(--fns-rain-rgb), 0.35), 1870px 2541px rgba(var(--fns-rain-rgb), 0.35), 935px 926px rgba(var(--fns-rain-rgb), 0.35), 935px 2226px rgba(var(--fns-rain-rgb), 0.35), 1758px 1039px rgba(var(--fns-rain-rgb), 0.44), 1758px 2339px rgba(var(--fns-rain-rgb), 0.44);
+        opacity: {{ ((0.9 if heavy else 0.7) * (0.45 if faint else 1)) | round(2) }};
+        transform-origin: 50% 0;
+        animation: fns-rain-a {{ '.75s' if heavy else '1.05s' }} linear infinite;
+      }
+      {% if layer != 'storm' %}
+      #view::after {
+        width: 1px; height: 14px; border-radius: 1px; background: transparent;
+        box-shadow: 1943px 531px rgba(var(--fns-rain-rgb), 0.27), 1943px 1831px rgba(var(--fns-rain-rgb), 0.27), 629px 916px rgba(var(--fns-rain-rgb), 0.17), 629px 2216px rgba(var(--fns-rain-rgb), 0.17), 298px 803px rgba(var(--fns-rain-rgb), 0.21), 298px 2103px rgba(var(--fns-rain-rgb), 0.21), 97px 492px rgba(var(--fns-rain-rgb), 0.21), 97px 1792px rgba(var(--fns-rain-rgb), 0.21), 671px 620px rgba(var(--fns-rain-rgb), 0.25), 671px 1920px rgba(var(--fns-rain-rgb), 0.25), 432px 749px rgba(var(--fns-rain-rgb), 0.17), 432px 2049px rgba(var(--fns-rain-rgb), 0.17), 362px 957px rgba(var(--fns-rain-rgb), 0.18), 362px 2257px rgba(var(--fns-rain-rgb), 0.18), 185px 815px rgba(var(--fns-rain-rgb), 0.27), 185px 2115px rgba(var(--fns-rain-rgb), 0.27), 466px 458px rgba(var(--fns-rain-rgb), 0.17), 466px 1758px rgba(var(--fns-rain-rgb), 0.17), 1567px 1055px rgba(var(--fns-rain-rgb), 0.2), 1567px 2355px rgba(var(--fns-rain-rgb), 0.2), 1525px 400px rgba(var(--fns-rain-rgb), 0.2), 1525px 1700px rgba(var(--fns-rain-rgb), 0.2), 177px 749px rgba(var(--fns-rain-rgb), 0.16), 177px 2049px rgba(var(--fns-rain-rgb), 0.16), 2069px 939px rgba(var(--fns-rain-rgb), 0.21), 2069px 2239px rgba(var(--fns-rain-rgb), 0.21), -126px 787px rgba(var(--fns-rain-rgb), 0.2), -126px 2087px rgba(var(--fns-rain-rgb), 0.2), 1010px 1049px rgba(var(--fns-rain-rgb), 0.28), 1010px 2349px rgba(var(--fns-rain-rgb), 0.28), 262px 468px rgba(var(--fns-rain-rgb), 0.28), 262px 1768px rgba(var(--fns-rain-rgb), 0.28), 229px 172px rgba(var(--fns-rain-rgb), 0.19), 229px 1472px rgba(var(--fns-rain-rgb), 0.19), -38px 371px rgba(var(--fns-rain-rgb), 0.19), -38px 1671px rgba(var(--fns-rain-rgb), 0.19), 330px 864px rgba(var(--fns-rain-rgb), 0.26), 330px 2164px rgba(var(--fns-rain-rgb), 0.26), 859px 831px rgba(var(--fns-rain-rgb), 0.17), 859px 2131px rgba(var(--fns-rain-rgb), 0.17), 1908px 1168px rgba(var(--fns-rain-rgb), 0.22), 1908px 2468px rgba(var(--fns-rain-rgb), 0.22), 1139px 183px rgba(var(--fns-rain-rgb), 0.19), 1139px 1483px rgba(var(--fns-rain-rgb), 0.19), 550px 871px rgba(var(--fns-rain-rgb), 0.27), 550px 2171px rgba(var(--fns-rain-rgb), 0.27), 901px 34px rgba(var(--fns-rain-rgb), 0.23), 901px 1334px rgba(var(--fns-rain-rgb), 0.23), 867px 171px rgba(var(--fns-rain-rgb), 0.23), 867px 1471px rgba(var(--fns-rain-rgb), 0.23), 710px 136px rgba(var(--fns-rain-rgb), 0.19), 710px 1436px rgba(var(--fns-rain-rgb), 0.19), 298px 929px rgba(var(--fns-rain-rgb), 0.16), 298px 2229px rgba(var(--fns-rain-rgb), 0.16), 2065px 855px rgba(var(--fns-rain-rgb), 0.27), 2065px 2155px rgba(var(--fns-rain-rgb), 0.27), 897px 1273px rgba(var(--fns-rain-rgb), 0.17), 897px 2573px rgba(var(--fns-rain-rgb), 0.17), 1958px 488px rgba(var(--fns-rain-rgb), 0.27), 1958px 1788px rgba(var(--fns-rain-rgb), 0.27), 461px 536px rgba(var(--fns-rain-rgb), 0.16), 461px 1836px rgba(var(--fns-rain-rgb), 0.16), 626px 638px rgba(var(--fns-rain-rgb), 0.23), 626px 1938px rgba(var(--fns-rain-rgb), 0.23), 1975px 421px rgba(var(--fns-rain-rgb), 0.19), 1975px 1721px rgba(var(--fns-rain-rgb), 0.19), 1848px 364px rgba(var(--fns-rain-rgb), 0.19), 1848px 1664px rgba(var(--fns-rain-rgb), 0.19), -126px 512px rgba(var(--fns-rain-rgb), 0.16), -126px 1812px rgba(var(--fns-rain-rgb), 0.16), -125px 1035px rgba(var(--fns-rain-rgb), 0.22), -125px 2335px rgba(var(--fns-rain-rgb), 0.22), 576px 1053px rgba(var(--fns-rain-rgb), 0.21), 576px 2353px rgba(var(--fns-rain-rgb), 0.21), 1631px 217px rgba(var(--fns-rain-rgb), 0.24), 1631px 1517px rgba(var(--fns-rain-rgb), 0.24), 1570px 1013px rgba(var(--fns-rain-rgb), 0.22), 1570px 2313px rgba(var(--fns-rain-rgb), 0.22), 1410px 1037px rgba(var(--fns-rain-rgb), 0.19), 1410px 2337px rgba(var(--fns-rain-rgb), 0.19), 681px 470px rgba(var(--fns-rain-rgb), 0.2), 681px 1770px rgba(var(--fns-rain-rgb), 0.2), 372px 828px rgba(var(--fns-rain-rgb), 0.28), 372px 2128px rgba(var(--fns-rain-rgb), 0.28), 22px 265px rgba(var(--fns-rain-rgb), 0.16), 22px 1565px rgba(var(--fns-rain-rgb), 0.16), 846px 882px rgba(var(--fns-rain-rgb), 0.17), 846px 2182px rgba(var(--fns-rain-rgb), 0.17), 146px 780px rgba(var(--fns-rain-rgb), 0.26), 146px 2080px rgba(var(--fns-rain-rgb), 0.26), 954px 1226px rgba(var(--fns-rain-rgb), 0.18), 954px 2526px rgba(var(--fns-rain-rgb), 0.18), 1000px 92px rgba(var(--fns-rain-rgb), 0.21), 1000px 1392px rgba(var(--fns-rain-rgb), 0.21), 445px 550px rgba(var(--fns-rain-rgb), 0.21), 445px 1850px rgba(var(--fns-rain-rgb), 0.21), 878px 745px rgba(var(--fns-rain-rgb), 0.28), 878px 2045px rgba(var(--fns-rain-rgb), 0.28), 2040px 662px rgba(var(--fns-rain-rgb), 0.18), 2040px 1962px rgba(var(--fns-rain-rgb), 0.18), 1067px 446px rgba(var(--fns-rain-rgb), 0.2), 1067px 1746px rgba(var(--fns-rain-rgb), 0.2), -196px 686px rgba(var(--fns-rain-rgb), 0.2), -196px 1986px rgba(var(--fns-rain-rgb), 0.2), 1744px 571px rgba(var(--fns-rain-rgb), 0.22), 1744px 1871px rgba(var(--fns-rain-rgb), 0.22), 623px 508px rgba(var(--fns-rain-rgb), 0.22), 623px 1808px rgba(var(--fns-rain-rgb), 0.22), -180px 186px rgba(var(--fns-rain-rgb), 0.19), -180px 1486px rgba(var(--fns-rain-rgb), 0.19), 167px 294px rgba(var(--fns-rain-rgb), 0.2), 167px 1594px rgba(var(--fns-rain-rgb), 0.2), -30px 806px rgba(var(--fns-rain-rgb), 0.16), -30px 2106px rgba(var(--fns-rain-rgb), 0.16), 1046px 1289px rgba(var(--fns-rain-rgb), 0.18), 1046px 2589px rgba(var(--fns-rain-rgb), 0.18), 2198px 1083px rgba(var(--fns-rain-rgb), 0.26), 2198px 2383px rgba(var(--fns-rain-rgb), 0.26), 435px 1221px rgba(var(--fns-rain-rgb), 0.2), 435px 2521px rgba(var(--fns-rain-rgb), 0.2), 1135px 1012px rgba(var(--fns-rain-rgb), 0.17), 1135px 2312px rgba(var(--fns-rain-rgb), 0.17), 392px 89px rgba(var(--fns-rain-rgb), 0.26), 392px 1389px rgba(var(--fns-rain-rgb), 0.26), 1901px 1284px rgba(var(--fns-rain-rgb), 0.21), 1901px 2584px rgba(var(--fns-rain-rgb), 0.21), 1870px 285px rgba(var(--fns-rain-rgb), 0.27), 1870px 1585px rgba(var(--fns-rain-rgb), 0.27), 1865px 1164px rgba(var(--fns-rain-rgb), 0.26), 1865px 2464px rgba(var(--fns-rain-rgb), 0.26), -135px 1196px rgba(var(--fns-rain-rgb), 0.25), -135px 2496px rgba(var(--fns-rain-rgb), 0.25), 741px 174px rgba(var(--fns-rain-rgb), 0.16), 741px 1474px rgba(var(--fns-rain-rgb), 0.16), 345px 738px rgba(var(--fns-rain-rgb), 0.27), 345px 2038px rgba(var(--fns-rain-rgb), 0.27), 1342px 924px rgba(var(--fns-rain-rgb), 0.22), 1342px 2224px rgba(var(--fns-rain-rgb), 0.22), -123px 1282px rgba(var(--fns-rain-rgb), 0.22), -123px 2582px rgba(var(--fns-rain-rgb), 0.22), 801px 1002px rgba(var(--fns-rain-rgb), 0.19), 801px 2302px rgba(var(--fns-rain-rgb), 0.19), 1671px 143px rgba(var(--fns-rain-rgb), 0.25), 1671px 1443px rgba(var(--fns-rain-rgb), 0.25), 1860px 1096px rgba(var(--fns-rain-rgb), 0.17), 1860px 2396px rgba(var(--fns-rain-rgb), 0.17), 1954px 135px rgba(var(--fns-rain-rgb), 0.25), 1954px 1435px rgba(var(--fns-rain-rgb), 0.25), 1740px 516px rgba(var(--fns-rain-rgb), 0.26), 1740px 1816px rgba(var(--fns-rain-rgb), 0.26), 887px 480px rgba(var(--fns-rain-rgb), 0.25), 887px 1780px rgba(var(--fns-rain-rgb), 0.25), 640px 472px rgba(var(--fns-rain-rgb), 0.25), 640px 1772px rgba(var(--fns-rain-rgb), 0.25), 1685px 1011px rgba(var(--fns-rain-rgb), 0.26), 1685px 2311px rgba(var(--fns-rain-rgb), 0.26), 114px 981px rgba(var(--fns-rain-rgb), 0.27), 114px 2281px rgba(var(--fns-rain-rgb), 0.27), 976px 95px rgba(var(--fns-rain-rgb), 0.23), 976px 1395px rgba(var(--fns-rain-rgb), 0.23), 612px 158px rgba(var(--fns-rain-rgb), 0.23), 612px 1458px rgba(var(--fns-rain-rgb), 0.23), 1158px 520px rgba(var(--fns-rain-rgb), 0.24), 1158px 1820px rgba(var(--fns-rain-rgb), 0.24), 1046px 1272px rgba(var(--fns-rain-rgb), 0.23), 1046px 2572px rgba(var(--fns-rain-rgb), 0.23), -149px 987px rgba(var(--fns-rain-rgb), 0.16), -149px 2287px rgba(var(--fns-rain-rgb), 0.16), 900px 203px rgba(var(--fns-rain-rgb), 0.24), 900px 1503px rgba(var(--fns-rain-rgb), 0.24), 1805px 595px rgba(var(--fns-rain-rgb), 0.24), 1805px 1895px rgba(var(--fns-rain-rgb), 0.24), 969px 951px rgba(var(--fns-rain-rgb), 0.21), 969px 2251px rgba(var(--fns-rain-rgb), 0.21), 285px 1124px rgba(var(--fns-rain-rgb), 0.18), 285px 2424px rgba(var(--fns-rain-rgb), 0.18), 151px 968px rgba(var(--fns-rain-rgb), 0.16), 151px 2268px rgba(var(--fns-rain-rgb), 0.16), 1679px 156px rgba(var(--fns-rain-rgb), 0.26), 1679px 1456px rgba(var(--fns-rain-rgb), 0.26), 1640px 550px rgba(var(--fns-rain-rgb), 0.2), 1640px 1850px rgba(var(--fns-rain-rgb), 0.2), 663px 152px rgba(var(--fns-rain-rgb), 0.23), 663px 1452px rgba(var(--fns-rain-rgb), 0.23), 380px 1073px rgba(var(--fns-rain-rgb), 0.19), 380px 2373px rgba(var(--fns-rain-rgb), 0.19), 1272px 271px rgba(var(--fns-rain-rgb), 0.23), 1272px 1571px rgba(var(--fns-rain-rgb), 0.23), 1883px 572px rgba(var(--fns-rain-rgb), 0.27), 1883px 1872px rgba(var(--fns-rain-rgb), 0.27), 1295px 473px rgba(var(--fns-rain-rgb), 0.22), 1295px 1773px rgba(var(--fns-rain-rgb), 0.22), 1791px 807px rgba(var(--fns-rain-rgb), 0.16), 1791px 2107px rgba(var(--fns-rain-rgb), 0.16), -186px 1006px rgba(var(--fns-rain-rgb), 0.24), -186px 2306px rgba(var(--fns-rain-rgb), 0.24), 1460px 618px rgba(var(--fns-rain-rgb), 0.25), 1460px 1918px rgba(var(--fns-rain-rgb), 0.25), 1504px 704px rgba(var(--fns-rain-rgb), 0.2), 1504px 2004px rgba(var(--fns-rain-rgb), 0.2), 295px 678px rgba(var(--fns-rain-rgb), 0.15), 295px 1978px rgba(var(--fns-rain-rgb), 0.15), 1185px 815px rgba(var(--fns-rain-rgb), 0.17), 1185px 2115px rgba(var(--fns-rain-rgb), 0.17), 601px 24px rgba(var(--fns-rain-rgb), 0.27), 601px 1324px rgba(var(--fns-rain-rgb), 0.27), 987px 518px rgba(var(--fns-rain-rgb), 0.2), 987px 1818px rgba(var(--fns-rain-rgb), 0.2), 1409px 799px rgba(var(--fns-rain-rgb), 0.28), 1409px 2099px rgba(var(--fns-rain-rgb), 0.28), 112px 738px rgba(var(--fns-rain-rgb), 0.27), 112px 2038px rgba(var(--fns-rain-rgb), 0.27), 927px 98px rgba(var(--fns-rain-rgb), 0.19), 927px 1398px rgba(var(--fns-rain-rgb), 0.19), 11px 584px rgba(var(--fns-rain-rgb), 0.23), 11px 1884px rgba(var(--fns-rain-rgb), 0.23), 409px 510px rgba(var(--fns-rain-rgb), 0.28), 409px 1810px rgba(var(--fns-rain-rgb), 0.28), 1586px 1046px rgba(var(--fns-rain-rgb), 0.19), 1586px 2346px rgba(var(--fns-rain-rgb), 0.19), 1329px 876px rgba(var(--fns-rain-rgb), 0.27), 1329px 2176px rgba(var(--fns-rain-rgb), 0.27), 1438px 1134px rgba(var(--fns-rain-rgb), 0.22), 1438px 2434px rgba(var(--fns-rain-rgb), 0.22), 130px 101px rgba(var(--fns-rain-rgb), 0.27), 130px 1401px rgba(var(--fns-rain-rgb), 0.27), 1482px 923px rgba(var(--fns-rain-rgb), 0.23), 1482px 2223px rgba(var(--fns-rain-rgb), 0.23), 367px 586px rgba(var(--fns-rain-rgb), 0.22), 367px 1886px rgba(var(--fns-rain-rgb), 0.22), 2053px 260px rgba(var(--fns-rain-rgb), 0.18), 2053px 1560px rgba(var(--fns-rain-rgb), 0.18), 1499px 703px rgba(var(--fns-rain-rgb), 0.19), 1499px 2003px rgba(var(--fns-rain-rgb), 0.19), 847px 532px rgba(var(--fns-rain-rgb), 0.21), 847px 1832px rgba(var(--fns-rain-rgb), 0.21), 777px 616px rgba(var(--fns-rain-rgb), 0.21), 777px 1916px rgba(var(--fns-rain-rgb), 0.21), 1415px 245px rgba(var(--fns-rain-rgb), 0.18), 1415px 1545px rgba(var(--fns-rain-rgb), 0.18), 462px 153px rgba(var(--fns-rain-rgb), 0.18), 462px 1453px rgba(var(--fns-rain-rgb), 0.18), 1836px 1127px rgba(var(--fns-rain-rgb), 0.18), 1836px 2427px rgba(var(--fns-rain-rgb), 0.18), 1163px 921px rgba(var(--fns-rain-rgb), 0.21), 1163px 2221px rgba(var(--fns-rain-rgb), 0.21), 2043px 394px rgba(var(--fns-rain-rgb), 0.18), 2043px 1694px rgba(var(--fns-rain-rgb), 0.18), 515px 700px rgba(var(--fns-rain-rgb), 0.22), 515px 2000px rgba(var(--fns-rain-rgb), 0.22), 1107px 489px rgba(var(--fns-rain-rgb), 0.2), 1107px 1789px rgba(var(--fns-rain-rgb), 0.2), 2133px 413px rgba(var(--fns-rain-rgb), 0.27), 2133px 1713px rgba(var(--fns-rain-rgb), 0.27), 1490px 784px rgba(var(--fns-rain-rgb), 0.21), 1490px 2084px rgba(var(--fns-rain-rgb), 0.21), 1946px 430px rgba(var(--fns-rain-rgb), 0.2), 1946px 1730px rgba(var(--fns-rain-rgb), 0.2), 1185px 127px rgba(var(--fns-rain-rgb), 0.22), 1185px 1427px rgba(var(--fns-rain-rgb), 0.22), 2152px 737px rgba(var(--fns-rain-rgb), 0.17), 2152px 2037px rgba(var(--fns-rain-rgb), 0.17), 1861px 1083px rgba(var(--fns-rain-rgb), 0.23), 1861px 2383px rgba(var(--fns-rain-rgb), 0.23), 684px 189px rgba(var(--fns-rain-rgb), 0.19), 684px 1489px rgba(var(--fns-rain-rgb), 0.19), 817px 787px rgba(var(--fns-rain-rgb), 0.2), 817px 2087px rgba(var(--fns-rain-rgb), 0.2), 1626px 884px rgba(var(--fns-rain-rgb), 0.27), 1626px 2184px rgba(var(--fns-rain-rgb), 0.27), -111px 260px rgba(var(--fns-rain-rgb), 0.16), -111px 1560px rgba(var(--fns-rain-rgb), 0.16), 1738px 1202px rgba(var(--fns-rain-rgb), 0.22), 1738px 2502px rgba(var(--fns-rain-rgb), 0.22), 99px 801px rgba(var(--fns-rain-rgb), 0.27), 99px 2101px rgba(var(--fns-rain-rgb), 0.27), 1962px 958px rgba(var(--fns-rain-rgb), 0.28), 1962px 2258px rgba(var(--fns-rain-rgb), 0.28), 817px 223px rgba(var(--fns-rain-rgb), 0.18), 817px 1523px rgba(var(--fns-rain-rgb), 0.18), 422px 1069px rgba(var(--fns-rain-rgb), 0.28), 422px 2369px rgba(var(--fns-rain-rgb), 0.28), 246px 936px rgba(var(--fns-rain-rgb), 0.16), 246px 2236px rgba(var(--fns-rain-rgb), 0.16), -39px 2px rgba(var(--fns-rain-rgb), 0.25), -39px 1302px rgba(var(--fns-rain-rgb), 0.25), 752px 1166px rgba(var(--fns-rain-rgb), 0.27), 752px 2466px rgba(var(--fns-rain-rgb), 0.27), 1044px 262px rgba(var(--fns-rain-rgb), 0.23), 1044px 1562px rgba(var(--fns-rain-rgb), 0.23), 1963px 895px rgba(var(--fns-rain-rgb), 0.24), 1963px 2195px rgba(var(--fns-rain-rgb), 0.24), 259px 203px rgba(var(--fns-rain-rgb), 0.16), 259px 1503px rgba(var(--fns-rain-rgb), 0.16), 1948px 1193px rgba(var(--fns-rain-rgb), 0.18), 1948px 2493px rgba(var(--fns-rain-rgb), 0.18), 868px 457px rgba(var(--fns-rain-rgb), 0.25), 868px 1757px rgba(var(--fns-rain-rgb), 0.25), -196px 21px rgba(var(--fns-rain-rgb), 0.22), -196px 1321px rgba(var(--fns-rain-rgb), 0.22), 1686px 570px rgba(var(--fns-rain-rgb), 0.27), 1686px 1870px rgba(var(--fns-rain-rgb), 0.27), 792px 973px rgba(var(--fns-rain-rgb), 0.22), 792px 2273px rgba(var(--fns-rain-rgb), 0.22), 2040px 505px rgba(var(--fns-rain-rgb), 0.16), 2040px 1805px rgba(var(--fns-rain-rgb), 0.16), 1486px 629px rgba(var(--fns-rain-rgb), 0.16), 1486px 1929px rgba(var(--fns-rain-rgb), 0.16), 595px 1020px rgba(var(--fns-rain-rgb), 0.27), 595px 2320px rgba(var(--fns-rain-rgb), 0.27), 1520px 166px rgba(var(--fns-rain-rgb), 0.19), 1520px 1466px rgba(var(--fns-rain-rgb), 0.19), 1538px 758px rgba(var(--fns-rain-rgb), 0.18), 1538px 2058px rgba(var(--fns-rain-rgb), 0.18), -61px 692px rgba(var(--fns-rain-rgb), 0.24), -61px 1992px rgba(var(--fns-rain-rgb), 0.24), 1284px 811px rgba(var(--fns-rain-rgb), 0.18), 1284px 2111px rgba(var(--fns-rain-rgb), 0.18), 996px 1033px rgba(var(--fns-rain-rgb), 0.16), 996px 2333px rgba(var(--fns-rain-rgb), 0.16), 1830px 410px rgba(var(--fns-rain-rgb), 0.19), 1830px 1710px rgba(var(--fns-rain-rgb), 0.19), 594px 472px rgba(var(--fns-rain-rgb), 0.21), 594px 1772px rgba(var(--fns-rain-rgb), 0.21), 885px 604px rgba(var(--fns-rain-rgb), 0.17), 885px 1904px rgba(var(--fns-rain-rgb), 0.17), 1830px 1249px rgba(var(--fns-rain-rgb), 0.18), 1830px 2549px rgba(var(--fns-rain-rgb), 0.18), 714px 993px rgba(var(--fns-rain-rgb), 0.21), 714px 2293px rgba(var(--fns-rain-rgb), 0.21), 31px 1218px rgba(var(--fns-rain-rgb), 0.17), 31px 2518px rgba(var(--fns-rain-rgb), 0.17), 1411px 111px rgba(var(--fns-rain-rgb), 0.18), 1411px 1411px rgba(var(--fns-rain-rgb), 0.18), 381px 850px rgba(var(--fns-rain-rgb), 0.16), 381px 2150px rgba(var(--fns-rain-rgb), 0.16), 46px 377px rgba(var(--fns-rain-rgb), 0.2), 46px 1677px rgba(var(--fns-rain-rgb), 0.2), 1086px 231px rgba(var(--fns-rain-rgb), 0.28), 1086px 1531px rgba(var(--fns-rain-rgb), 0.28), 478px 674px rgba(var(--fns-rain-rgb), 0.18), 478px 1974px rgba(var(--fns-rain-rgb), 0.18), 1949px 957px rgba(var(--fns-rain-rgb), 0.16), 1949px 2257px rgba(var(--fns-rain-rgb), 0.16), 1350px 765px rgba(var(--fns-rain-rgb), 0.28), 1350px 2065px rgba(var(--fns-rain-rgb), 0.28), 1612px 346px rgba(var(--fns-rain-rgb), 0.17), 1612px 1646px rgba(var(--fns-rain-rgb), 0.17), 120px 573px rgba(var(--fns-rain-rgb), 0.16), 120px 1873px rgba(var(--fns-rain-rgb), 0.16), 1521px 253px rgba(var(--fns-rain-rgb), 0.22), 1521px 1553px rgba(var(--fns-rain-rgb), 0.22), 649px 778px rgba(var(--fns-rain-rgb), 0.2), 649px 2078px rgba(var(--fns-rain-rgb), 0.2), 1064px 885px rgba(var(--fns-rain-rgb), 0.17), 1064px 2185px rgba(var(--fns-rain-rgb), 0.17), 1739px 400px rgba(var(--fns-rain-rgb), 0.2), 1739px 1700px rgba(var(--fns-rain-rgb), 0.2), 1628px 395px rgba(var(--fns-rain-rgb), 0.19), 1628px 1695px rgba(var(--fns-rain-rgb), 0.19), 1743px 62px rgba(var(--fns-rain-rgb), 0.23), 1743px 1362px rgba(var(--fns-rain-rgb), 0.23), 815px 1280px rgba(var(--fns-rain-rgb), 0.25), 815px 2580px rgba(var(--fns-rain-rgb), 0.25), -34px 769px rgba(var(--fns-rain-rgb), 0.16), -34px 2069px rgba(var(--fns-rain-rgb), 0.16), 56px 126px rgba(var(--fns-rain-rgb), 0.19), 56px 1426px rgba(var(--fns-rain-rgb), 0.19), 57px 1240px rgba(var(--fns-rain-rgb), 0.2), 57px 2540px rgba(var(--fns-rain-rgb), 0.2), 915px 686px rgba(var(--fns-rain-rgb), 0.27), 915px 1986px rgba(var(--fns-rain-rgb), 0.27), -22px 536px rgba(var(--fns-rain-rgb), 0.25), -22px 1836px rgba(var(--fns-rain-rgb), 0.25), 1096px 564px rgba(var(--fns-rain-rgb), 0.19), 1096px 1864px rgba(var(--fns-rain-rgb), 0.19), 67px 49px rgba(var(--fns-rain-rgb), 0.26), 67px 1349px rgba(var(--fns-rain-rgb), 0.26), 239px 973px rgba(var(--fns-rain-rgb), 0.24), 239px 2273px rgba(var(--fns-rain-rgb), 0.24), 1707px 791px rgba(var(--fns-rain-rgb), 0.25), 1707px 2091px rgba(var(--fns-rain-rgb), 0.25), 1561px 1010px rgba(var(--fns-rain-rgb), 0.17), 1561px 2310px rgba(var(--fns-rain-rgb), 0.17), 1833px 374px rgba(var(--fns-rain-rgb), 0.16), 1833px 1674px rgba(var(--fns-rain-rgb), 0.16), 1042px 309px rgba(var(--fns-rain-rgb), 0.23), 1042px 1609px rgba(var(--fns-rain-rgb), 0.23), 1142px 654px rgba(var(--fns-rain-rgb), 0.21), 1142px 1954px rgba(var(--fns-rain-rgb), 0.21), 123px 1048px rgba(var(--fns-rain-rgb), 0.18), 123px 2348px rgba(var(--fns-rain-rgb), 0.18), 455px 506px rgba(var(--fns-rain-rgb), 0.21), 455px 1806px rgba(var(--fns-rain-rgb), 0.21), -62px 986px rgba(var(--fns-rain-rgb), 0.22), -62px 2286px rgba(var(--fns-rain-rgb), 0.22), 1134px 329px rgba(var(--fns-rain-rgb), 0.28), 1134px 1629px rgba(var(--fns-rain-rgb), 0.28), 230px 147px rgba(var(--fns-rain-rgb), 0.19), 230px 1447px rgba(var(--fns-rain-rgb), 0.19);
+        opacity: {{ (0.6 * (0.45 if faint else 1)) | round(2) }};
+        animation: fns-rain-b {{ '1.2s' if heavy else '1.7s' }} linear infinite;
+      }
+      {% endif %}
+      @keyframes fns-rain-a { from { transform: rotate({{ tilt | round(1) }}deg) translate3d(0, 0, 0); } to { transform: rotate({{ tilt | round(1) }}deg) translate3d(0, 1300px, 0); } }
+      @keyframes fns-rain-b { from { transform: rotate({{ (tilt * 0.7) | round(1) }}deg) translate3d(0, 0, 0); } to { transform: rotate({{ (tilt * 0.7) | round(1) }}deg) translate3d(0, 1300px, 0); } }
+      {% endif %}
+      {% if layer == 'storm' %}
+      #view::after {
+        left: 0; top: 0; width: 100vw; height: 100vh; box-shadow: none;
+        background: rgb(var(--fns-flash-rgb)); opacity: 0; z-index: 2; mix-blend-mode: screen;
+        animation: fns-flash 31s linear infinite;
+      }
+      @keyframes fns-flash { 0%, 62%, 63.6%, 64.9%, 89%, 89.8%, 100% { opacity: 0; } 62.3% { opacity: .55; } 62.9% { opacity: .1; } 64.3% { opacity: .4; } 89.3% { opacity: .35; } }
+      {% endif %}
+      {% if layer == 'snow' %}
+      #view::before {
+        width: 5px; height: 5px; border-radius: 50%; background: transparent;
+        box-shadow: 144px 426px rgba(var(--fns-snow-rgb), 0.5), 144px 1726px rgba(var(--fns-snow-rgb), 0.5), 1841px 915px rgba(var(--fns-snow-rgb), 0.53), 1841px 2215px rgba(var(--fns-snow-rgb), 0.53), 344px 853px rgba(var(--fns-snow-rgb), 0.64), 344px 2153px rgba(var(--fns-snow-rgb), 0.64), 762px 1102px rgba(var(--fns-snow-rgb), 0.79), 762px 2402px rgba(var(--fns-snow-rgb), 0.79), 296px 601px rgba(var(--fns-snow-rgb), 0.58), 296px 1901px rgba(var(--fns-snow-rgb), 0.58), 2121px 548px rgba(var(--fns-snow-rgb), 0.61), 2121px 1848px rgba(var(--fns-snow-rgb), 0.61), 866px 407px rgba(var(--fns-snow-rgb), 0.64), 866px 1707px rgba(var(--fns-snow-rgb), 0.64), 560px 502px rgba(var(--fns-snow-rgb), 0.56), 560px 1802px rgba(var(--fns-snow-rgb), 0.56), 952px 1184px rgba(var(--fns-snow-rgb), 0.54), 952px 2484px rgba(var(--fns-snow-rgb), 0.54), 65px 811px rgba(var(--fns-snow-rgb), 0.56), 65px 2111px rgba(var(--fns-snow-rgb), 0.56), 807px 1039px rgba(var(--fns-snow-rgb), 0.67), 807px 2339px rgba(var(--fns-snow-rgb), 0.67), 211px 950px rgba(var(--fns-snow-rgb), 0.85), 211px 2250px rgba(var(--fns-snow-rgb), 0.85), 219px 9px rgba(var(--fns-snow-rgb), 0.65), 219px 1309px rgba(var(--fns-snow-rgb), 0.65), 746px 918px rgba(var(--fns-snow-rgb), 0.82), 746px 2218px rgba(var(--fns-snow-rgb), 0.82), -35px 601px rgba(var(--fns-snow-rgb), 0.56), -35px 1901px rgba(var(--fns-snow-rgb), 0.56), 6px 388px rgba(var(--fns-snow-rgb), 0.7), 6px 1688px rgba(var(--fns-snow-rgb), 0.7), 2188px 397px rgba(var(--fns-snow-rgb), 0.82), 2188px 1697px rgba(var(--fns-snow-rgb), 0.82), 1324px 1049px rgba(var(--fns-snow-rgb), 0.8), 1324px 2349px rgba(var(--fns-snow-rgb), 0.8), 1639px 1235px rgba(var(--fns-snow-rgb), 0.57), 1639px 2535px rgba(var(--fns-snow-rgb), 0.57), -175px 216px rgba(var(--fns-snow-rgb), 0.71), -175px 1516px rgba(var(--fns-snow-rgb), 0.71), 1232px 445px rgba(var(--fns-snow-rgb), 0.48), 1232px 1745px rgba(var(--fns-snow-rgb), 0.48), 1192px 289px rgba(var(--fns-snow-rgb), 0.48), 1192px 1589px rgba(var(--fns-snow-rgb), 0.48), 844px 78px rgba(var(--fns-snow-rgb), 0.7), 844px 1378px rgba(var(--fns-snow-rgb), 0.7), 633px 23px rgba(var(--fns-snow-rgb), 0.78), 633px 1323px rgba(var(--fns-snow-rgb), 0.78), 1475px 761px rgba(var(--fns-snow-rgb), 0.54), 1475px 2061px rgba(var(--fns-snow-rgb), 0.54), 1078px 159px rgba(var(--fns-snow-rgb), 0.55), 1078px 1459px rgba(var(--fns-snow-rgb), 0.55), 1830px 1122px rgba(var(--fns-snow-rgb), 0.65), 1830px 2422px rgba(var(--fns-snow-rgb), 0.65), 1471px 207px rgba(var(--fns-snow-rgb), 0.77), 1471px 1507px rgba(var(--fns-snow-rgb), 0.77), 2053px 316px rgba(var(--fns-snow-rgb), 0.71), 2053px 1616px rgba(var(--fns-snow-rgb), 0.71), 173px 335px rgba(var(--fns-snow-rgb), 0.62), 173px 1635px rgba(var(--fns-snow-rgb), 0.62), 910px 839px rgba(var(--fns-snow-rgb), 0.85), 910px 2139px rgba(var(--fns-snow-rgb), 0.85), 1059px 855px rgba(var(--fns-snow-rgb), 0.83), 1059px 2155px rgba(var(--fns-snow-rgb), 0.83), 1079px 1160px rgba(var(--fns-snow-rgb), 0.81), 1079px 2460px rgba(var(--fns-snow-rgb), 0.81), 1496px 852px rgba(var(--fns-snow-rgb), 0.47), 1496px 2152px rgba(var(--fns-snow-rgb), 0.47), 1290px 403px rgba(var(--fns-snow-rgb), 0.62), 1290px 1703px rgba(var(--fns-snow-rgb), 0.62), 1458px 417px rgba(var(--fns-snow-rgb), 0.83), 1458px 1717px rgba(var(--fns-snow-rgb), 0.83), 1578px 320px rgba(var(--fns-snow-rgb), 0.63), 1578px 1620px rgba(var(--fns-snow-rgb), 0.63), 170px 831px rgba(var(--fns-snow-rgb), 0.69), 170px 2131px rgba(var(--fns-snow-rgb), 0.69), 1293px 943px rgba(var(--fns-snow-rgb), 0.76), 1293px 2243px rgba(var(--fns-snow-rgb), 0.76), 332px 30px rgba(var(--fns-snow-rgb), 0.49), 332px 1330px rgba(var(--fns-snow-rgb), 0.49), 383px 812px rgba(var(--fns-snow-rgb), 0.5), 383px 2112px rgba(var(--fns-snow-rgb), 0.5), 1318px 1033px rgba(var(--fns-snow-rgb), 0.53), 1318px 2333px rgba(var(--fns-snow-rgb), 0.53), 1225px 580px rgba(var(--fns-snow-rgb), 0.53), 1225px 1880px rgba(var(--fns-snow-rgb), 0.53), 503px 137px rgba(var(--fns-snow-rgb), 0.51), 503px 1437px rgba(var(--fns-snow-rgb), 0.51), 1809px 404px rgba(var(--fns-snow-rgb), 0.58), 1809px 1704px rgba(var(--fns-snow-rgb), 0.58), -22px 988px rgba(var(--fns-snow-rgb), 0.59), -22px 2288px rgba(var(--fns-snow-rgb), 0.59), 1388px 176px rgba(var(--fns-snow-rgb), 0.81), 1388px 1476px rgba(var(--fns-snow-rgb), 0.81), 456px 454px rgba(var(--fns-snow-rgb), 0.71), 456px 1754px rgba(var(--fns-snow-rgb), 0.71), 603px 968px rgba(var(--fns-snow-rgb), 0.54), 603px 2268px rgba(var(--fns-snow-rgb), 0.54), 693px 85px rgba(var(--fns-snow-rgb), 0.62), 693px 1385px rgba(var(--fns-snow-rgb), 0.62), 1921px 320px rgba(var(--fns-snow-rgb), 0.61), 1921px 1620px rgba(var(--fns-snow-rgb), 0.61), 304px 306px rgba(var(--fns-snow-rgb), 0.56), 304px 1606px rgba(var(--fns-snow-rgb), 0.56), 588px 84px rgba(var(--fns-snow-rgb), 0.81), 588px 1384px rgba(var(--fns-snow-rgb), 0.81), -44px 663px rgba(var(--fns-snow-rgb), 0.51), -44px 1963px rgba(var(--fns-snow-rgb), 0.51), 1666px 1126px rgba(var(--fns-snow-rgb), 0.79), 1666px 2426px rgba(var(--fns-snow-rgb), 0.79), 1054px 860px rgba(var(--fns-snow-rgb), 0.59), 1054px 2160px rgba(var(--fns-snow-rgb), 0.59), 820px 871px rgba(var(--fns-snow-rgb), 0.62), 820px 2171px rgba(var(--fns-snow-rgb), 0.62), 1305px 915px rgba(var(--fns-snow-rgb), 0.66), 1305px 2215px rgba(var(--fns-snow-rgb), 0.66), 532px 47px rgba(var(--fns-snow-rgb), 0.47), 532px 1347px rgba(var(--fns-snow-rgb), 0.47), 1804px 952px rgba(var(--fns-snow-rgb), 0.56), 1804px 2252px rgba(var(--fns-snow-rgb), 0.56), 1677px 367px rgba(var(--fns-snow-rgb), 0.78), 1677px 1667px rgba(var(--fns-snow-rgb), 0.78), 1439px 219px rgba(var(--fns-snow-rgb), 0.49), 1439px 1519px rgba(var(--fns-snow-rgb), 0.49), 1268px 881px rgba(var(--fns-snow-rgb), 0.61), 1268px 2181px rgba(var(--fns-snow-rgb), 0.61), 1610px 1032px rgba(var(--fns-snow-rgb), 0.66), 1610px 2332px rgba(var(--fns-snow-rgb), 0.66), -34px 83px rgba(var(--fns-snow-rgb), 0.71), -34px 1383px rgba(var(--fns-snow-rgb), 0.71), 136px 642px rgba(var(--fns-snow-rgb), 0.76), 136px 1942px rgba(var(--fns-snow-rgb), 0.76), 1895px 163px rgba(var(--fns-snow-rgb), 0.49), 1895px 1463px rgba(var(--fns-snow-rgb), 0.49), 1864px 773px rgba(var(--fns-snow-rgb), 0.72), 1864px 2073px rgba(var(--fns-snow-rgb), 0.72), 357px 52px rgba(var(--fns-snow-rgb), 0.8), 357px 1352px rgba(var(--fns-snow-rgb), 0.8), 248px 396px rgba(var(--fns-snow-rgb), 0.52), 248px 1696px rgba(var(--fns-snow-rgb), 0.52), 1814px 589px rgba(var(--fns-snow-rgb), 0.83), 1814px 1889px rgba(var(--fns-snow-rgb), 0.83), 476px 452px rgba(var(--fns-snow-rgb), 0.49), 476px 1752px rgba(var(--fns-snow-rgb), 0.49), 1237px 1250px rgba(var(--fns-snow-rgb), 0.76), 1237px 2550px rgba(var(--fns-snow-rgb), 0.76), 450px 663px rgba(var(--fns-snow-rgb), 0.81), 450px 1963px rgba(var(--fns-snow-rgb), 0.81), 926px 934px rgba(var(--fns-snow-rgb), 0.52), 926px 2234px rgba(var(--fns-snow-rgb), 0.52), 1857px 983px rgba(var(--fns-snow-rgb), 0.55), 1857px 2283px rgba(var(--fns-snow-rgb), 0.55), 876px 1261px rgba(var(--fns-snow-rgb), 0.66), 876px 2561px rgba(var(--fns-snow-rgb), 0.66), 1106px 762px rgba(var(--fns-snow-rgb), 0.48), 1106px 2062px rgba(var(--fns-snow-rgb), 0.48), 545px 826px rgba(var(--fns-snow-rgb), 0.53), 545px 2126px rgba(var(--fns-snow-rgb), 0.53), 939px 671px rgba(var(--fns-snow-rgb), 0.81), 939px 1971px rgba(var(--fns-snow-rgb), 0.81), 491px 541px rgba(var(--fns-snow-rgb), 0.51), 491px 1841px rgba(var(--fns-snow-rgb), 0.51), 1973px 99px rgba(var(--fns-snow-rgb), 0.71), 1973px 1399px rgba(var(--fns-snow-rgb), 0.71), 1273px 927px rgba(var(--fns-snow-rgb), 0.68), 1273px 2227px rgba(var(--fns-snow-rgb), 0.68), 2175px 214px rgba(var(--fns-snow-rgb), 0.56), 2175px 1514px rgba(var(--fns-snow-rgb), 0.56), 1994px 1289px rgba(var(--fns-snow-rgb), 0.8), 1994px 2589px rgba(var(--fns-snow-rgb), 0.8), 1321px 542px rgba(var(--fns-snow-rgb), 0.61), 1321px 1842px rgba(var(--fns-snow-rgb), 0.61), 1311px 1182px rgba(var(--fns-snow-rgb), 0.52), 1311px 2482px rgba(var(--fns-snow-rgb), 0.52), 1155px 166px rgba(var(--fns-snow-rgb), 0.64), 1155px 1466px rgba(var(--fns-snow-rgb), 0.64), 523px 1260px rgba(var(--fns-snow-rgb), 0.75), 523px 2560px rgba(var(--fns-snow-rgb), 0.75), -3px 606px rgba(var(--fns-snow-rgb), 0.78), -3px 1906px rgba(var(--fns-snow-rgb), 0.78), 838px 635px rgba(var(--fns-snow-rgb), 0.71), 838px 1935px rgba(var(--fns-snow-rgb), 0.71), 2199px 640px rgba(var(--fns-snow-rgb), 0.75), 2199px 1940px rgba(var(--fns-snow-rgb), 0.75), -62px 453px rgba(var(--fns-snow-rgb), 0.52), -62px 1753px rgba(var(--fns-snow-rgb), 0.52), 1570px 855px rgba(var(--fns-snow-rgb), 0.66), 1570px 2155px rgba(var(--fns-snow-rgb), 0.66), -5px 270px rgba(var(--fns-snow-rgb), 0.65), -5px 1570px rgba(var(--fns-snow-rgb), 0.65), -14px 45px rgba(var(--fns-snow-rgb), 0.49), -14px 1345px rgba(var(--fns-snow-rgb), 0.49), 2122px 726px rgba(var(--fns-snow-rgb), 0.58), 2122px 2026px rgba(var(--fns-snow-rgb), 0.58), 1942px 731px rgba(var(--fns-snow-rgb), 0.67), 1942px 2031px rgba(var(--fns-snow-rgb), 0.67), 1492px 1195px rgba(var(--fns-snow-rgb), 0.58), 1492px 2495px rgba(var(--fns-snow-rgb), 0.58), 347px 418px rgba(var(--fns-snow-rgb), 0.61), 347px 1718px rgba(var(--fns-snow-rgb), 0.61), 1745px 324px rgba(var(--fns-snow-rgb), 0.52), 1745px 1624px rgba(var(--fns-snow-rgb), 0.52), 797px 305px rgba(var(--fns-snow-rgb), 0.64), 797px 1605px rgba(var(--fns-snow-rgb), 0.64), 60px 296px rgba(var(--fns-snow-rgb), 0.8), 60px 1596px rgba(var(--fns-snow-rgb), 0.8), 904px 823px rgba(var(--fns-snow-rgb), 0.78), 904px 2123px rgba(var(--fns-snow-rgb), 0.78), -153px 114px rgba(var(--fns-snow-rgb), 0.71), -153px 1414px rgba(var(--fns-snow-rgb), 0.71), 2103px 717px rgba(var(--fns-snow-rgb), 0.69), 2103px 2017px rgba(var(--fns-snow-rgb), 0.69), 2169px 908px rgba(var(--fns-snow-rgb), 0.7), 2169px 2208px rgba(var(--fns-snow-rgb), 0.7), 1920px 1009px rgba(var(--fns-snow-rgb), 0.56), 1920px 2309px rgba(var(--fns-snow-rgb), 0.56), -199px 90px rgba(var(--fns-snow-rgb), 0.49), -199px 1390px rgba(var(--fns-snow-rgb), 0.49), -97px 831px rgba(var(--fns-snow-rgb), 0.54), -97px 2131px rgba(var(--fns-snow-rgb), 0.54), 452px 119px rgba(var(--fns-snow-rgb), 0.82), 452px 1419px rgba(var(--fns-snow-rgb), 0.82), 229px 25px rgba(var(--fns-snow-rgb), 0.7), 229px 1325px rgba(var(--fns-snow-rgb), 0.7), 607px 291px rgba(var(--fns-snow-rgb), 0.63), 607px 1591px rgba(var(--fns-snow-rgb), 0.63), 1922px 1245px rgba(var(--fns-snow-rgb), 0.71), 1922px 2545px rgba(var(--fns-snow-rgb), 0.71), 1500px 1255px rgba(var(--fns-snow-rgb), 0.53), 1500px 2555px rgba(var(--fns-snow-rgb), 0.53), 1067px 130px rgba(var(--fns-snow-rgb), 0.58), 1067px 1430px rgba(var(--fns-snow-rgb), 0.58), -2px 978px rgba(var(--fns-snow-rgb), 0.74), -2px 2278px rgba(var(--fns-snow-rgb), 0.74), -174px 768px rgba(var(--fns-snow-rgb), 0.79), -174px 2068px rgba(var(--fns-snow-rgb), 0.79), 1705px 164px rgba(var(--fns-snow-rgb), 0.75), 1705px 1464px rgba(var(--fns-snow-rgb), 0.75), 1653px 359px rgba(var(--fns-snow-rgb), 0.55), 1653px 1659px rgba(var(--fns-snow-rgb), 0.55), 231px 535px rgba(var(--fns-snow-rgb), 0.56), 231px 1835px rgba(var(--fns-snow-rgb), 0.56), -42px 252px rgba(var(--fns-snow-rgb), 0.6), -42px 1552px rgba(var(--fns-snow-rgb), 0.6), 878px 107px rgba(var(--fns-snow-rgb), 0.57), 878px 1407px rgba(var(--fns-snow-rgb), 0.57), 2068px 893px rgba(var(--fns-snow-rgb), 0.73), 2068px 2193px rgba(var(--fns-snow-rgb), 0.73), 1943px 543px rgba(var(--fns-snow-rgb), 0.58), 1943px 1843px rgba(var(--fns-snow-rgb), 0.58), 688px 174px rgba(var(--fns-snow-rgb), 0.8), 688px 1474px rgba(var(--fns-snow-rgb), 0.8), -138px 347px rgba(var(--fns-snow-rgb), 0.57), -138px 1647px rgba(var(--fns-snow-rgb), 0.57), 767px 415px rgba(var(--fns-snow-rgb), 0.83), 767px 1715px rgba(var(--fns-snow-rgb), 0.83), 1138px 393px rgba(var(--fns-snow-rgb), 0.8), 1138px 1693px rgba(var(--fns-snow-rgb), 0.8), 1145px 1231px rgba(var(--fns-snow-rgb), 0.56), 1145px 2531px rgba(var(--fns-snow-rgb), 0.56), 1996px 961px rgba(var(--fns-snow-rgb), 0.65), 1996px 2261px rgba(var(--fns-snow-rgb), 0.65), 1973px 13px rgba(var(--fns-snow-rgb), 0.8), 1973px 1313px rgba(var(--fns-snow-rgb), 0.8), 1590px 478px rgba(var(--fns-snow-rgb), 0.69), 1590px 1778px rgba(var(--fns-snow-rgb), 0.69), 1060px 434px rgba(var(--fns-snow-rgb), 0.62), 1060px 1734px rgba(var(--fns-snow-rgb), 0.62), 2197px 159px rgba(var(--fns-snow-rgb), 0.68), 2197px 1459px rgba(var(--fns-snow-rgb), 0.68), 502px 296px rgba(var(--fns-snow-rgb), 0.48), 502px 1596px rgba(var(--fns-snow-rgb), 0.48), 258px 218px rgba(var(--fns-snow-rgb), 0.71), 258px 1518px rgba(var(--fns-snow-rgb), 0.71), 462px 706px rgba(var(--fns-snow-rgb), 0.84), 462px 2006px rgba(var(--fns-snow-rgb), 0.84), -83px 63px rgba(var(--fns-snow-rgb), 0.48), -83px 1363px rgba(var(--fns-snow-rgb), 0.48), -26px 138px rgba(var(--fns-snow-rgb), 0.75), -26px 1438px rgba(var(--fns-snow-rgb), 0.75), 69px 1209px rgba(var(--fns-snow-rgb), 0.76), 69px 2509px rgba(var(--fns-snow-rgb), 0.76), 616px 1093px rgba(var(--fns-snow-rgb), 0.81), 616px 2393px rgba(var(--fns-snow-rgb), 0.81), 70px 786px rgba(var(--fns-snow-rgb), 0.51), 70px 2086px rgba(var(--fns-snow-rgb), 0.51), 642px 416px rgba(var(--fns-snow-rgb), 0.51), 642px 1716px rgba(var(--fns-snow-rgb), 0.51), -59px 1298px rgba(var(--fns-snow-rgb), 0.5), -59px 2598px rgba(var(--fns-snow-rgb), 0.5), 977px 977px rgba(var(--fns-snow-rgb), 0.51), 977px 2277px rgba(var(--fns-snow-rgb), 0.51), 200px 419px rgba(var(--fns-snow-rgb), 0.58), 200px 1719px rgba(var(--fns-snow-rgb), 0.58), 1178px 867px rgba(var(--fns-snow-rgb), 0.57), 1178px 2167px rgba(var(--fns-snow-rgb), 0.57), 1237px 525px rgba(var(--fns-snow-rgb), 0.82), 1237px 1825px rgba(var(--fns-snow-rgb), 0.82), -2px 753px rgba(var(--fns-snow-rgb), 0.82), -2px 2053px rgba(var(--fns-snow-rgb), 0.82);
+        opacity: {{ (0.9 * (0.45 if faint else 1)) | round(2) }};
+        animation: fns-snow-a 17s linear infinite;
+      }
+      #view::after {
+        width: 3px; height: 3px; border-radius: 50%; background: transparent;
+        box-shadow: 1863px 975px rgba(var(--fns-snow-rgb), 0.51), 1863px 2275px rgba(var(--fns-snow-rgb), 0.51), -74px 845px rgba(var(--fns-snow-rgb), 0.31), -74px 2145px rgba(var(--fns-snow-rgb), 0.31), 1924px 201px rgba(var(--fns-snow-rgb), 0.39), 1924px 1501px rgba(var(--fns-snow-rgb), 0.39), -3px 1101px rgba(var(--fns-snow-rgb), 0.44), -3px 2401px rgba(var(--fns-snow-rgb), 0.44), 172px 1176px rgba(var(--fns-snow-rgb), 0.51), 172px 2476px rgba(var(--fns-snow-rgb), 0.51), 497px 893px rgba(var(--fns-snow-rgb), 0.3), 497px 2193px rgba(var(--fns-snow-rgb), 0.3), 627px 590px rgba(var(--fns-snow-rgb), 0.49), 627px 1890px rgba(var(--fns-snow-rgb), 0.49), 21px 8px rgba(var(--fns-snow-rgb), 0.39), 21px 1308px rgba(var(--fns-snow-rgb), 0.39), 191px 1006px rgba(var(--fns-snow-rgb), 0.47), 191px 2306px rgba(var(--fns-snow-rgb), 0.47), 555px 1012px rgba(var(--fns-snow-rgb), 0.45), 555px 2312px rgba(var(--fns-snow-rgb), 0.45), 1910px 533px rgba(var(--fns-snow-rgb), 0.45), 1910px 1833px rgba(var(--fns-snow-rgb), 0.45), 450px 581px rgba(var(--fns-snow-rgb), 0.5), 450px 1881px rgba(var(--fns-snow-rgb), 0.5), 748px 1020px rgba(var(--fns-snow-rgb), 0.34), 748px 2320px rgba(var(--fns-snow-rgb), 0.34), 131px 1004px rgba(var(--fns-snow-rgb), 0.5), 131px 2304px rgba(var(--fns-snow-rgb), 0.5), 2098px 214px rgba(var(--fns-snow-rgb), 0.46), 2098px 1514px rgba(var(--fns-snow-rgb), 0.46), 1256px 194px rgba(var(--fns-snow-rgb), 0.4), 1256px 1494px rgba(var(--fns-snow-rgb), 0.4), 1416px 176px rgba(var(--fns-snow-rgb), 0.41), 1416px 1476px rgba(var(--fns-snow-rgb), 0.41), -97px 761px rgba(var(--fns-snow-rgb), 0.35), -97px 2061px rgba(var(--fns-snow-rgb), 0.35), 878px 876px rgba(var(--fns-snow-rgb), 0.53), 878px 2176px rgba(var(--fns-snow-rgb), 0.53), 1852px 350px rgba(var(--fns-snow-rgb), 0.4), 1852px 1650px rgba(var(--fns-snow-rgb), 0.4), 756px 943px rgba(var(--fns-snow-rgb), 0.33), 756px 2243px rgba(var(--fns-snow-rgb), 0.33), -62px 713px rgba(var(--fns-snow-rgb), 0.45), -62px 2013px rgba(var(--fns-snow-rgb), 0.45), 1937px 318px rgba(var(--fns-snow-rgb), 0.52), 1937px 1618px rgba(var(--fns-snow-rgb), 0.52), 1644px 1134px rgba(var(--fns-snow-rgb), 0.49), 1644px 2434px rgba(var(--fns-snow-rgb), 0.49), 494px 948px rgba(var(--fns-snow-rgb), 0.41), 494px 2248px rgba(var(--fns-snow-rgb), 0.41), 853px 1186px rgba(var(--fns-snow-rgb), 0.36), 853px 2486px rgba(var(--fns-snow-rgb), 0.36), 1168px 946px rgba(var(--fns-snow-rgb), 0.46), 1168px 2246px rgba(var(--fns-snow-rgb), 0.46), 774px 1039px rgba(var(--fns-snow-rgb), 0.35), 774px 2339px rgba(var(--fns-snow-rgb), 0.35), 1034px 1264px rgba(var(--fns-snow-rgb), 0.34), 1034px 2564px rgba(var(--fns-snow-rgb), 0.34), 438px 507px rgba(var(--fns-snow-rgb), 0.48), 438px 1807px rgba(var(--fns-snow-rgb), 0.48), 1938px 713px rgba(var(--fns-snow-rgb), 0.34), 1938px 2013px rgba(var(--fns-snow-rgb), 0.34), 1143px 387px rgba(var(--fns-snow-rgb), 0.37), 1143px 1687px rgba(var(--fns-snow-rgb), 0.37), 216px 337px rgba(var(--fns-snow-rgb), 0.54), 216px 1637px rgba(var(--fns-snow-rgb), 0.54), 216px 400px rgba(var(--fns-snow-rgb), 0.4), 216px 1700px rgba(var(--fns-snow-rgb), 0.4), 407px 618px rgba(var(--fns-snow-rgb), 0.48), 407px 1918px rgba(var(--fns-snow-rgb), 0.48), 1581px 560px rgba(var(--fns-snow-rgb), 0.35), 1581px 1860px rgba(var(--fns-snow-rgb), 0.35), 237px 575px rgba(var(--fns-snow-rgb), 0.35), 237px 1875px rgba(var(--fns-snow-rgb), 0.35), 1390px 950px rgba(var(--fns-snow-rgb), 0.31), 1390px 2250px rgba(var(--fns-snow-rgb), 0.31), 1434px 894px rgba(var(--fns-snow-rgb), 0.47), 1434px 2194px rgba(var(--fns-snow-rgb), 0.47), 1849px 1295px rgba(var(--fns-snow-rgb), 0.38), 1849px 2595px rgba(var(--fns-snow-rgb), 0.38), -110px 290px rgba(var(--fns-snow-rgb), 0.37), -110px 1590px rgba(var(--fns-snow-rgb), 0.37), 1457px 11px rgba(var(--fns-snow-rgb), 0.49), 1457px 1311px rgba(var(--fns-snow-rgb), 0.49), 1561px 1175px rgba(var(--fns-snow-rgb), 0.45), 1561px 2475px rgba(var(--fns-snow-rgb), 0.45), 1525px 468px rgba(var(--fns-snow-rgb), 0.47), 1525px 1768px rgba(var(--fns-snow-rgb), 0.47), 2191px 468px rgba(var(--fns-snow-rgb), 0.47), 2191px 1768px rgba(var(--fns-snow-rgb), 0.47), 308px 929px rgba(var(--fns-snow-rgb), 0.41), 308px 2229px rgba(var(--fns-snow-rgb), 0.41), 864px 1286px rgba(var(--fns-snow-rgb), 0.48), 864px 2586px rgba(var(--fns-snow-rgb), 0.48), 1518px 496px rgba(var(--fns-snow-rgb), 0.5), 1518px 1796px rgba(var(--fns-snow-rgb), 0.5), 440px 512px rgba(var(--fns-snow-rgb), 0.51), 440px 1812px rgba(var(--fns-snow-rgb), 0.51), 1777px 932px rgba(var(--fns-snow-rgb), 0.31), 1777px 2232px rgba(var(--fns-snow-rgb), 0.31), 1476px 1061px rgba(var(--fns-snow-rgb), 0.47), 1476px 2361px rgba(var(--fns-snow-rgb), 0.47), 549px 671px rgba(var(--fns-snow-rgb), 0.5), 549px 1971px rgba(var(--fns-snow-rgb), 0.5), 1392px 1003px rgba(var(--fns-snow-rgb), 0.53), 1392px 2303px rgba(var(--fns-snow-rgb), 0.53), 235px 78px rgba(var(--fns-snow-rgb), 0.36), 235px 1378px rgba(var(--fns-snow-rgb), 0.36), 692px 329px rgba(var(--fns-snow-rgb), 0.48), 692px 1629px rgba(var(--fns-snow-rgb), 0.48), 618px 1063px rgba(var(--fns-snow-rgb), 0.39), 618px 2363px rgba(var(--fns-snow-rgb), 0.39), 2153px 935px rgba(var(--fns-snow-rgb), 0.44), 2153px 2235px rgba(var(--fns-snow-rgb), 0.44), 1748px 1048px rgba(var(--fns-snow-rgb), 0.31), 1748px 2348px rgba(var(--fns-snow-rgb), 0.31), 1315px 1068px rgba(var(--fns-snow-rgb), 0.39), 1315px 2368px rgba(var(--fns-snow-rgb), 0.39), 1671px 430px rgba(var(--fns-snow-rgb), 0.55), 1671px 1730px rgba(var(--fns-snow-rgb), 0.55), 552px 803px rgba(var(--fns-snow-rgb), 0.43), 552px 2103px rgba(var(--fns-snow-rgb), 0.43), 301px 1257px rgba(var(--fns-snow-rgb), 0.39), 301px 2557px rgba(var(--fns-snow-rgb), 0.39), 31px 517px rgba(var(--fns-snow-rgb), 0.37), 31px 1817px rgba(var(--fns-snow-rgb), 0.37), 1437px 125px rgba(var(--fns-snow-rgb), 0.31), 1437px 1425px rgba(var(--fns-snow-rgb), 0.31), 1514px 861px rgba(var(--fns-snow-rgb), 0.46), 1514px 2161px rgba(var(--fns-snow-rgb), 0.46), 1242px 1188px rgba(var(--fns-snow-rgb), 0.37), 1242px 2488px rgba(var(--fns-snow-rgb), 0.37), 719px 621px rgba(var(--fns-snow-rgb), 0.49), 719px 1921px rgba(var(--fns-snow-rgb), 0.49), 1958px 448px rgba(var(--fns-snow-rgb), 0.55), 1958px 1748px rgba(var(--fns-snow-rgb), 0.55), 1405px 946px rgba(var(--fns-snow-rgb), 0.35), 1405px 2246px rgba(var(--fns-snow-rgb), 0.35), 329px 141px rgba(var(--fns-snow-rgb), 0.5), 329px 1441px rgba(var(--fns-snow-rgb), 0.5), 591px 960px rgba(var(--fns-snow-rgb), 0.46), 591px 2260px rgba(var(--fns-snow-rgb), 0.46), 725px 299px rgba(var(--fns-snow-rgb), 0.39), 725px 1599px rgba(var(--fns-snow-rgb), 0.39), 1492px 958px rgba(var(--fns-snow-rgb), 0.55), 1492px 2258px rgba(var(--fns-snow-rgb), 0.55), 2045px 256px rgba(var(--fns-snow-rgb), 0.5), 2045px 1556px rgba(var(--fns-snow-rgb), 0.5), 1722px 726px rgba(var(--fns-snow-rgb), 0.5), 1722px 2026px rgba(var(--fns-snow-rgb), 0.5), 743px 547px rgba(var(--fns-snow-rgb), 0.48), 743px 1847px rgba(var(--fns-snow-rgb), 0.48), 838px 872px rgba(var(--fns-snow-rgb), 0.47), 838px 2172px rgba(var(--fns-snow-rgb), 0.47), 1772px 5px rgba(var(--fns-snow-rgb), 0.5), 1772px 1305px rgba(var(--fns-snow-rgb), 0.5), 951px 733px rgba(var(--fns-snow-rgb), 0.36), 951px 2033px rgba(var(--fns-snow-rgb), 0.36), 1036px 656px rgba(var(--fns-snow-rgb), 0.42), 1036px 1956px rgba(var(--fns-snow-rgb), 0.42), 1555px 1276px rgba(var(--fns-snow-rgb), 0.46), 1555px 2576px rgba(var(--fns-snow-rgb), 0.46), 1284px 312px rgba(var(--fns-snow-rgb), 0.53), 1284px 1612px rgba(var(--fns-snow-rgb), 0.53), 1377px 116px rgba(var(--fns-snow-rgb), 0.32), 1377px 1416px rgba(var(--fns-snow-rgb), 0.32), 2112px 664px rgba(var(--fns-snow-rgb), 0.5), 2112px 1964px rgba(var(--fns-snow-rgb), 0.5), 375px 1086px rgba(var(--fns-snow-rgb), 0.51), 375px 2386px rgba(var(--fns-snow-rgb), 0.51), 2185px 30px rgba(var(--fns-snow-rgb), 0.47), 2185px 1330px rgba(var(--fns-snow-rgb), 0.47), 659px 147px rgba(var(--fns-snow-rgb), 0.46), 659px 1447px rgba(var(--fns-snow-rgb), 0.46), 824px 1245px rgba(var(--fns-snow-rgb), 0.33), 824px 2545px rgba(var(--fns-snow-rgb), 0.33), 384px 478px rgba(var(--fns-snow-rgb), 0.35), 384px 1778px rgba(var(--fns-snow-rgb), 0.35), 1651px 709px rgba(var(--fns-snow-rgb), 0.5), 1651px 2009px rgba(var(--fns-snow-rgb), 0.5), 654px 824px rgba(var(--fns-snow-rgb), 0.5), 654px 2124px rgba(var(--fns-snow-rgb), 0.5), 487px 1248px rgba(var(--fns-snow-rgb), 0.52), 487px 2548px rgba(var(--fns-snow-rgb), 0.52), 170px 1123px rgba(var(--fns-snow-rgb), 0.5), 170px 2423px rgba(var(--fns-snow-rgb), 0.5), 1016px 404px rgba(var(--fns-snow-rgb), 0.42), 1016px 1704px rgba(var(--fns-snow-rgb), 0.42), 672px 1087px rgba(var(--fns-snow-rgb), 0.32), 672px 2387px rgba(var(--fns-snow-rgb), 0.32), 1596px 239px rgba(var(--fns-snow-rgb), 0.44), 1596px 1539px rgba(var(--fns-snow-rgb), 0.44), 883px 858px rgba(var(--fns-snow-rgb), 0.36), 883px 2158px rgba(var(--fns-snow-rgb), 0.36), 370px 969px rgba(var(--fns-snow-rgb), 0.42), 370px 2269px rgba(var(--fns-snow-rgb), 0.42), 39px 991px rgba(var(--fns-snow-rgb), 0.42), 39px 2291px rgba(var(--fns-snow-rgb), 0.42), 391px 1006px rgba(var(--fns-snow-rgb), 0.36), 391px 2306px rgba(var(--fns-snow-rgb), 0.36), 474px 1104px rgba(var(--fns-snow-rgb), 0.45), 474px 2404px rgba(var(--fns-snow-rgb), 0.45), -173px 328px rgba(var(--fns-snow-rgb), 0.51), -173px 1628px rgba(var(--fns-snow-rgb), 0.51), 1716px 1152px rgba(var(--fns-snow-rgb), 0.43), 1716px 2452px rgba(var(--fns-snow-rgb), 0.43), 1015px 953px rgba(var(--fns-snow-rgb), 0.4), 1015px 2253px rgba(var(--fns-snow-rgb), 0.4), 1515px 154px rgba(var(--fns-snow-rgb), 0.35), 1515px 1454px rgba(var(--fns-snow-rgb), 0.35), 1276px 58px rgba(var(--fns-snow-rgb), 0.31), 1276px 1358px rgba(var(--fns-snow-rgb), 0.31), -13px 676px rgba(var(--fns-snow-rgb), 0.5), -13px 1976px rgba(var(--fns-snow-rgb), 0.5), 184px 1045px rgba(var(--fns-snow-rgb), 0.42), 184px 2345px rgba(var(--fns-snow-rgb), 0.42), 391px 69px rgba(var(--fns-snow-rgb), 0.36), 391px 1369px rgba(var(--fns-snow-rgb), 0.36), 1502px 1280px rgba(var(--fns-snow-rgb), 0.33), 1502px 2580px rgba(var(--fns-snow-rgb), 0.33), 186px 749px rgba(var(--fns-snow-rgb), 0.39), 186px 2049px rgba(var(--fns-snow-rgb), 0.39), 1952px 1134px rgba(var(--fns-snow-rgb), 0.49), 1952px 2434px rgba(var(--fns-snow-rgb), 0.49), 663px 581px rgba(var(--fns-snow-rgb), 0.41), 663px 1881px rgba(var(--fns-snow-rgb), 0.41), 1530px 515px rgba(var(--fns-snow-rgb), 0.44), 1530px 1815px rgba(var(--fns-snow-rgb), 0.44), 984px 599px rgba(var(--fns-snow-rgb), 0.39), 984px 1899px rgba(var(--fns-snow-rgb), 0.39), 1822px 826px rgba(var(--fns-snow-rgb), 0.39), 1822px 2126px rgba(var(--fns-snow-rgb), 0.39), 912px 1037px rgba(var(--fns-snow-rgb), 0.39), 912px 2337px rgba(var(--fns-snow-rgb), 0.39), 633px 1008px rgba(var(--fns-snow-rgb), 0.5), 633px 2308px rgba(var(--fns-snow-rgb), 0.5), 1155px 393px rgba(var(--fns-snow-rgb), 0.38), 1155px 1693px rgba(var(--fns-snow-rgb), 0.38), 1025px 261px rgba(var(--fns-snow-rgb), 0.45), 1025px 1561px rgba(var(--fns-snow-rgb), 0.45), 158px 82px rgba(var(--fns-snow-rgb), 0.4), 158px 1382px rgba(var(--fns-snow-rgb), 0.4), 2070px 831px rgba(var(--fns-snow-rgb), 0.44), 2070px 2131px rgba(var(--fns-snow-rgb), 0.44), 3px 816px rgba(var(--fns-snow-rgb), 0.38), 3px 2116px rgba(var(--fns-snow-rgb), 0.38), -175px 95px rgba(var(--fns-snow-rgb), 0.35), -175px 1395px rgba(var(--fns-snow-rgb), 0.35), 1745px 1246px rgba(var(--fns-snow-rgb), 0.49), 1745px 2546px rgba(var(--fns-snow-rgb), 0.49), 46px 1025px rgba(var(--fns-snow-rgb), 0.53), 46px 2325px rgba(var(--fns-snow-rgb), 0.53), 1340px 1262px rgba(var(--fns-snow-rgb), 0.34), 1340px 2562px rgba(var(--fns-snow-rgb), 0.34), 139px 435px rgba(var(--fns-snow-rgb), 0.31), 139px 1735px rgba(var(--fns-snow-rgb), 0.31), 1675px 1280px rgba(var(--fns-snow-rgb), 0.49), 1675px 2580px rgba(var(--fns-snow-rgb), 0.49), 215px 371px rgba(var(--fns-snow-rgb), 0.52), 215px 1671px rgba(var(--fns-snow-rgb), 0.52), 1526px 206px rgba(var(--fns-snow-rgb), 0.53), 1526px 1506px rgba(var(--fns-snow-rgb), 0.53), -146px 755px rgba(var(--fns-snow-rgb), 0.52), -146px 2055px rgba(var(--fns-snow-rgb), 0.52), 368px 633px rgba(var(--fns-snow-rgb), 0.44), 368px 1933px rgba(var(--fns-snow-rgb), 0.44), 856px 618px rgba(var(--fns-snow-rgb), 0.35), 856px 1918px rgba(var(--fns-snow-rgb), 0.35), -60px 652px rgba(var(--fns-snow-rgb), 0.31), -60px 1952px rgba(var(--fns-snow-rgb), 0.31), 2119px 1184px rgba(var(--fns-snow-rgb), 0.53), 2119px 2484px rgba(var(--fns-snow-rgb), 0.53), 23px 1019px rgba(var(--fns-snow-rgb), 0.44), 23px 2319px rgba(var(--fns-snow-rgb), 0.44), -39px 243px rgba(var(--fns-snow-rgb), 0.49), -39px 1543px rgba(var(--fns-snow-rgb), 0.49), 1524px 1178px rgba(var(--fns-snow-rgb), 0.47), 1524px 2478px rgba(var(--fns-snow-rgb), 0.47), 1457px 914px rgba(var(--fns-snow-rgb), 0.32), 1457px 2214px rgba(var(--fns-snow-rgb), 0.32), 1385px 1216px rgba(var(--fns-snow-rgb), 0.45), 1385px 2516px rgba(var(--fns-snow-rgb), 0.45), 436px 973px rgba(var(--fns-snow-rgb), 0.49), 436px 2273px rgba(var(--fns-snow-rgb), 0.49), 2047px 208px rgba(var(--fns-snow-rgb), 0.32), 2047px 1508px rgba(var(--fns-snow-rgb), 0.32), 1734px 434px rgba(var(--fns-snow-rgb), 0.52), 1734px 1734px rgba(var(--fns-snow-rgb), 0.52), -137px 874px rgba(var(--fns-snow-rgb), 0.3), -137px 2174px rgba(var(--fns-snow-rgb), 0.3), 298px 180px rgba(var(--fns-snow-rgb), 0.36), 298px 1480px rgba(var(--fns-snow-rgb), 0.36), 297px 264px rgba(var(--fns-snow-rgb), 0.42), 297px 1564px rgba(var(--fns-snow-rgb), 0.42), 928px 1165px rgba(var(--fns-snow-rgb), 0.36), 928px 2465px rgba(var(--fns-snow-rgb), 0.36), 567px 102px rgba(var(--fns-snow-rgb), 0.39), 567px 1402px rgba(var(--fns-snow-rgb), 0.39), 393px 172px rgba(var(--fns-snow-rgb), 0.38), 393px 1472px rgba(var(--fns-snow-rgb), 0.38), 2083px 1020px rgba(var(--fns-snow-rgb), 0.42), 2083px 2320px rgba(var(--fns-snow-rgb), 0.42), 840px 107px rgba(var(--fns-snow-rgb), 0.48), 840px 1407px rgba(var(--fns-snow-rgb), 0.48), -154px 124px rgba(var(--fns-snow-rgb), 0.31), -154px 1424px rgba(var(--fns-snow-rgb), 0.31), 126px 796px rgba(var(--fns-snow-rgb), 0.38), 126px 2096px rgba(var(--fns-snow-rgb), 0.38), 479px 996px rgba(var(--fns-snow-rgb), 0.45), 479px 2296px rgba(var(--fns-snow-rgb), 0.45), 1095px 752px rgba(var(--fns-snow-rgb), 0.54), 1095px 2052px rgba(var(--fns-snow-rgb), 0.54), 1597px 962px rgba(var(--fns-snow-rgb), 0.47), 1597px 2262px rgba(var(--fns-snow-rgb), 0.47), 393px 239px rgba(var(--fns-snow-rgb), 0.39), 393px 1539px rgba(var(--fns-snow-rgb), 0.39), 471px 1289px rgba(var(--fns-snow-rgb), 0.5), 471px 2589px rgba(var(--fns-snow-rgb), 0.5), 1753px 789px rgba(var(--fns-snow-rgb), 0.5), 1753px 2089px rgba(var(--fns-snow-rgb), 0.5), 1654px 557px rgba(var(--fns-snow-rgb), 0.5), 1654px 1857px rgba(var(--fns-snow-rgb), 0.5), 2121px 683px rgba(var(--fns-snow-rgb), 0.37), 2121px 1983px rgba(var(--fns-snow-rgb), 0.37), 48px 1273px rgba(var(--fns-snow-rgb), 0.54), 48px 2573px rgba(var(--fns-snow-rgb), 0.54), 1160px 1240px rgba(var(--fns-snow-rgb), 0.48), 1160px 2540px rgba(var(--fns-snow-rgb), 0.48), -137px 309px rgba(var(--fns-snow-rgb), 0.45), -137px 1609px rgba(var(--fns-snow-rgb), 0.45), 1064px 1197px rgba(var(--fns-snow-rgb), 0.41), 1064px 2497px rgba(var(--fns-snow-rgb), 0.41), 808px 771px rgba(var(--fns-snow-rgb), 0.4), 808px 2071px rgba(var(--fns-snow-rgb), 0.4), 1340px 1232px rgba(var(--fns-snow-rgb), 0.49), 1340px 2532px rgba(var(--fns-snow-rgb), 0.49), 759px 924px rgba(var(--fns-snow-rgb), 0.37), 759px 2224px rgba(var(--fns-snow-rgb), 0.37), -194px 658px rgba(var(--fns-snow-rgb), 0.37), -194px 1958px rgba(var(--fns-snow-rgb), 0.37), 1530px 322px rgba(var(--fns-snow-rgb), 0.45), 1530px 1622px rgba(var(--fns-snow-rgb), 0.45), -27px 590px rgba(var(--fns-snow-rgb), 0.51), -27px 1890px rgba(var(--fns-snow-rgb), 0.51), 2142px 301px rgba(var(--fns-snow-rgb), 0.37), 2142px 1601px rgba(var(--fns-snow-rgb), 0.37), 2043px 1023px rgba(var(--fns-snow-rgb), 0.39), 2043px 2323px rgba(var(--fns-snow-rgb), 0.39), 148px 1105px rgba(var(--fns-snow-rgb), 0.44), 148px 2405px rgba(var(--fns-snow-rgb), 0.44), 1363px 410px rgba(var(--fns-snow-rgb), 0.5), 1363px 1710px rgba(var(--fns-snow-rgb), 0.5), 758px 633px rgba(var(--fns-snow-rgb), 0.45), 758px 1933px rgba(var(--fns-snow-rgb), 0.45), 1419px 952px rgba(var(--fns-snow-rgb), 0.48), 1419px 2252px rgba(var(--fns-snow-rgb), 0.48), 843px 1200px rgba(var(--fns-snow-rgb), 0.49), 843px 2500px rgba(var(--fns-snow-rgb), 0.49), 1376px 941px rgba(var(--fns-snow-rgb), 0.44), 1376px 2241px rgba(var(--fns-snow-rgb), 0.44), 1996px 727px rgba(var(--fns-snow-rgb), 0.49), 1996px 2027px rgba(var(--fns-snow-rgb), 0.49), 753px 815px rgba(var(--fns-snow-rgb), 0.45), 753px 2115px rgba(var(--fns-snow-rgb), 0.45), 863px 1068px rgba(var(--fns-snow-rgb), 0.38), 863px 2368px rgba(var(--fns-snow-rgb), 0.38), 1873px 1206px rgba(var(--fns-snow-rgb), 0.35), 1873px 2506px rgba(var(--fns-snow-rgb), 0.35), 671px 393px rgba(var(--fns-snow-rgb), 0.33), 671px 1693px rgba(var(--fns-snow-rgb), 0.33), 987px 743px rgba(var(--fns-snow-rgb), 0.45), 987px 2043px rgba(var(--fns-snow-rgb), 0.45), 1270px 824px rgba(var(--fns-snow-rgb), 0.5), 1270px 2124px rgba(var(--fns-snow-rgb), 0.5), 410px 504px rgba(var(--fns-snow-rgb), 0.31), 410px 1804px rgba(var(--fns-snow-rgb), 0.31), 1820px 766px rgba(var(--fns-snow-rgb), 0.52), 1820px 2066px rgba(var(--fns-snow-rgb), 0.52), 1322px 1295px rgba(var(--fns-snow-rgb), 0.42), 1322px 2595px rgba(var(--fns-snow-rgb), 0.42), 134px 319px rgba(var(--fns-snow-rgb), 0.38), 134px 1619px rgba(var(--fns-snow-rgb), 0.38), -76px 706px rgba(var(--fns-snow-rgb), 0.37), -76px 2006px rgba(var(--fns-snow-rgb), 0.37), -116px 192px rgba(var(--fns-snow-rgb), 0.31), -116px 1492px rgba(var(--fns-snow-rgb), 0.31), 2116px 995px rgba(var(--fns-snow-rgb), 0.45), 2116px 2295px rgba(var(--fns-snow-rgb), 0.45), 674px 535px rgba(var(--fns-snow-rgb), 0.53), 674px 1835px rgba(var(--fns-snow-rgb), 0.53), 946px 872px rgba(var(--fns-snow-rgb), 0.33), 946px 2172px rgba(var(--fns-snow-rgb), 0.33), 1630px 1214px rgba(var(--fns-snow-rgb), 0.51), 1630px 2514px rgba(var(--fns-snow-rgb), 0.51), 336px 520px rgba(var(--fns-snow-rgb), 0.51), 336px 1820px rgba(var(--fns-snow-rgb), 0.51), 1187px 411px rgba(var(--fns-snow-rgb), 0.55), 1187px 1711px rgba(var(--fns-snow-rgb), 0.55), 1349px 171px rgba(var(--fns-snow-rgb), 0.31), 1349px 1471px rgba(var(--fns-snow-rgb), 0.31), -58px 1141px rgba(var(--fns-snow-rgb), 0.39), -58px 2441px rgba(var(--fns-snow-rgb), 0.39), 1677px 997px rgba(var(--fns-snow-rgb), 0.54), 1677px 2297px rgba(var(--fns-snow-rgb), 0.54), 62px 1224px rgba(var(--fns-snow-rgb), 0.46), 62px 2524px rgba(var(--fns-snow-rgb), 0.46), 291px 184px rgba(var(--fns-snow-rgb), 0.37), 291px 1484px rgba(var(--fns-snow-rgb), 0.37), 2112px 477px rgba(var(--fns-snow-rgb), 0.46), 2112px 1777px rgba(var(--fns-snow-rgb), 0.46), 1874px 805px rgba(var(--fns-snow-rgb), 0.35), 1874px 2105px rgba(var(--fns-snow-rgb), 0.35), 454px 759px rgba(var(--fns-snow-rgb), 0.54), 454px 2059px rgba(var(--fns-snow-rgb), 0.54), 708px 352px rgba(var(--fns-snow-rgb), 0.31), 708px 1652px rgba(var(--fns-snow-rgb), 0.31), 848px 720px rgba(var(--fns-snow-rgb), 0.32), 848px 2020px rgba(var(--fns-snow-rgb), 0.32), 2064px 56px rgba(var(--fns-snow-rgb), 0.51), 2064px 1356px rgba(var(--fns-snow-rgb), 0.51), -8px 528px rgba(var(--fns-snow-rgb), 0.5), -8px 1828px rgba(var(--fns-snow-rgb), 0.5), 1780px 114px rgba(var(--fns-snow-rgb), 0.33), 1780px 1414px rgba(var(--fns-snow-rgb), 0.33), 1101px 11px rgba(var(--fns-snow-rgb), 0.53), 1101px 1311px rgba(var(--fns-snow-rgb), 0.53), 1023px 1207px rgba(var(--fns-snow-rgb), 0.45), 1023px 2507px rgba(var(--fns-snow-rgb), 0.45), 231px 964px rgba(var(--fns-snow-rgb), 0.38), 231px 2264px rgba(var(--fns-snow-rgb), 0.38), 852px 798px rgba(var(--fns-snow-rgb), 0.33), 852px 2098px rgba(var(--fns-snow-rgb), 0.33), 1771px 777px rgba(var(--fns-snow-rgb), 0.34), 1771px 2077px rgba(var(--fns-snow-rgb), 0.34), 776px 293px rgba(var(--fns-snow-rgb), 0.53), 776px 1593px rgba(var(--fns-snow-rgb), 0.53), -149px 958px rgba(var(--fns-snow-rgb), 0.48), -149px 2258px rgba(var(--fns-snow-rgb), 0.48), 599px 73px rgba(var(--fns-snow-rgb), 0.34), 599px 1373px rgba(var(--fns-snow-rgb), 0.34), 703px 159px rgba(var(--fns-snow-rgb), 0.53), 703px 1459px rgba(var(--fns-snow-rgb), 0.53), 1328px 286px rgba(var(--fns-snow-rgb), 0.5), 1328px 1586px rgba(var(--fns-snow-rgb), 0.5), 197px 788px rgba(var(--fns-snow-rgb), 0.51), 197px 2088px rgba(var(--fns-snow-rgb), 0.51), 107px 926px rgba(var(--fns-snow-rgb), 0.54), 107px 2226px rgba(var(--fns-snow-rgb), 0.54), 1121px 478px rgba(var(--fns-snow-rgb), 0.42), 1121px 1778px rgba(var(--fns-snow-rgb), 0.42), 1299px 292px rgba(var(--fns-snow-rgb), 0.38), 1299px 1592px rgba(var(--fns-snow-rgb), 0.38), 32px 369px rgba(var(--fns-snow-rgb), 0.48), 32px 1669px rgba(var(--fns-snow-rgb), 0.48), 2066px 296px rgba(var(--fns-snow-rgb), 0.41), 2066px 1596px rgba(var(--fns-snow-rgb), 0.41), 411px 545px rgba(var(--fns-snow-rgb), 0.41), 411px 1845px rgba(var(--fns-snow-rgb), 0.41), 810px 318px rgba(var(--fns-snow-rgb), 0.31), 810px 1618px rgba(var(--fns-snow-rgb), 0.31), 2138px 607px rgba(var(--fns-snow-rgb), 0.39), 2138px 1907px rgba(var(--fns-snow-rgb), 0.39), 487px 533px rgba(var(--fns-snow-rgb), 0.42), 487px 1833px rgba(var(--fns-snow-rgb), 0.42), 1102px 934px rgba(var(--fns-snow-rgb), 0.53), 1102px 2234px rgba(var(--fns-snow-rgb), 0.53), 267px 314px rgba(var(--fns-snow-rgb), 0.54), 267px 1614px rgba(var(--fns-snow-rgb), 0.54), 32px 1292px rgba(var(--fns-snow-rgb), 0.52), 32px 2592px rgba(var(--fns-snow-rgb), 0.52), 664px 1146px rgba(var(--fns-snow-rgb), 0.42), 664px 2446px rgba(var(--fns-snow-rgb), 0.42), 972px 244px rgba(var(--fns-snow-rgb), 0.37), 972px 1544px rgba(var(--fns-snow-rgb), 0.37), 625px 746px rgba(var(--fns-snow-rgb), 0.41), 625px 2046px rgba(var(--fns-snow-rgb), 0.41), 871px 488px rgba(var(--fns-snow-rgb), 0.53), 871px 1788px rgba(var(--fns-snow-rgb), 0.53), 199px 799px rgba(var(--fns-snow-rgb), 0.37), 199px 2099px rgba(var(--fns-snow-rgb), 0.37);
+        opacity: {{ (0.7 * (0.45 if faint else 1)) | round(2) }};
+        animation: fns-snow-b 29s linear infinite;
+      }
+      @keyframes fns-snow-a { 0% { transform: translate3d(0, 0, 0); } 25% { transform: translate3d({{ 18 * sg }}px, 325px, 0); } 50% { transform: translate3d({{ 4 * sg }}px, 650px, 0); } 75% { transform: translate3d({{ 26 * sg }}px, 975px, 0); } 100% { transform: translate3d({{ 40 * sg }}px, 1300px, 0); } }
+      @keyframes fns-snow-b { 0% { transform: translate3d(0, 0, 0); } 33% { transform: translate3d({{ -10 * sg }}px, 433px, 0); } 66% { transform: translate3d({{ 14 * sg }}px, 866px, 0); } 100% { transform: translate3d({{ 20 * sg }}px, 1300px, 0); } }
+      {% endif %}
+      {% if layer == 'fog' %}
+      #view::before {
+        left: 0; top: 0; width: 100vw; height: 100vh; opacity: .85;
+        background-image:
+          radial-gradient(70vw 45vh at 20% 30%, rgba(var(--fns-fog-rgb), .36), transparent 70%),
+          radial-gradient(60vw 40vh at 75% 60%, rgba(var(--fns-fog-rgb), .30), transparent 70%),
+          radial-gradient(50vw 35vh at 50% 90%, rgba(var(--fns-fog-rgb), .20), transparent 70%);
+        background-size: 200% 100%;
+        animation: fns-fog-a 70s ease-in-out infinite alternate;
+      }
+      #view::after {
+        left: 0; top: 0; width: 100vw; height: 100vh; opacity: .7;
+        background-image:
+          radial-gradient(65vw 40vh at 80% 20%, rgba(var(--fns-fog-rgb), .22), transparent 70%),
+          radial-gradient(55vw 38vh at 30% 75%, rgba(var(--fns-fog-rgb), .20), transparent 70%),
+          linear-gradient(rgba(var(--fns-fog-rgb), .10), rgba(var(--fns-fog-rgb), .10));
+        background-size: 200% 100%, 200% 100%, 100% 100%;
+        animation: fns-fog-b 95s ease-in-out infinite alternate;
+      }
+      @keyframes fns-fog-a { from { background-position: 0% 0; } to { background-position: 100% 0; } }
+      @keyframes fns-fog-b { from { background-position: 100% 0, 100% 0, 0 0; } to { background-position: 0% 0, 0% 0, 0 0; } }
+      {% endif %}
+      {% set wind = 1 + ([ws, 60] | min) / 30 %}
+      {# oblaky (polojasno) jen za světla — v noci v tmavém módu vypadaly jako šedý flek (uživatel 2026-09-05) #}
+      {% if layer == 'clouds' and el < -6 %}{% set layer = 'none' %}{% endif %}
+      {% if layer == 'sun' and sa > 0.15 %}
+      {# paprsky: kuželový gradient kolem slunce, pomalá rotace kolem jeho polohy, maska do ztracena #}
+      #view::before {
+        left: 0; top: 0; width: 100vw; height: 100vh; opacity: {{ (sa * 0.9) | round(2) }};
+        background: repeating-conic-gradient(from 0deg at {{ sx }}% {{ sy }}%, rgba({{ sun }}, .10) 0deg 3deg, transparent 3deg 11deg, rgba({{ sun }}, .05) 11deg 13deg, transparent 13deg 24deg);
+        -webkit-mask-image: radial-gradient(circle at {{ sx }}% {{ sy }}%, black 0%, transparent 42%);
+        mask-image: radial-gradient(circle at {{ sx }}% {{ sy }}%, black 0%, transparent 42%);
+        transform-origin: {{ sx }}% {{ sy }}%;
+        animation: fns-rays 160s linear infinite;
+      }
+      @keyframes fns-rays { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      {% endif %}
+      {% if layer == 'clouds' %}
+      {# polojasno: měkké oblaky plující ve směru větru, rychlost podle wind_speed #}
+      #view::before {
+        left: 0; top: 0; width: 100vw; height: 100vh; opacity: .9;
+        background-image:
+          radial-gradient(38vw 22vh at 15% 18%, rgba(var(--fns-cloud-rgb), .30), transparent 70%),
+          radial-gradient(30vw 18vh at 62% 8%, rgba(var(--fns-cloud-rgb), .26), transparent 70%),
+          radial-gradient(34vw 20vh at 88% 34%, rgba(var(--fns-cloud-rgb), .22), transparent 70%);
+        background-size: 240% 100%; background-repeat: repeat-x;
+        animation: fns-clouds-a {{ (150 / wind) | round(0) | int }}s linear infinite{{ ' reverse' if sg < 0 else '' }};
+      }
+      #view::after {
+        left: 0; top: 0; width: 100vw; height: 100vh; opacity: .7;
+        background-image:
+          radial-gradient(26vw 14vh at 40% 60%, rgba(var(--fns-cloud-rgb), .20), transparent 70%),
+          radial-gradient(22vw 12vh at 80% 78%, rgba(var(--fns-cloud-rgb), .16), transparent 70%);
+        background-size: 260% 100%; background-repeat: repeat-x;
+        animation: fns-clouds-b {{ (230 / wind) | round(0) | int }}s linear infinite{{ ' reverse' if sg < 0 else '' }};
+      }
+      @keyframes fns-clouds-a { from { background-position: 0 0; } to { background-position: 240vw 0; } }
+      @keyframes fns-clouds-b { from { background-position: 0 0; } to { background-position: 260vw 0; } }
+      {% endif %}
+      {% if layer == 'overcast' %}
+      {# zataženo: šedý závoj + pomalu plující tmavší chuchvalce #}
+      #view::before {
+        left: 0; top: 0; width: 100vw; height: 100vh; opacity: 1;
+        background-image:
+          radial-gradient(60vw 30vh at 25% 12%, rgba(var(--fns-overcast-rgb), .22), transparent 70%),
+          radial-gradient(50vw 26vh at 70% 30%, rgba(var(--fns-overcast-rgb), .18), transparent 70%),
+          radial-gradient(45vw 24vh at 45% 70%, rgba(var(--fns-overcast-rgb), .14), transparent 70%),
+          linear-gradient(rgba(var(--fns-overcast-rgb), .12), rgba(var(--fns-overcast-rgb), .12));
+        background-size: 250% 100%, 250% 100%, 250% 100%, 100% 100%; background-repeat: repeat-x, repeat-x, repeat-x, no-repeat;
+        animation: fns-overcast {{ (260 / wind) | round(0) | int }}s linear infinite{{ ' reverse' if sg < 0 else '' }};
+      }
+      @keyframes fns-overcast { from { background-position: 0 0, 0 0, 0 0, 0 0; } to { background-position: 250vw 0, 250vw 0, 250vw 0, 0 0; } }
+      {% endif %}
+      {% if layer == 'stars' %}
+      {# jasná noc: dvě sady hvězd (box-shadow), střídavé blikání = mihotání #}
+      #view::before, #view::after {
+        left: 0; top: 0; width: 1.6px; height: 1.6px; border-radius: 50%; background: transparent;
+      }
+      #view::before { box-shadow: 664px 117px 0px rgba(var(--fns-star-rgb), 0.85), 591px 32px 0px rgba(var(--fns-star-rgb), 0.63), 2092px 287px 0px rgba(var(--fns-star-rgb), 0.63), 761px 737px 1px rgba(var(--fns-star-rgb), 0.63), 894px 566px 0px rgba(var(--fns-star-rgb), 0.71), 737px 1068px 0px rgba(var(--fns-star-rgb), 0.82), 805px 1230px 0px rgba(var(--fns-star-rgb), 0.43), 2029px 560px 0px rgba(var(--fns-star-rgb), 0.48), 787px 1193px 0px rgba(var(--fns-star-rgb), 0.56), 269px 1064px 0px rgba(var(--fns-star-rgb), 0.61), 2123px 711px 1px rgba(var(--fns-star-rgb), 0.57), 369px 31px 1px rgba(var(--fns-star-rgb), 0.61), 545px 545px 0px rgba(var(--fns-star-rgb), 0.52), 150px 334px 0px rgba(var(--fns-star-rgb), 0.78), 1458px 1064px 0px rgba(var(--fns-star-rgb), 0.91), 494px 730px 0px rgba(var(--fns-star-rgb), 0.79), 1562px 1180px 0px rgba(var(--fns-star-rgb), 0.81), 1194px 220px 1px rgba(var(--fns-star-rgb), 0.92), 1828px 1051px 0px rgba(var(--fns-star-rgb), 0.39), 84px 498px 0px rgba(var(--fns-star-rgb), 0.93), 747px 343px 0px rgba(var(--fns-star-rgb), 0.44), 123px 39px 0px rgba(var(--fns-star-rgb), 0.43), 1070px 36px 1px rgba(var(--fns-star-rgb), 0.86), 2141px 488px 0px rgba(var(--fns-star-rgb), 0.78), 1436px 192px 0px rgba(var(--fns-star-rgb), 0.79), 1118px 252px 0px rgba(var(--fns-star-rgb), 0.64), 450px 249px 0px rgba(var(--fns-star-rgb), 0.45), 931px 464px 1px rgba(var(--fns-star-rgb), 0.46), 1624px 336px 0px rgba(var(--fns-star-rgb), 0.92), 1592px 861px 0px rgba(var(--fns-star-rgb), 0.72), 1620px 106px 0px rgba(var(--fns-star-rgb), 0.82), 1641px 492px 1px rgba(var(--fns-star-rgb), 0.86), 1313px 820px 0px rgba(var(--fns-star-rgb), 0.86), 1330px 1059px 0px rgba(var(--fns-star-rgb), 0.46), 1021px 864px 0px rgba(var(--fns-star-rgb), 0.76), 1492px 223px 0px rgba(var(--fns-star-rgb), 0.68), 1328px 886px 0px rgba(var(--fns-star-rgb), 0.49), 923px 285px 1px rgba(var(--fns-star-rgb), 0.62), 1858px 1296px 0px rgba(var(--fns-star-rgb), 0.41), 140px 1271px 0px rgba(var(--fns-star-rgb), 0.53), 146px 1272px 0px rgba(var(--fns-star-rgb), 0.44), 2131px 27px 0px rgba(var(--fns-star-rgb), 0.63), 1177px 231px 0px rgba(var(--fns-star-rgb), 0.55), 493px 123px 0px rgba(var(--fns-star-rgb), 0.72), 346px 955px 0px rgba(var(--fns-star-rgb), 0.72), 1802px 253px 0px rgba(var(--fns-star-rgb), 0.67), 1665px 1182px 0px rgba(var(--fns-star-rgb), 0.54), 359px 1118px 1px rgba(var(--fns-star-rgb), 0.54), 907px 791px 0px rgba(var(--fns-star-rgb), 0.49), 1887px 1122px 1px rgba(var(--fns-star-rgb), 0.55), 1920px 635px 0px rgba(var(--fns-star-rgb), 0.4), 907px 386px 1px rgba(var(--fns-star-rgb), 0.67), 1623px 24px 0px rgba(var(--fns-star-rgb), 0.91), 977px 663px 1px rgba(var(--fns-star-rgb), 0.7), 1105px 583px 0px rgba(var(--fns-star-rgb), 0.88), 1210px 116px 0px rgba(var(--fns-star-rgb), 0.82), 273px 1240px 1px rgba(var(--fns-star-rgb), 0.88), 254px 1058px 1px rgba(var(--fns-star-rgb), 0.6), 1450px 223px 0px rgba(var(--fns-star-rgb), 0.68), 1707px 690px 0px rgba(var(--fns-star-rgb), 0.76), 829px 1262px 0px rgba(var(--fns-star-rgb), 0.73), 2120px 194px 1px rgba(var(--fns-star-rgb), 0.8), 1100px 1291px 0px rgba(var(--fns-star-rgb), 0.78), 1691px 211px 0px rgba(var(--fns-star-rgb), 0.38), 2039px 814px 0px rgba(var(--fns-star-rgb), 0.93), 1711px 572px 0px rgba(var(--fns-star-rgb), 0.88), 1554px 926px 0px rgba(var(--fns-star-rgb), 0.77), 1444px 599px 1px rgba(var(--fns-star-rgb), 0.58), 1318px 13px 1px rgba(var(--fns-star-rgb), 0.83), 1559px 909px 0px rgba(var(--fns-star-rgb), 0.55), 593px 892px 0px rgba(var(--fns-star-rgb), 0.71), 360px 676px 0px rgba(var(--fns-star-rgb), 0.56), 1334px 418px 0px rgba(var(--fns-star-rgb), 0.93), 104px 97px 1px rgba(var(--fns-star-rgb), 0.53), 1228px 1098px 1px rgba(var(--fns-star-rgb), 0.82), 2119px 1059px 1px rgba(var(--fns-star-rgb), 0.79), 1595px 950px 0px rgba(var(--fns-star-rgb), 0.58), 1855px 21px 0px rgba(var(--fns-star-rgb), 0.77), 405px 838px 1px rgba(var(--fns-star-rgb), 0.59), 631px 385px 1px rgba(var(--fns-star-rgb), 0.93), 1645px 901px 0px rgba(var(--fns-star-rgb), 0.82), 2171px 188px 0px rgba(var(--fns-star-rgb), 0.48), 1501px 153px 0px rgba(var(--fns-star-rgb), 0.85), 452px 603px 1px rgba(var(--fns-star-rgb), 0.77), 640px 1073px 0px rgba(var(--fns-star-rgb), 0.55), 2068px 385px 0px rgba(var(--fns-star-rgb), 0.61), 436px 723px 0px rgba(var(--fns-star-rgb), 0.7), 1685px 21px 0px rgba(var(--fns-star-rgb), 0.83), 16px 623px 0px rgba(var(--fns-star-rgb), 0.61), 63px 60px 1px rgba(var(--fns-star-rgb), 0.49), 1089px 1088px 0px rgba(var(--fns-star-rgb), 0.67), 813px 841px 0px rgba(var(--fns-star-rgb), 0.72), 642px 1061px 0px rgba(var(--fns-star-rgb), 0.81), 118px 205px 1px rgba(var(--fns-star-rgb), 0.42), 1914px 1255px 0px rgba(var(--fns-star-rgb), 0.63), 51px 1185px 0px rgba(var(--fns-star-rgb), 0.56), 1449px 564px 0px rgba(var(--fns-star-rgb), 0.48), 407px 1192px 0px rgba(var(--fns-star-rgb), 0.42), 1842px 1277px 0px rgba(var(--fns-star-rgb), 0.6), 901px 810px 0px rgba(var(--fns-star-rgb), 0.71), 1800px 111px 0px rgba(var(--fns-star-rgb), 0.73), 912px 90px 0px rgba(var(--fns-star-rgb), 0.47), 1289px 12px 1px rgba(var(--fns-star-rgb), 0.89), 1243px 856px 1px rgba(var(--fns-star-rgb), 0.72), 276px 497px 0px rgba(var(--fns-star-rgb), 0.77), 1693px 633px 1px rgba(var(--fns-star-rgb), 0.61), 91px 498px 0px rgba(var(--fns-star-rgb), 0.43), 1467px 776px 0px rgba(var(--fns-star-rgb), 0.49), 1622px 1150px 0px rgba(var(--fns-star-rgb), 0.59), 2186px 789px 0px rgba(var(--fns-star-rgb), 0.57), 504px 864px 0px rgba(var(--fns-star-rgb), 0.85), 1003px 793px 0px rgba(var(--fns-star-rgb), 0.49), 1410px 485px 0px rgba(var(--fns-star-rgb), 0.63), 103px 699px 0px rgba(var(--fns-star-rgb), 0.84), 531px 189px 0px rgba(var(--fns-star-rgb), 0.49), 1815px 956px 0px rgba(var(--fns-star-rgb), 0.86), 652px 753px 1px rgba(var(--fns-star-rgb), 0.58), 1543px 1288px 0px rgba(var(--fns-star-rgb), 0.93), 1217px 974px 0px rgba(var(--fns-star-rgb), 0.67), 1854px 268px 0px rgba(var(--fns-star-rgb), 0.92), 1803px 1203px 0px rgba(var(--fns-star-rgb), 0.94), 1655px 1245px 0px rgba(var(--fns-star-rgb), 0.67), 502px 1050px 0px rgba(var(--fns-star-rgb), 0.43), 1576px 58px 0px rgba(var(--fns-star-rgb), 0.75), 1272px 30px 0px rgba(var(--fns-star-rgb), 0.6), 725px 474px 0px rgba(var(--fns-star-rgb), 0.56), 278px 1150px 0px rgba(var(--fns-star-rgb), 0.9), 789px 134px 0px rgba(var(--fns-star-rgb), 0.79), 927px 590px 1px rgba(var(--fns-star-rgb), 0.45), 1156px 728px 1px rgba(var(--fns-star-rgb), 0.61), 541px 566px 0px rgba(var(--fns-star-rgb), 0.48), 1439px 844px 1px rgba(var(--fns-star-rgb), 0.39), 1017px 820px 0px rgba(var(--fns-star-rgb), 0.58), 744px 596px 0px rgba(var(--fns-star-rgb), 0.45), 165px 828px 0px rgba(var(--fns-star-rgb), 0.4), 1764px 405px 0px rgba(var(--fns-star-rgb), 0.81), 1559px 80px 0px rgba(var(--fns-star-rgb), 0.69), 932px 1167px 0px rgba(var(--fns-star-rgb), 0.66), 1781px 1178px 0px rgba(var(--fns-star-rgb), 0.58), 458px 586px 0px rgba(var(--fns-star-rgb), 0.89); animation: fns-twinkle-a 5s ease-in-out infinite; }
+      #view::after  { box-shadow: 1001px 227px 0px rgba(var(--fns-star-rgb), 0.32), 860px 707px 0px rgba(var(--fns-star-rgb), 0.64), 1708px 806px 0px rgba(var(--fns-star-rgb), 0.75), 1151px 1079px 1px rgba(var(--fns-star-rgb), 0.34), 1812px 696px 1px rgba(var(--fns-star-rgb), 0.61), 2083px 111px 0px rgba(var(--fns-star-rgb), 0.6), 1754px 1048px 0px rgba(var(--fns-star-rgb), 0.68), 2005px 387px 0px rgba(var(--fns-star-rgb), 0.32), 714px 1119px 0px rgba(var(--fns-star-rgb), 0.37), 1066px 511px 0px rgba(var(--fns-star-rgb), 0.73), 1465px 711px 0px rgba(var(--fns-star-rgb), 0.49), 1272px 280px 1px rgba(var(--fns-star-rgb), 0.36), 1977px 487px 0px rgba(var(--fns-star-rgb), 0.62), 2111px 911px 0px rgba(var(--fns-star-rgb), 0.36), 1226px 273px 0px rgba(var(--fns-star-rgb), 0.7), 986px 683px 0px rgba(var(--fns-star-rgb), 0.58), 1739px 346px 0px rgba(var(--fns-star-rgb), 0.6), 1888px 831px 0px rgba(var(--fns-star-rgb), 0.67), 1185px 25px 0px rgba(var(--fns-star-rgb), 0.46), 177px 123px 0px rgba(var(--fns-star-rgb), 0.7), 807px 226px 1px rgba(var(--fns-star-rgb), 0.62), 462px 330px 1px rgba(var(--fns-star-rgb), 0.45), 1486px 592px 0px rgba(var(--fns-star-rgb), 0.38), 186px 22px 1px rgba(var(--fns-star-rgb), 0.51), 343px 679px 0px rgba(var(--fns-star-rgb), 0.74), 445px 1001px 1px rgba(var(--fns-star-rgb), 0.73), 777px 1112px 0px rgba(var(--fns-star-rgb), 0.44), 372px 585px 0px rgba(var(--fns-star-rgb), 0.58), 1007px 160px 0px rgba(var(--fns-star-rgb), 0.36), 103px 809px 0px rgba(var(--fns-star-rgb), 0.68), 1506px 380px 0px rgba(var(--fns-star-rgb), 0.73), 418px 635px 0px rgba(var(--fns-star-rgb), 0.63), 1553px 377px 0px rgba(var(--fns-star-rgb), 0.59), 1311px 471px 0px rgba(var(--fns-star-rgb), 0.47), 1038px 490px 0px rgba(var(--fns-star-rgb), 0.33), 1651px 103px 1px rgba(var(--fns-star-rgb), 0.73), 1732px 1023px 0px rgba(var(--fns-star-rgb), 0.63), 328px 290px 0px rgba(var(--fns-star-rgb), 0.61), 566px 907px 1px rgba(var(--fns-star-rgb), 0.59), 367px 81px 1px rgba(var(--fns-star-rgb), 0.68), 781px 447px 0px rgba(var(--fns-star-rgb), 0.63), 131px 1250px 1px rgba(var(--fns-star-rgb), 0.68), 586px 580px 0px rgba(var(--fns-star-rgb), 0.33), 2107px 862px 0px rgba(var(--fns-star-rgb), 0.7), 1796px 18px 0px rgba(var(--fns-star-rgb), 0.6), 673px 775px 1px rgba(var(--fns-star-rgb), 0.43), 1425px 1162px 0px rgba(var(--fns-star-rgb), 0.39), 1325px 1058px 0px rgba(var(--fns-star-rgb), 0.51), 1643px 1247px 0px rgba(var(--fns-star-rgb), 0.58), 1357px 1247px 1px rgba(var(--fns-star-rgb), 0.6), 1509px 984px 0px rgba(var(--fns-star-rgb), 0.6), 1225px 703px 0px rgba(var(--fns-star-rgb), 0.54), 773px 455px 1px rgba(var(--fns-star-rgb), 0.61), 349px 300px 0px rgba(var(--fns-star-rgb), 0.6), 1705px 737px 1px rgba(var(--fns-star-rgb), 0.54), 1623px 534px 0px rgba(var(--fns-star-rgb), 0.35), 830px 1122px 0px rgba(var(--fns-star-rgb), 0.64), 1038px 194px 0px rgba(var(--fns-star-rgb), 0.38), 2004px 464px 0px rgba(var(--fns-star-rgb), 0.55), 462px 1051px 0px rgba(var(--fns-star-rgb), 0.71), 1671px 150px 0px rgba(var(--fns-star-rgb), 0.66), 2060px 1127px 0px rgba(var(--fns-star-rgb), 0.53), 2110px 209px 1px rgba(var(--fns-star-rgb), 0.51), 701px 392px 0px rgba(var(--fns-star-rgb), 0.55), 560px 764px 0px rgba(var(--fns-star-rgb), 0.65), 1656px 485px 0px rgba(var(--fns-star-rgb), 0.32), 62px 1217px 1px rgba(var(--fns-star-rgb), 0.73), 1228px 246px 1px rgba(var(--fns-star-rgb), 0.62), 359px 1272px 0px rgba(var(--fns-star-rgb), 0.74), 469px 726px 0px rgba(var(--fns-star-rgb), 0.38), 47px 523px 0px rgba(var(--fns-star-rgb), 0.36), 2101px 1074px 1px rgba(var(--fns-star-rgb), 0.73), 178px 1236px 0px rgba(var(--fns-star-rgb), 0.46), 1340px 1235px 0px rgba(var(--fns-star-rgb), 0.35), 1042px 725px 1px rgba(var(--fns-star-rgb), 0.39), 87px 1190px 0px rgba(var(--fns-star-rgb), 0.5), 1999px 226px 0px rgba(var(--fns-star-rgb), 0.33), 758px 307px 0px rgba(var(--fns-star-rgb), 0.55), 1559px 295px 0px rgba(var(--fns-star-rgb), 0.56), 1100px 909px 0px rgba(var(--fns-star-rgb), 0.31), 618px 997px 0px rgba(var(--fns-star-rgb), 0.53), 145px 152px 1px rgba(var(--fns-star-rgb), 0.38), 1948px 324px 1px rgba(var(--fns-star-rgb), 0.61), 1611px 469px 0px rgba(var(--fns-star-rgb), 0.69), 1478px 674px 0px rgba(var(--fns-star-rgb), 0.54), 536px 1206px 0px rgba(var(--fns-star-rgb), 0.58), 695px 739px 0px rgba(var(--fns-star-rgb), 0.63), 1918px 794px 0px rgba(var(--fns-star-rgb), 0.72), 24px 687px 0px rgba(var(--fns-star-rgb), 0.56), 928px 42px 0px rgba(var(--fns-star-rgb), 0.41), 597px 294px 0px rgba(var(--fns-star-rgb), 0.42), 260px 1024px 0px rgba(var(--fns-star-rgb), 0.75), 2163px 1196px 0px rgba(var(--fns-star-rgb), 0.73), 390px 408px 0px rgba(var(--fns-star-rgb), 0.65), 1486px 576px 0px rgba(var(--fns-star-rgb), 0.66), 578px 147px 0px rgba(var(--fns-star-rgb), 0.44), 1485px 1042px 0px rgba(var(--fns-star-rgb), 0.68), 1435px 1127px 0px rgba(var(--fns-star-rgb), 0.62), 247px 690px 1px rgba(var(--fns-star-rgb), 0.6), 2063px 752px 0px rgba(var(--fns-star-rgb), 0.7), 1430px 308px 0px rgba(var(--fns-star-rgb), 0.36), 1856px 829px 0px rgba(var(--fns-star-rgb), 0.5), 691px 1201px 0px rgba(var(--fns-star-rgb), 0.33), 1263px 516px 0px rgba(var(--fns-star-rgb), 0.63), 301px 389px 0px rgba(var(--fns-star-rgb), 0.56), 732px 623px 1px rgba(var(--fns-star-rgb), 0.56), 1462px 877px 0px rgba(var(--fns-star-rgb), 0.62), 1984px 653px 0px rgba(var(--fns-star-rgb), 0.7), 1054px 1119px 0px rgba(var(--fns-star-rgb), 0.31), 1097px 485px 0px rgba(var(--fns-star-rgb), 0.62); animation: fns-twinkle-b 7s ease-in-out infinite; }
+      @keyframes fns-twinkle-a { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+      @keyframes fns-twinkle-b { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+      {% endif %}
+      @media (prefers-reduced-motion: reduce) { #view::before, #view::after { animation: none !important; opacity: .3; } }
+      .main-title {
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+      /* Kompaktnější mobil: menší mezery v sekcích i mezi nimi, těsnější
+         mushroom karty, menší nadpisy. Proměnné se z #view dědí do sekcí. */
+      @media (max-width: 600px) {
+        #view {
+          --ha-section-grid-row-gap: 6px;
+          --ha-view-sections-row-gap: 18px;
+          --mush-spacing: 10px;
+          --ha-heading-card-title-font-size: 17px;
+        }
+      }
+
+  # --- SIDEBAR (ha-sidebar) — vybraná položka jako zaoblená pilulka ---------
+  uix-sidebar-yaml: |
+    .: |
+      ha-list-item-button { border-radius: 12px; }
+      ha-list-item-button.selected:before {
+        border-radius: 12px;
+        opacity: .14;
+      }
+
+  # --- ROW MOD ---
+  uix-row-yaml: |
+    hui-generic-entity-row:
+      $:
+        state-badge:
+          $:
+            ha-state-icon:
+              $: |
+                ha-icon { display: block; }
+                ha-icon, ha-svg-icon {
+                  height: 22px !important;
+                  position: relative;
+                  top: -1px;
+                }
+                @media screen and (max-width: 800px) {
+                  ha-icon, ha-svg-icon { top: -1px !important; }
+                }
+        .: |
+          state-badge {
+            color: rgba(var(--mush-rgb-state), 1);
+            background: rgba(var(--mush-rgb-state), .14);
+            background-size: cover;
+            background-position: center;
+            border-radius: 12px !important;
+            margin: 0 15px 0 0;
+            --mdc-icon-size: 22px;
+          }
+          /* V popupech (browser_mod / more-info) je ikona bez podkladoveho ctverce
+             — tinta patri jen radkum na dashboardech. */
+          :host-context(browser-mod-popup) state-badge,
+          :host-context(ha-dialog) state-badge {
+            background: none !important;
+            border-radius: 0 !important;
+          }
+          .secondary {
+              overflow: unset !important;
+              white-space: normal !important;
+              font-size: 12px !important;
+          }
+          .info {
+            margin-left: 0px !important;
+            font-weight: 600;
+            padding: 16px 0 !important;
+            position: relative;
+          }
+
+  # --- CARD MOD ---
+  uix-card-yaml: |
+    datetime-bar:
+      $: |
+        .external-bar, .internal-bar {
+          height: 8px !important;
+          border-radius: 50px !important;
+        }
+
+    hui-entity-heading-badge:
+      $: |
+        ha-heading-badge state-display { font-size: 12px !important; }
+
+    .: |
+      /* 2026-09-05 pohyb: (4) přechod stavu — jen transform a barvy, box-shadow záměrně bez přechodu (stack-in-card) */
+      ha-card { transition: transform 90ms ease, background-color 200ms ease, color 200ms ease !important; }
+      ha-tile-icon, .icon-container, mushroom-shape-icon .shape, ha-state-icon {
+        transition: color 200ms ease, background-color 200ms ease, transform 200ms ease;
+      }
+      /* (3) odezva na stisk — dlaždice, tlačítka, mushroom */
+      :host(.type-tile) ha-card:active, :host(.type-button) ha-card:active, :host(.type-custom-button-card) ha-card:active,
+      :host(.type-custom-mushroom-template-card) ha-card:active, :host(.type-custom-mushroom-entity-card) ha-card:active,
+      :host(.type-custom-mushroom-light-card) ha-card:active, :host(.type-custom-mushroom-media-player-card) ha-card:active {
+        transform: scale(.97);
+      }
+      /* (8) vstup karty zrušen 2026-09-05: při načítání stránky karty naskakují postupně a animace každé z nich dělala "poskakování" */
+      /* (2) alerty na Přehledu: vstup + pulz error typu je v uix.style foundry alert_row (řádky jdou přes auto-entities, třída z motivu se na ně nepropíše) */
+      /* (5) respektovat nastavení telefonu */
+      @media (prefers-reduced-motion: reduce) {
+        :host, ha-card, ha-card * { animation: none !important; transition: none !important; }
+      }
+
+      /* --- POMOCNÉ TŘÍDY --- */
+      :host(.no-padding) ha-card, ha-card.no-padding {
+        border: none;
+        background: transparent;
+        box-shadow: none;
+      }
+      :host(.no-padding) ha-card #states, ha-card.no-padding #states {
+        padding: 0 !important;
+      }
+      :host(.no-shadow) ha-card, ha-card.no-shadow {
+        box-shadow: none !important;
+      }
+
+      /* --- MINI GRAPH CARD --- */
+      :host(.type-custom-mini-graph-card.no-name) ha-card { padding-top: 0; }
+      :host(.type-custom-mini-graph-card) ha-card .state__value { font-size: 14px !important; font-weight: bold; }
+      :host(.type-custom-mini-graph-card) ha-card .state__uom { font-size: 14px; position: relative; top: -4px; }
+      :host(.type-custom-mini-graph-card) ha-card .ellipsis { font-size: 14px; }
+      :host(.type-custom-mini-graph-card) ha-card .header { padding: 0px 12px 12px 12px; }
+      :host(.type-custom-mini-graph-card) ha-card .states { padding: 0px 12px 16px 12px; }
+      :host(.type-custom-mini-graph-card) ha-card .info { font-size: 10px; padding: 0px 12px 12px 12px; }
+      :host(.type-custom-mini-graph-card.no-name) ha-card .icon { position: absolute; top: 9px; right: 5px; }
+
+      /* --- HEADING --- */
+      :host(.type-heading) ha-card:has(.subtitle) { padding-top: 10px }
+
+      /* Titulek těsnější, podtitulek jako malý štítek (uppercase, prostrkaný) */
+      :host(.type-heading) .content.title { letter-spacing: -0.01em; }
+      :host(.type-heading) .content.subtitle {
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        opacity: .9;
+      }
+
+      /* Nadpis uprostřed sekce má mít shora stejný odstup jako mezera mezi
+         sekcemi: --ha-section-grid-row-gap (8px) + 16px = 24px, což je
+         --ha-view-sections-row-gap. První nadpis v sekci se vynechá — tam ten
+         odstup dělá už mezisekční mezera. Musí to být padding, ne margin;
+         margin v gridu sekce nezvětší výšku buňky a karta se překryje. */
+      :host(.type-heading:not(:first-child)) ha-card { padding-top: 16px; }
+      /* Mobil: 18px mezisekční mezera − 6px mezera v sekci = 12px */
+      @media (max-width: 600px) {
+        :host(.type-heading:not(:first-child)) ha-card { padding-top: 12px; }
+      }
+
+      /* --- MINI GRAPH: jednotné čáry pro všech 21 grafů + foundries ---
+         line_width je option karty (default 5), ale SVG atribut stroke-width
+         přebije CSS vlastnost, takže to jde globálně odsud. */
+      :host(.type-custom-mini-graph-card) ha-card path.line {
+        stroke-width: 2px;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      /* --- PICTURE-ELEMENTS (půdorys) --- */
+      /* state-badge má pevných 40px a ikona uvnitř 24px, ale obrázek půdorysu se
+         roztahuje podle šířky karty. Na užší kartě (mobil ~339px vs. desktop ~442px)
+         tak ikony zabírají relativně víc a prvky u okraje vylezou ven — třeba krb
+         na top: 3%. Navázáním na cqw se ikony zmenšují spolu s obrázkem; min()
+         drží horní hranici na dnešní velikosti, takže široké obrazovky se nemění. */
+      :host(.type-picture-elements) ha-card { container-type: inline-size; }
+      :host(.type-picture-elements) state-badge {
+        width: min(40px, 9cqw);
+        height: min(40px, 9cqw);
+        --mdc-icon-size: min(24px, 5.4cqw);
+      }
+
+      /* Rotační animace — samotný trigger má karta přes uix.style, keyframes sdílené */
+      @keyframes rotation {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+  modes:
+    light:
+      # --- Paleta light (2026-09-06 v2) — jediné místo, kde se píše hodnota barvy.
+      #     Odstín i sytost stejné jako dřív, mění se jen světlost: ve světlém režimu jsou
+      #     nejsvětlejší tóny o kousek hlubší, v tmavém se ty nejtmavší nadzvednou. Bez posunu odstínu.
+      fns-red: "#ef4444"
+      fns-pink: "#ec4899"
+      fns-purple: "#a855f7"
+      fns-deep-purple: "#7c3aed"
+      fns-indigo: "#6366f1"
+      fns-blue: "#3b82f6"
+      fns-light-blue: "#1dade7"
+      fns-cyan: "#00acc8"
+      fns-teal: "#00ae9d"
+      fns-green: "#00b451"
+      fns-light-green: "#77bb00"
+      fns-lime: "#93d515"
+      fns-yellow: "#e8bc00"
+      fns-amber: "#e9af00"
+      fns-orange: "#ee6a00"
+      fns-deep-orange: "#e95b1e"
+      fns-brown: "#a47148"
+      fns-grey: "#828c9c"
+      fns-blue-grey: "#64748b"
+      fns-light-grey: "#b3bac6"
+      fns-dark-grey: "#5e6878"
+
+      fns-rgb-red: "239, 68, 68"
+      fns-rgb-pink: "236, 72, 153"
+      fns-rgb-purple: "168, 85, 247"
+      fns-rgb-deep-purple: "124, 58, 237"
+      fns-rgb-indigo: "99, 102, 241"
+      fns-rgb-blue: "59, 130, 246"
+      fns-rgb-light-blue: "29, 173, 231"
+      fns-rgb-cyan: "0, 172, 200"
+      fns-rgb-teal: "0, 174, 157"
+      fns-rgb-green: "0, 180, 81"
+      fns-rgb-light-green: "119, 187, 0"
+      fns-rgb-lime: "147, 213, 21"
+      fns-rgb-yellow: "232, 188, 0"
+      fns-rgb-amber: "233, 175, 0"
+      fns-rgb-orange: "238, 106, 0"
+      fns-rgb-deep-orange: "233, 91, 30"
+      fns-rgb-brown: "164, 113, 72"
+      fns-rgb-grey: "130, 140, 156"
+      fns-rgb-blue-grey: "100, 116, 139"
+      fns-rgb-light-grey: "179, 186, 198"
+      fns-rgb-dark-grey: "94, 104, 120"
+
+      # sémantické role — v kartách se odkazují tyhle, ne odstíny
+      fns-success: "var(--fns-green)"
+      fns-rgb-success: "var(--fns-rgb-green)"
+      fns-warning: "var(--fns-amber)"
+      fns-rgb-warning: "var(--fns-rgb-amber)"
+      fns-danger: "var(--fns-red)"
+      fns-rgb-danger: "var(--fns-rgb-red)"
+      fns-info: "var(--fns-blue)"
+      fns-rgb-info: "var(--fns-rgb-blue)"
+      fns-accent: "var(--fns-indigo)"
+      fns-rgb-accent: "var(--fns-rgb-indigo)"
+      # Povrchy
+      primary-background-color: "#f3f5f9"
+      secondary-background-color: "#e9edf4"
+      card-background-color: "#ffffff"
+      clear-background-color: "#ffffff"
+      rgb-card-background-color: "255, 255, 255"
+      fns-sidebar-bg: "#ffffff"
+      fns-header-bg: "rgba(243, 245, 249, .72)"
+      fns-card-border: "rgba(17, 24, 39, .06)"
+      fns-scrim: "rgba(17, 24, 39, .40)"
+      fns-ambient: "radial-gradient(1100px 640px at 6% -6%, rgba(63, 109, 245, .24), transparent 62%), radial-gradient(900px 560px at 100% 8%, rgba(20, 184, 166, .16), transparent 60%), var(--primary-background-color)"
+      fns-ambient-a1: ".24"
+      fns-ambient-a2: ".16"
+      fns-rain-rgb: "90, 130, 200"
+      fns-snow-rgb: "150, 175, 215"
+      fns-fog-rgb: "140, 148, 162"
+      fns-flash-rgb: "255, 255, 255"
+      fns-cloud-rgb: "196, 206, 222"
+      fns-overcast-rgb: "128, 138, 156"
+      fns-star-rgb: "110, 130, 175"
+      # Text
+      primary-text-color: "#111827"
+      secondary-text-color: "#5b6472"
+      disabled-text-color: "#a3aab5"
+      rgb-primary-text-color: "17, 24, 39"
+      rgb-secondary-text-color: "91, 100, 114"
+      # Akcent
+      primary-color: "#3f6df5"
+      rgb-primary-color: "63, 109, 245"
+      dark-primary-color: "#2b55d6"
+      darker-primary-color: "#1d3a9a"
+      light-primary-color: "#dfe6ff"
+      mush-rgb-state: "63, 109, 245"
+      # Vypnuté entity: zřetelně modré, aby se lišily od šedých nedostupných (disabled-text-color)
+      state-icon-color: "#4f6fb3"
+      state-icon-unavailable-color: "#a3aab5"
+      # Linky, stíny, formuláře
+      divider-color: "rgba(17, 24, 39, .08)"
+      outline-color: "rgba(17, 24, 39, .10)"
+      outline-hover-color: "rgba(17, 24, 39, .22)"
+      shadow-color: "rgba(17, 24, 39, .14)"
+      scrollbar-thumb-color: "#c3c9d4"
+      input-fill-color: "#f3f5f9"
+      box-shadow: "0 0 0 1px var(--fns-card-border), 0 1px 2px rgba(17, 24, 39, .04), 0 10px 28px -14px rgba(17, 24, 39, .14)"
+      # Půdorys — badge
+      mush-rgb-disabled: "189, 189, 189"
+      fns-badge-bg: "rgba(255,255,255,.85)"
+      fns-badge-fg: "#212121"
+      fns-badge-title-bg: "rgba(255,255,255,.9)"
+      fns-badge-title-fg: "#444"
+    dark:
+      # --- Paleta dark (2026-09-06 v2) — jediné místo, kde se píše hodnota barvy.
+      #     Odstín i sytost stejné jako dřív, mění se jen světlost: ve světlém režimu jsou
+      #     nejsvětlejší tóny o kousek hlubší, v tmavém se ty nejtmavší nadzvednou. Bez posunu odstínu.
+      fns-red: "#fe5350"
+      fns-pink: "#fa56a5"
+      fns-purple: "#b367ff"
+      fns-deep-purple: "#8e59ff"
+      fns-indigo: "#7880ff"
+      fns-blue: "#4c90ff"
+      fns-light-blue: "#38bdf8"
+      fns-cyan: "#06b6d4"
+      fns-teal: "#14b8a6"
+      fns-green: "#22c55e"
+      fns-light-green: "#84cc16"
+      fns-lime: "#a3e635"
+      fns-yellow: "#facc15"
+      fns-amber: "#fbbf24"
+      fns-orange: "#f97316"
+      fns-deep-orange: "#f4652b"
+      fns-brown: "#ba865d"
+      fns-grey: "#8b95a5"
+      fns-blue-grey: "#7889a0"
+      fns-light-grey: "#c3cad6"
+      fns-dark-grey: "#727c8d"
+
+      fns-rgb-red: "254, 83, 80"
+      fns-rgb-pink: "250, 86, 165"
+      fns-rgb-purple: "179, 103, 255"
+      fns-rgb-deep-purple: "142, 89, 255"
+      fns-rgb-indigo: "120, 128, 255"
+      fns-rgb-blue: "76, 144, 255"
+      fns-rgb-light-blue: "56, 189, 248"
+      fns-rgb-cyan: "6, 182, 212"
+      fns-rgb-teal: "20, 184, 166"
+      fns-rgb-green: "34, 197, 94"
+      fns-rgb-light-green: "132, 204, 22"
+      fns-rgb-lime: "163, 230, 53"
+      fns-rgb-yellow: "250, 204, 21"
+      fns-rgb-amber: "251, 191, 36"
+      fns-rgb-orange: "249, 115, 22"
+      fns-rgb-deep-orange: "244, 101, 43"
+      fns-rgb-brown: "186, 134, 93"
+      fns-rgb-grey: "139, 149, 165"
+      fns-rgb-blue-grey: "120, 137, 160"
+      fns-rgb-light-grey: "195, 202, 214"
+      fns-rgb-dark-grey: "114, 124, 141"
+
+      # sémantické role — v kartách se odkazují tyhle, ne odstíny
+      fns-success: "var(--fns-green)"
+      fns-rgb-success: "var(--fns-rgb-green)"
+      fns-warning: "var(--fns-amber)"
+      fns-rgb-warning: "var(--fns-rgb-amber)"
+      fns-danger: "var(--fns-red)"
+      fns-rgb-danger: "var(--fns-rgb-red)"
+      fns-info: "var(--fns-blue)"
+      fns-rgb-info: "var(--fns-rgb-blue)"
+      fns-accent: "var(--fns-indigo)"
+      fns-rgb-accent: "var(--fns-rgb-indigo)"
+      # Povrchy
+      primary-background-color: "#0b0e14"
+      secondary-background-color: "#1a212c"
+      card-background-color: "#151a23"
+      clear-background-color: "#0b0e14"
+      rgb-card-background-color: "21, 26, 35"
+      fns-sidebar-bg: "#0f131a"
+      fns-header-bg: "rgba(11, 14, 20, .72)"
+      fns-card-border: "rgba(255, 255, 255, .06)"
+      fns-scrim: "rgba(2, 6, 12, .60)"
+      fns-ambient: "radial-gradient(1100px 640px at 6% -6%, rgba(63, 109, 245, .34), transparent 62%), radial-gradient(900px 560px at 100% 8%, rgba(20, 184, 166, .20), transparent 60%), var(--primary-background-color)"
+      fns-ambient-a1: ".34"
+      fns-ambient-a2: ".20"
+      fns-rain-rgb: "150, 185, 240"
+      fns-snow-rgb: "255, 255, 255"
+      fns-fog-rgb: "190, 198, 212"
+      fns-flash-rgb: "205, 215, 255"
+      fns-cloud-rgb: "200, 210, 228"
+      fns-overcast-rgb: "150, 160, 180"
+      fns-star-rgb: "255, 255, 255"
+      # Text
+      primary-text-color: "#e8ecf4"
+      secondary-text-color: "#98a3b8"
+      disabled-text-color: "#5e6878"
+      rgb-primary-text-color: "232, 236, 244"
+      rgb-secondary-text-color: "152, 163, 184"
+      # Akcent
+      primary-color: "#6b8cff"
+      rgb-primary-color: "107, 140, 255"
+      dark-primary-color: "#3f6df5"
+      darker-primary-color: "#2b55d6"
+      light-primary-color: "#14245f"
+      mush-rgb-state: "107, 140, 255"
+      # Vypnuté entity: měkká modř; nedostupné zůstávají tmavě šedé
+      state-icon-color: "#8fb0ec"
+      state-icon-unavailable-color: "#525c6b"
+      # Linky, stíny, formuláře
+      divider-color: "rgba(255, 255, 255, .07)"
+      outline-color: "rgba(255, 255, 255, .10)"
+      outline-hover-color: "rgba(255, 255, 255, .22)"
+      shadow-color: "rgba(0, 0, 0, .55)"
+      scrollbar-thumb-color: "#3a4352"
+      input-fill-color: "rgba(255, 255, 255, .05)"
+      mdc-ripple-color: "#c9d3e6"
+      box-shadow: "0 0 0 1px var(--fns-card-border), 0 1px 2px rgba(0, 0, 0, .40), 0 12px 32px -16px rgba(0, 0, 0, .60)"
+      # Půdorys — badge
+      mush-rgb-disabled: "111, 111, 111"
+      fns-badge-bg: "rgba(18,18,18,.72)"
+      fns-badge-fg: "#ffffff"
+      fns-badge-title-bg: "rgba(18,18,18,.85)"
+      fns-badge-title-fg: "#dddddd"

@@ -1,0 +1,121 @@
+uix_foundries:
+  level_tile:
+    element:
+      entity: '{{ entity }}'
+      icon: '{{ icon }}'
+      icon_color: '{{ color }}'
+      layout: vertical
+      primary: << states('{{ entity }}') | float(0) | round(0) >> %
+      secondary: '{{ name }}'
+      tap_action:
+        action: more-info
+      type: custom:mushroom-template-card
+      uix:
+        style: "{% set v = states(config.entity) | float(0) | round(0) %}\nha-card {\n  background-color: var(--ha-card-background, var(--card-background-color, #fff)) !important;\n  background-image: linear-gradient(to top,\n    rgba({{ rgb }}, {{ alfa }}) 0%,\n    rgba({{ rgb }}, {{ alfa }}) {{ v }}%,\n    transparent {{ v }}%,\n    transparent 100%) !important;\n}\nha-card .primary { font-size: 14px !important; white-space: nowrap !important; }\nha-card .secondary { font-size: 11px !important; white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; }\n"
+    forge:
+      billets:
+        alfa: '.22'
+        color: grey
+        entity: null
+        icon: mdi:water
+        name: ''
+        rgb: 150,150,150
+      grid_options:
+        columns: 3
+        rows: 2
+      mold: card
+  mini_graph:
+    element:
+      animate: true
+      color_thresholds:
+      - color: '{{ c1 }}'
+        value: '{{ v1 }}'
+      - color: '{{ c2 }}'
+        value: '{{ v2 }}'
+      - color: '{{ c3 }}'
+        value: '{{ v3 }}'
+      - color: '{{ c4 }}'
+        value: '{{ v4 }}'
+      - color: '{{ c5 }}'
+        value: '{{ v5 }}'
+      color_thresholds_transition: hard
+      entities:
+      - '{{ entity }}'
+      font_size: '{{ font_size }}'
+      hour24: true
+      hours_to_show: '{{ hours }}'
+      name: '{{ name }}'
+      points_per_hour: '{{ pph }}'
+      show:
+        average: true
+        extrema: true
+        fill: '{{ fill }}'
+        icon: '{{ icon }}'
+        icon_adaptive_color: true
+        labels: false
+        legend: '{{ legend }}'
+        name: '{{ show_name }}'
+        state: '{{ state }}'
+      type: custom:mini-graph-card
+      uix:
+        class: '{{ css_class }}'
+        style: '{{ card_style }}'
+    forge:
+      billets:
+        c1: '#3b82f6'
+        c2: '#f97316'
+        c3: '#ef4444'
+        c4: '#ef4444'
+        c5: '#ef4444'
+        card_style: ''
+        css_class: ''
+        entity: null
+        fill: true
+        font_size: 100
+        hours: 12
+        icon: true
+        legend: true
+        name: null
+        pph: 2
+        show_name: true
+        state: true
+        v1: 45
+        v2: 50
+        v3: 55
+        v4: 55
+        v5: 55
+      mold: card
+  threshold_tile:
+    element:
+      entity: '{{ entity }}'
+      features_position: '{{ features_position }}'
+      icon: '{{ icon }}'
+      name: '{{ name }}'
+      state_content: '{{ state_content }}'
+      type: tile
+      uix:
+        style:
+          .: "ha-card {\n  /* 2026-09-06: barva z palety motivu (--fns-rgb-*), ne název z palety HA — 'green' byl CSS keyword #008000 a nesedel s ostatnimi kartami */\n  {% if states(config.entity)|float(0) * sgn > t1 %}\n    --tile-color: rgb(var(--fns-rgb-{{ c_hi }})) !important;\n  {% elif states(config.entity)|float(0) * sgn > t2 %}\n    --tile-color: rgb(var(--fns-rgb-{{ c_mid }})) !important;\n  {% else %}\n    --tile-color: rgb(var(--fns-rgb-{{ c_lo }})) !important;\n  {% endif %}\n}\n"
+          ha-tile-container$: ".background::before {\n  position: absolute;\n  {{ fill_prop }}: {{ (states(config.entity)|float(0) - fmin) * 100 / (fmax - fmin) }}%;\n  {{ 'height' if fill_prop == 'width' else 'width' }}: 100%;\n  bottom: 0;\n  transition: all 1s;\n  content: \" \";\n  {% if states(config.entity)|float(0) * sgn > t1 %}\n    background-color: rgba(var(--mush-rgb-{{ c_hi }}), .07);\n  {% elif states(config.entity)|float(0) * sgn > t2 %}\n    background-color: rgba(var(--mush-rgb-{{ c_mid }}), .07);\n  {% else %}\n    background-color: rgba(var(--mush-rgb-{{ c_lo }}), .07);\n  {% endif %}\n}\n"
+          ha-tile-info$: ".secondary::after {\n{% if info_entity %}\n  visibility: visible;\n  content: \" ⸱ {{ states(info_entity) }} {{ info_unit }}\";\n  white-space: nowrap;\n  margin-left: 4px;\n{% else %}\n  content: \"\";\n{% endif %}\n}\n{% if info_entity %}\n.secondary::slotted(*) {\n  width: auto !important;\n  flex: 0 0 auto !important;\n}\n{% endif %}\n"
+      vertical: '{{ vertical }}'
+    forge:
+      billets:
+        c_hi: green
+        c_lo: red
+        c_mid: orange
+        entity: null
+        features_position: bottom
+        fill_prop: width
+        fmax: 100
+        fmin: 0
+        icon: ''
+        info_entity: ''
+        info_unit: ''
+        name: null
+        sgn: 1
+        state_content: state
+        t1: null
+        t2: null
+        vertical: false
+      mold: card
