@@ -1,45 +1,37 @@
 # FNS HA Tweaks
 
-Sdílené části dvou instancí Home Assistantu — **HA Home** a **HA Office** (adresy a přístupy jsou mimo repozitář).
-Změna se udělá jednou v tomto repozitáři a skript ji nasadí na obě instance.
+Sdílený vzhled pro víc instancí Home Assistantu v jedné HACS integraci. Nainstaluješ, přidáš jeden řádek do `configuration.yaml`, restartuješ — a je to. Další verze se pak nabízí k aktualizaci přímo v HACS.
 
-## Co se sdílí
+## Co integrace přinese
 
-| Cesta v repozitáři | Co to je | Kam se nasazuje |
-|---|---|---|
-| `shared/theme/fns-mushroom.yaml` | motiv `fns_mushroom` — globální paleta (light/dark), cirkadiánní podbarvení, vrstvy počasí, sluneční záře | Home `/homeassistant/themes/fns-mushroom/fns-mushroom.yaml`, Office `/homeassistant/themes/fns_mushroom/fns_mushroom.yaml` |
-| `shared/uix/foundries.shared.yaml` | UIX foundries `level_tile`, `mini_graph`, `threshold_tile` | slučuje se do `/homeassistant/uix/foundries.yaml` obou instancí |
-| `shared/cards/sun_line.json` | karta sluneční linky v hlavičce Přehledu (svítání/soumrak, fáze Měsíce, srážkové sloupce, popup) | hlavička výchozího dashboardu obou instancí |
-| `instances/<instance>/foundries.local.yaml` | foundries jen pro danou instanci (`alert_row`, `climate`, `room_heading`…) | slučuje se se sdílenými do `foundries.yaml` |
+| Co | Kam si to sama nasadí |
+|---|---|
+| Motiv `fns_mushroom` — globální paleta pro light i dark, cirkadiánní podbarvení, vrstvy počasí a sluneční záře | `themes/fns-mushroom/fns-mushroom.yaml`, pak načte témata |
+| UIX foundries `level_tile`, `mini_graph`, `threshold_tile` | `uix/fns_shared.yaml` a zaregistruje ho v integraci UIX |
+| Karta sluneční linky (svítání a soumrak, fáze Měsíce, srážkové sloupce, popup) | službou `fns_shared.deploy_sun_card` do hlavičky výchozího dashboardu |
 
-Soubor `foundries.yaml` na instanci je **generovaný** — needituj ho přes SSH ani v editoru,
-změna se ztratí při příštím `push`. Edituj `shared/` nebo `instances/`.
+Vlastní foundries instance zůstávají tam, kde byly (`uix/foundries.yaml`); integrace do nich nesahá, jen přidá druhý soubor vedle nich.
 
-## Přístupy
+## Instalace
 
-Skript čte hesla a tokeny z `~/.config/ha-sync.json`, který v repozitáři není.
-Založ ho podle `secrets.example.json` (práva 600).
+1. HACS → tři tečky → **Custom repositories** → `matata86/fns-ha-tweaks`, kategorie **Integration**.
+2. **Download**.
+3. Do `configuration.yaml` přidat řádek:
 
-## Použití
+   ```yaml
+   fns_shared:
+   ```
+4. Restart Home Assistantu.
 
-```bash
-python3 ha_sync.py status all       # co se liší proti živým instancím
-python3 ha_sync.py diff office      # konkrétní rozdíl v tématu a foundries
-python3 ha_sync.py pull home        # živý stav Home -> repozitář (po ruční úpravě na instanci)
-python3 ha_sync.py push office      # repozitář -> Office
-python3 ha_sync.py push all         # repozitář -> obě instance
-```
+Motiv se pak vybere v profilu uživatele (**Motiv → fns_mushroom**), foundries jsou hned k dispozici.
 
-`push` nahraje motiv a sloučené foundries přes SFTP, uloží kartu slunce do dashboardu
-přes websocket a zavolá `uix/reload_foundry_files` + `frontend.reload_themes`.
-Prohlížeč pak stačí načíst znovu, restart Core není potřeba.
+Kartu slunce nasadí jednou služba **Vývojářské nástroje → Akce → `fns_shared.deploy_sun_card`**. Pokud už karta v dashboardu je, nahradí ji novou verzí.
 
-## Obvyklý postup změny
+## Aktualizace
 
-1. `python3 ha_sync.py pull home` — sesbírá aktuální stav referenční instance.
-2. Úprava souboru v `shared/`.
-3. `python3 ha_sync.py push all`.
-4. `git commit && git push`.
+Nová verze se objeví v HACS jako u kterékoli jiné integrace. Po stažení a restartu se motiv i foundries přepíšou samy.
 
-Karta slunce se v dashboardu hledá podle názvu popupu „Slunce a měsíc"; pokud ji někdo
-přejmenuje, `push` ji přeskočí a napíše to do výstupu.
+## Požadavky
+
+- [UIX](https://uix.lf.technology) — kvůli foundries a stylům motivu
+- Mushroom, browser_mod — karty a popup sluneční linky
