@@ -89,6 +89,23 @@ async def _load_default_dashboard(hass: HomeAssistant):
     raise ValueError("výchozí dashboard nemá uloženou konfiguraci (není ve storage režimu)")
 
 
+def _find_sun_card(config: dict[str, Any]) -> dict[str, Any] | None:
+    """Najde kartu sluneční linky v dashboardu, nebo vrátí None."""
+    stack: list[Any] = [config]
+    while stack:
+        node = stack.pop()
+        if isinstance(node, list):
+            for item in node:
+                if (isinstance(item, dict)
+                        and str(item.get("type", "")).startswith("custom:mushroom-template")
+                        and SUN_CARD_MARKER in json.dumps(item, ensure_ascii=False)):
+                    return item
+                stack.append(item)
+        elif isinstance(node, dict):
+            stack.extend(node.values())
+    return None
+
+
 def _replace_sun_card(config: dict[str, Any], card: dict[str, Any]) -> str:
     """Nahradí kartu slunce, nebo ji vloží do hlavičky prvního pohledu."""
     stack: list[Any] = [config]
@@ -145,12 +162,28 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
         elif foundries_changed:
             await hass.config_entries.async_reload(entry.entry_id)
 
-    async def _deploy_sun_card(_call: ServiceCall) -> None:
+        try:
+            _LOGGER.info("%s: karta slunce — %s", DOMAIN, await _sync_sun_card(only_if_present=True))
+        except Exception as err:  # dashboard nemusí být ve storage režimu
+            _LOGGER.warning("%s: kartu slunce nelze aktualizovat (%s)", DOMAIN, err)
+
+    async def _sync_sun_card(only_if_present: bool = False) -> str:
         store, dashboard = await _load_default_dashboard(hass)
         card = await hass.async_add_executor_job(_load_sun_card)
+        if only_if_present:
+            # Při startu kartu nikam nevnucujeme — jen aktualizujeme tu, která už v dashboardu je,
+            # a to jen když se liší, ať se dashboard zbytečně nepřepisuje.
+            current = _find_sun_card(dashboard)
+            if current is None:
+                return "v dashboardu není"
+            if current == card:
+                return "beze změny"
         where = _replace_sun_card(dashboard, card)
         await store.async_save(dashboard)
-        _LOGGER.info("%s: karta slunce %s", DOMAIN, where)
+        return where
+
+    async def _deploy_sun_card(_call: ServiceCall) -> None:
+        _LOGGER.info("%s: karta slunce %s", DOMAIN, await _sync_sun_card())
 
     hass.services.async_register(DOMAIN, SERVICE_DEPLOY_SUN_CARD, _deploy_sun_card)
 
