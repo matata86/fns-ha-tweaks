@@ -67,17 +67,26 @@ def _load_sun_card() -> dict[str, Any]:
         return json.load(fh)
 
 
-def _default_dashboard_store(hass: HomeAssistant):
-    """Vrátí úložiště výchozího dashboardu napříč verzemi HA."""
+async def _load_default_dashboard(hass: HomeAssistant):
+    """Vrátí (úložiště, konfigurace) výchozího dashboardu napříč verzemi HA."""
     lovelace = hass.data.get("lovelace")
-    if lovelace is None:
-        return None
     dashboards = getattr(lovelace, "dashboards", None)
     if dashboards is None and isinstance(lovelace, dict):
         dashboards = lovelace.get("dashboards")
     if not dashboards:
-        return None
-    return dashboards.get(None)
+        raise ValueError("lovelace není k dispozici")
+
+    # Podle verze HA je výchozí dashboard pod klíčem "lovelace" nebo None;
+    # ten druhý bývá automaticky generovaný a uloženou konfiguraci nemá.
+    for key in ("lovelace", None):
+        store = dashboards.get(key)
+        if store is None:
+            continue
+        try:
+            return store, await store.async_load(False)
+        except Exception:  # ConfigNotFound a spol. — zkusíme další klíč
+            continue
+    raise ValueError("výchozí dashboard nemá uloženou konfiguraci (není ve storage režimu)")
 
 
 def _replace_sun_card(config: dict[str, Any], card: dict[str, Any]) -> str:
@@ -137,11 +146,8 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
             await hass.config_entries.async_reload(entry.entry_id)
 
     async def _deploy_sun_card(_call: ServiceCall) -> None:
-        store = _default_dashboard_store(hass)
-        if store is None:
-            raise ValueError("výchozí dashboard není ve storage režimu")
+        store, dashboard = await _load_default_dashboard(hass)
         card = await hass.async_add_executor_job(_load_sun_card)
-        dashboard = await store.async_load(False)
         where = _replace_sun_card(dashboard, card)
         await store.async_save(dashboard)
         _LOGGER.info("%s: karta slunce %s", DOMAIN, where)
