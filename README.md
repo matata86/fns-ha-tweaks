@@ -1,6 +1,6 @@
-# ha-shared
+# FNS HA Tweaks
 
-Sdílené části dvou instancí Home Assistantu — **HA Home** (192.168.1.10) a **HA Office** (Tailscale 100.98.189.65).
+Sdílené části dvou instancí Home Assistantu — **HA Home** a **HA Office** (adresy a přístupy jsou mimo repozitář).
 Změna se udělá jednou v tomto repozitáři a skript ji nasadí na obě instance.
 
 ## Co se sdílí
