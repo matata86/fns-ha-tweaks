@@ -1,0 +1,5 @@
+deploy_sun_card:
+  name: Nasadit kartu slunce
+  description: >-
+    Vloží kartu sluneční linky do hlavičky výchozího dashboardu, nebo nahradí
+    tu, která tam už je. Volá se ručně, dashboard se nenasazuje automaticky.
