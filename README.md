@@ -8,7 +8,7 @@ Sdílený vzhled pro víc instancí Home Assistantu v jedné HACS integraci. Nai
 |---|---|
 | Motiv `fns_mushroom` — globální paleta pro light i dark, cirkadiánní podbarvení, vrstvy počasí a sluneční záře | `themes/fns-mushroom/fns-mushroom.yaml`, pak načte témata |
 | UIX foundries `level_tile`, `mini_graph`, `threshold_tile` | `uix/fns_shared.yaml` a zaregistruje ho v integraci UIX |
-| Karta sluneční linky (svítání a soumrak, fáze Měsíce, srážkové sloupce, popup) | službou `fns_shared.deploy_sun_card` do hlavičky výchozího dashboardu |
+| Karta sluneční linky (svítání a soumrak, fáze Měsíce, srážkové sloupce, popup) | při startu se sama aktualizuje, pokud už v dashboardu je; poprvé ji tam vloží služba `fns_shared.deploy_sun_card` |
 
 Vlastní foundries instance zůstávají tam, kde byly (`uix/foundries.yaml`); integrace do nich nesahá, jen přidá druhý soubor vedle nich.
 
@@ -25,7 +25,7 @@ Vlastní foundries instance zůstávají tam, kde byly (`uix/foundries.yaml`); i
 
 Motiv se pak vybere v profilu uživatele (**Motiv → fns_mushroom**), foundries jsou hned k dispozici.
 
-Kartu slunce nasadí jednou služba **Vývojářské nástroje → Akce → `fns_shared.deploy_sun_card`**. Pokud už karta v dashboardu je, nahradí ji novou verzí.
+Kartu slunce vloží poprvé služba **Vývojářské nástroje → Akce → `fns_shared.deploy_sun_card`**. Od té chvíle ji každá nová verze integrace při startu aktualizuje sama — přepíše se jen ta jedna karta, zbytek dashboardu zůstává.
 
 ## Aktualizace
 
