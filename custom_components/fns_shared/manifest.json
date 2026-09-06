@@ -1,13 +1,19 @@
 {
   "domain": "fns_shared",
-  "name": "FNS Shared",
-  "codeowners": ["@matata86"],
+  "name": "FNS HA Tweaks",
+  "codeowners": [
+    "@matata86"
+  ],
   "config_flow": false,
-  "dependencies": ["frontend"],
-  "after_dependencies": ["uix"],
-  "documentation": "https://github.com/matata86/ha-shared",
+  "dependencies": [
+    "frontend"
+  ],
+  "after_dependencies": [
+    "uix"
+  ],
+  "documentation": "https://github.com/matata86/fns-ha-tweaks",
   "integration_type": "service",
   "iot_class": "local_push",
-  "issue_tracker": "https://github.com/matata86/ha-shared/issues",
-  "version": "1.0.0"
+  "issue_tracker": "https://github.com/matata86/fns-ha-tweaks/issues",
+  "version": "1.0.1"
 }
