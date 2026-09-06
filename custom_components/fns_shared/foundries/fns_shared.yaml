@@ -85,6 +85,132 @@ uix_foundries:
         v4: 55
         v5: 55
       mold: card
+  printer:
+    element:
+      cards:
+      - entity: '{{ entity }}'
+        icon: '{{ icon }}'
+        name: '{{ name }}'
+        tap_action:
+          action: more-info
+        type: custom:mushroom-entity-card
+      - cards:
+        - entity: '{{ t1 }}'
+          icon: '{{ i1 }}'
+          icon_color: '{{ c1 }}'
+          layout: vertical
+          primary: << states('{{ t1 }}') | float(0) | round(0) >> %
+          secondary: '{{ n1 }}'
+          tap_action:
+            action: more-info
+          type: custom:mushroom-template-card
+          uix:
+            style: "{% if (config.entity | default('')) | trim == '' %}:host { display: none !important; }{% endif %}\n{% set v = states(config.entity) | float(0) | round(0) %}\n/* Progress zdola: plná barva do hodnoty, nad ní ještě 20 px, které přejdou do úplné průhlednosti. */\nha-card {\n  position: relative; overflow: hidden; z-index: 0;\n  background-color: var(--ha-card-background, var(--card-background-color, #fff)) !important;\n}\nha-card::before {\n  content: \"\"; position: absolute; left: 0; right: 0; bottom: 0; z-index: -1;\n  height: calc({{ v }}% + 20px);\n  background: linear-gradient(to top,\n    rgba({{ r1 }}, {{ alfa }}) 0,\n    rgba({{ r1 }}, {{ alfa }}) calc(100% - 20px),\n    rgba({{ r1 }}, 0) 100%);\n  transition: height .6s cubic-bezier(.25, .1, .25, 1);\n  {% if v <= 0 %}display: none;{% endif %}\n}\nha-card .primary { font-size: 14px !important; white-space: nowrap !important; }\nha-card .secondary { font-size: 11px !important; white-space: nowrap !important; overflow:\
+              \ hidden; text-overflow: ellipsis; }\n"
+        - entity: '{{ t2 }}'
+          icon: '{{ i2 }}'
+          icon_color: '{{ c2 }}'
+          layout: vertical
+          primary: << states('{{ t2 }}') | float(0) | round(0) >> %
+          secondary: '{{ n2 }}'
+          tap_action:
+            action: more-info
+          type: custom:mushroom-template-card
+          uix:
+            style: "{% if (config.entity | default('')) | trim == '' %}:host { display: none !important; }{% endif %}\n{% set v = states(config.entity) | float(0) | round(0) %}\n/* Progress zdola: plná barva do hodnoty, nad ní ještě 20 px, které přejdou do úplné průhlednosti. */\nha-card {\n  position: relative; overflow: hidden; z-index: 0;\n  background-color: var(--ha-card-background, var(--card-background-color, #fff)) !important;\n}\nha-card::before {\n  content: \"\"; position: absolute; left: 0; right: 0; bottom: 0; z-index: -1;\n  height: calc({{ v }}% + 20px);\n  background: linear-gradient(to top,\n    rgba({{ r2 }}, {{ alfa }}) 0,\n    rgba({{ r2 }}, {{ alfa }}) calc(100% - 20px),\n    rgba({{ r2 }}, 0) 100%);\n  transition: height .6s cubic-bezier(.25, .1, .25, 1);\n  {% if v <= 0 %}display: none;{% endif %}\n}\nha-card .primary { font-size: 14px !important; white-space: nowrap !important; }\nha-card .secondary { font-size: 11px !important; white-space: nowrap !important; overflow:\
+              \ hidden; text-overflow: ellipsis; }\n"
+        - entity: '{{ t3 }}'
+          icon: '{{ i3 }}'
+          icon_color: '{{ c3 }}'
+          layout: vertical
+          primary: << states('{{ t3 }}') | float(0) | round(0) >> %
+          secondary: '{{ n3 }}'
+          tap_action:
+            action: more-info
+          type: custom:mushroom-template-card
+          uix:
+            style: "{% if (config.entity | default('')) | trim == '' %}:host { display: none !important; }{% endif %}\n{% set v = states(config.entity) | float(0) | round(0) %}\n/* Progress zdola: plná barva do hodnoty, nad ní ještě 20 px, které přejdou do úplné průhlednosti. */\nha-card {\n  position: relative; overflow: hidden; z-index: 0;\n  background-color: var(--ha-card-background, var(--card-background-color, #fff)) !important;\n}\nha-card::before {\n  content: \"\"; position: absolute; left: 0; right: 0; bottom: 0; z-index: -1;\n  height: calc({{ v }}% + 20px);\n  background: linear-gradient(to top,\n    rgba({{ r3 }}, {{ alfa }}) 0,\n    rgba({{ r3 }}, {{ alfa }}) calc(100% - 20px),\n    rgba({{ r3 }}, 0) 100%);\n  transition: height .6s cubic-bezier(.25, .1, .25, 1);\n  {% if v <= 0 %}display: none;{% endif %}\n}\nha-card .primary { font-size: 14px !important; white-space: nowrap !important; }\nha-card .secondary { font-size: 11px !important; white-space: nowrap !important; overflow:\
+              \ hidden; text-overflow: ellipsis; }\n"
+        - entity: '{{ t4 }}'
+          icon: '{{ i4 }}'
+          icon_color: '{{ c4 }}'
+          layout: vertical
+          primary: << states('{{ t4 }}') | float(0) | round(0) >> %
+          secondary: '{{ n4 }}'
+          tap_action:
+            action: more-info
+          type: custom:mushroom-template-card
+          uix:
+            style: "{% if (config.entity | default('')) | trim == '' %}:host { display: none !important; }{% endif %}\n{% set v = states(config.entity) | float(0) | round(0) %}\n/* Progress zdola: plná barva do hodnoty, nad ní ještě 20 px, které přejdou do úplné průhlednosti. */\nha-card {\n  position: relative; overflow: hidden; z-index: 0;\n  background-color: var(--ha-card-background, var(--card-background-color, #fff)) !important;\n}\nha-card::before {\n  content: \"\"; position: absolute; left: 0; right: 0; bottom: 0; z-index: -1;\n  height: calc({{ v }}% + 20px);\n  background: linear-gradient(to top,\n    rgba({{ r4 }}, {{ alfa }}) 0,\n    rgba({{ r4 }}, {{ alfa }}) calc(100% - 20px),\n    rgba({{ r4 }}, 0) 100%);\n  transition: height .6s cubic-bezier(.25, .1, .25, 1);\n  {% if v <= 0 %}display: none;{% endif %}\n}\nha-card .primary { font-size: 14px !important; white-space: nowrap !important; }\nha-card .secondary { font-size: 11px !important; white-space: nowrap !important; overflow:\
+              \ hidden; text-overflow: ellipsis; }\n"
+        - entity: '{{ t5 }}'
+          icon: '{{ i5 }}'
+          icon_color: '{{ c5 }}'
+          layout: vertical
+          primary: << states('{{ t5 }}') | float(0) | round(0) >> %
+          secondary: '{{ n5 }}'
+          tap_action:
+            action: more-info
+          type: custom:mushroom-template-card
+          uix:
+            style: "{% if (config.entity | default('')) | trim == '' %}:host { display: none !important; }{% endif %}\n{% set v = states(config.entity) | float(0) | round(0) %}\n/* Progress zdola: plná barva do hodnoty, nad ní ještě 20 px, které přejdou do úplné průhlednosti. */\nha-card {\n  position: relative; overflow: hidden; z-index: 0;\n  background-color: var(--ha-card-background, var(--card-background-color, #fff)) !important;\n}\nha-card::before {\n  content: \"\"; position: absolute; left: 0; right: 0; bottom: 0; z-index: -1;\n  height: calc({{ v }}% + 20px);\n  background: linear-gradient(to top,\n    rgba({{ r5 }}, {{ alfa }}) 0,\n    rgba({{ r5 }}, {{ alfa }}) calc(100% - 20px),\n    rgba({{ r5 }}, 0) 100%);\n  transition: height .6s cubic-bezier(.25, .1, .25, 1);\n  {% if v <= 0 %}display: none;{% endif %}\n}\nha-card .primary { font-size: 14px !important; white-space: nowrap !important; }\nha-card .secondary { font-size: 11px !important; white-space: nowrap !important; overflow:\
+              \ hidden; text-overflow: ellipsis; }\n"
+        - entity: '{{ t6 }}'
+          icon: '{{ i6 }}'
+          icon_color: '{{ c6 }}'
+          layout: vertical
+          primary: << states('{{ t6 }}') | float(0) | round(0) >> %
+          secondary: '{{ n6 }}'
+          tap_action:
+            action: more-info
+          type: custom:mushroom-template-card
+          uix:
+            style: "{% if (config.entity | default('')) | trim == '' %}:host { display: none !important; }{% endif %}\n{% set v = states(config.entity) | float(0) | round(0) %}\n/* Progress zdola: plná barva do hodnoty, nad ní ještě 20 px, které přejdou do úplné průhlednosti. */\nha-card {\n  position: relative; overflow: hidden; z-index: 0;\n  background-color: var(--ha-card-background, var(--card-background-color, #fff)) !important;\n}\nha-card::before {\n  content: \"\"; position: absolute; left: 0; right: 0; bottom: 0; z-index: -1;\n  height: calc({{ v }}% + 20px);\n  background: linear-gradient(to top,\n    rgba({{ r6 }}, {{ alfa }}) 0,\n    rgba({{ r6 }}, {{ alfa }}) calc(100% - 20px),\n    rgba({{ r6 }}, 0) 100%);\n  transition: height .6s cubic-bezier(.25, .1, .25, 1);\n  {% if v <= 0 %}display: none;{% endif %}\n}\nha-card .primary { font-size: 14px !important; white-space: nowrap !important; }\nha-card .secondary { font-size: 11px !important; white-space: nowrap !important; overflow:\
+              \ hidden; text-overflow: ellipsis; }\n"
+        columns: '{{ columns }}'
+        square: false
+        type: grid
+      columns: 1
+      square: false
+      type: grid
+    forge:
+      billets:
+        alfa: '.22'
+        c1: grey
+        c2: grey
+        c3: grey
+        c4: grey
+        c5: grey
+        c6: grey
+        columns: 4
+        entity: null
+        i1: mdi:water
+        i2: mdi:water
+        i3: mdi:water
+        i4: mdi:water
+        i5: mdi:water
+        i6: mdi:water
+        icon: mdi:printer-outline
+        n1: ''
+        n2: ''
+        n3: ''
+        n4: ''
+        n5: ''
+        n6: ''
+        name: Tiskárna
+        r1: 150,150,150
+        r2: 150,150,150
+        r3: 150,150,150
+        r4: 150,150,150
+        r5: 150,150,150
+        r6: 150,150,150
+        t1: ''
+        t2: ''
+        t3: ''
+        t4: ''
+        t5: ''
+        t6: ''
+      mold: card
   threshold_tile:
     element:
       entity: '{{ entity }}'
