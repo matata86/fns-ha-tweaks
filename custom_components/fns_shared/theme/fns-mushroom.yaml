@@ -237,8 +237,13 @@ fns_mushroom:
       {% set hi = [[el / 45, 0] | max, 1] | min %}
       {% set sun = (255) ~ ', ' ~ ((150 + 70 * hi) / 10) | round(0) | int * 10 ~ ', ' ~ ((60 + 100 * hi) / 10) | round(0) | int * 10 %}
       {% set sa = ((1 - wg) * (1 if el > 0 else [1 + el / 6, 0] | max)) | round(1) %}
+      {# advent (2026-09-06): po soumraku teplý svíčkový nádech zdola, sytost roste s počtem zapálených svíček.
+         Mimo advent (a na instanci bez binary_sensor.advent) se nepřidá nic. #}
+      {% set svicky = state_attr('binary_sensor.advent', 'svicky') | int(0) if is_state('binary_sensor.advent', 'on') else 0 %}
+      {% set adv = ((0.5 + 0.22 * svicky) * ([[(2 - el) / 8, 0] | max, 1] | min)) | round(2) if svicky > 0 else 0 %}
       #view {
         background:
+          {% if adv > 0.05 %}radial-gradient(1000px 520px at 50% 112%, rgba(255, 186, 112, calc(var(--fns-ambient-a1) * {{ adv }})), transparent 64%),{% endif %}
           {% if sa > 0.02 %}radial-gradient(700px 480px at {{ sx }}% {{ sy }}%, rgba({{ sun }}, calc(var(--fns-ambient-a1) * {{ (sa * 1.7) | round(2) }})), transparent 65%),{% endif %}
           radial-gradient(1100px 640px at 6% -6%, rgba({{ c1 }}, calc(var(--fns-ambient-a1) * {{ wa }})), transparent 62%),
           radial-gradient(900px 560px at 100% 8%, rgba({{ c2 }}, calc(var(--fns-ambient-a2) * {{ wa }})), transparent 60%),
