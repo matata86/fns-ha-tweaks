@@ -9,6 +9,7 @@ Sdílený vzhled pro víc instancí Home Assistantu v jedné HACS integraci. Nai
 | Motiv `fns_mushroom` — globální paleta pro light i dark, cirkadiánní podbarvení, vrstvy počasí a sluneční záře | `themes/fns-mushroom/fns-mushroom.yaml`, pak načte témata |
 | UIX foundries `level_tile`, `mini_graph`, `threshold_tile` | `uix/fns_shared.yaml` a zaregistruje ho v integraci UIX |
 | Karta sluneční linky (svítání a soumrak, fáze Měsíce, srážkové sloupce, popup) | při startu se sama aktualizuje, pokud už v dashboardu je; poprvé ji tam vloží služba `fns_shared.deploy_sun_card` |
+| Grafický editor karet `custom:uix-forge` | frontend modul `/fns_shared/fns_forge_editor.js`, načte se sám |
 
 Vlastní foundries instance zůstávají tam, kde byly (`uix/foundries.yaml`); integrace do nich nesahá, jen přidá druhý soubor vedle nich.
 
@@ -26,6 +27,10 @@ Vlastní foundries instance zůstávají tam, kde byly (`uix/foundries.yaml`); i
 Motiv se pak vybere v profilu uživatele (**Motiv → fns_mushroom**), foundries jsou hned k dispozici.
 
 Kartu slunce vloží poprvé služba **Vývojářské nástroje → Akce → `fns_shared.deploy_sun_card`**. Od té chvíle ji každá nová verze integrace při startu aktualizuje sama — přepíše se jen ta jedna karta, zbytek dashboardu zůstává.
+
+## Editor foundry karet
+
+UIX ke kartám `custom:uix-forge` editor nedodává, takže HA nabízí jen YAML. Integrace doplní vlastní: v editoru karty je rozbalovací seznam foundries a pod ním formulář, jehož pole se generují z billetů zvolené foundry — entita se vybírá pickerem, ikona ikonpickerem, barvy ze seznamu barev HA, čísla číselníkem. Prázdné pole znamená výchozí hodnotu z definice foundry.
 
 ## Aktualizace
 
