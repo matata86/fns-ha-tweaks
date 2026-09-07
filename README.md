@@ -10,7 +10,7 @@ Sdílený vzhled pro víc instancí Home Assistantu v jedné HACS integraci. Nai
 | UIX foundries `level_tile`, `mini_graph`, `threshold_tile` | `uix/fns_shared.yaml` a zaregistruje ho v integraci UIX |
 | Karta sluneční linky (svítání a soumrak, fáze Měsíce, srážkové sloupce, popup) | při startu se sama aktualizuje, pokud už v dashboardu je; poprvé ji tam vloží služba `fns_shared.deploy_sun_card` |
 | Grafický editor karet `custom:uix-forge` | frontend modul `/fns_shared/fns_forge_editor.js`, načte se sám |
-| Senzory `Východ Měsíce`, `Západ Měsíce` a `Osvětlení Měsíce` | vytvoří se samy, karta sluneční linky je používá |
+| Senzory `Východ Měsíce`, `Západ Měsíce` a `Osvětlení Měsíce` | vytvoří se samy; karta je použije jen tehdy, když v instanci není integrace [Lunar Phase](https://github.com/hcoohb/hass-lunarphase) z HACS |
 
 Vlastní foundries instance zůstávají tam, kde byly (`uix/foundries.yaml`); integrace do nich nesahá, jen přidá druhý soubor vedle nich.
 
