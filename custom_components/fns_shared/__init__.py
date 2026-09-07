@@ -7,6 +7,7 @@ co s sebou nese, a nastaví, co je potřeba:
 - motiv ``fns_mushroom`` do ``themes/fns-mushroom/fns-mushroom.yaml``
   a načte témata
 - sdílené UIX foundries do ``uix/fns_shared.yaml`` a zaregistruje je v UIX
+- senzory ``Východ Měsíce`` a ``Západ Měsíce`` (karta sluneční linky je potřebuje)
 
 Kartu sluneční linky nasadí do hlavičky výchozího dashboardu služba
 ``fns_shared.deploy_sun_card`` (dashboard není soubor, proto se nenasazuje sám).
@@ -27,6 +28,7 @@ from homeassistant.components.http import StaticPathConfig
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import EVENT_HOMEASSISTANT_STARTED
 from homeassistant.core import CoreState, Event, HomeAssistant, ServiceCall
+from homeassistant.helpers.discovery import async_load_platform
 from homeassistant.helpers.typing import ConfigType
 
 DOMAIN = "fns_shared"
@@ -210,6 +212,9 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
 
     hass.services.async_register(DOMAIN, SERVICE_DEPLOY_SUN_CARD, _deploy_sun_card)
     await _register_editor(hass)
+
+    # Senzory východu a západu Měsíce — karta sluneční linky je čte místo dřívějšího odhadu.
+    hass.async_create_task(async_load_platform(hass, "sensor", DOMAIN, {}, config))
 
     if hass.state is CoreState.running:  # reload integrace za chodu
         await _apply()
