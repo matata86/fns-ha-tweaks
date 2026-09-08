@@ -59,16 +59,21 @@ function vytvorBublinu() {
   return prvek;
 }
 
-/** Srážky v dané hodině: vrací {mm, p} nebo null. */
-function srazkyVHodine(hass, cas) {
-  const hodiny = hass?.states?.[SENZOR]?.attributes?.srazky_hodiny || [];
-  for (const zaznam of hodiny) {
+/** Srážky v dané hodině dne. Datum se schválně ignoruje: linka kreslí 0–24 h, kdežto
+ *  předpověď drží příštích 24 h, takže ranní hodiny na lince patří většinou už zítřku.
+ *  Ze záznamů se stejnou hodinou se bere ten časově nejbližší. */
+function srazkyVHodine(hass, hodina) {
+  const zaznamy = hass?.states?.[SENZOR]?.attributes?.srazky_hodiny || [];
+  const ted = Date.now();
+  let nejlepsi = null;
+  for (const zaznam of zaznamy) {
     const t = new Date(zaznam.t);
-    if (t.getHours() === cas.getHours() && t.getDate() === cas.getDate()) {
-      return { mm: Number(zaznam.mm) || 0, p: Number(zaznam.p) || 0 };
+    if (t.getHours() !== hodina) continue;
+    if (!nejlepsi || Math.abs(t - ted) < Math.abs(nejlepsi.t - ted)) {
+      nejlepsi = { t, mm: Number(zaznam.mm) || 0, p: Number(zaznam.p) || 0 };
     }
   }
-  return null;
+  return nejlepsi;
 }
 
 function dvojciferne(cislo) {
@@ -76,13 +81,12 @@ function dvojciferne(cislo) {
 }
 
 function popis(hass, hodina, minuta) {
-  const ted = new Date();
-  const cas = new Date(ted.getFullYear(), ted.getMonth(), ted.getDate(), hodina, minuta);
-  const srazky = srazkyVHodine(hass, cas);
-  const zacatek = `${hodina}:${dvojciferne(Math.floor(minuta / 10) * 10)}`;
-  if (!srazky) return `${zacatek} — beze srážek`;
+  const srazky = srazkyVHodine(hass, hodina);
+  const cas = `${hodina}:${dvojciferne(Math.floor(minuta / 10) * 10)}`;
+  if (!srazky) return `${cas} — beze srážek`;
+  const zitra = srazky.t.getDate() !== new Date().getDate() ? "zítra " : "";
   const mm = srazky.mm.toFixed(1).replace(".", ",");
-  return `${zacatek} — ${mm} mm, ${srazky.p} %`;
+  return `${zitra}${cas} — ${mm} mm, ${srazky.p} %`;
 }
 
 function ukaz(karta, udalost) {
