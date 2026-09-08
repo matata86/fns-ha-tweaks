@@ -1,5 +1,7 @@
 # FNS HA Tweaks
 
+[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/matata86)
+
 Sdílený vzhled pro víc instancí Home Assistantu v jedné HACS integraci. Nainstaluješ, přidáš jeden řádek do `configuration.yaml`, restartuješ — a je to. Další verze se pak nabízí k aktualizaci přímo v HACS.
 
 ## Co integrace přinese
@@ -41,3 +43,13 @@ Nová verze se objeví v HACS jako u kterékoli jiné integrace. Po stažení a 
 - [UIX](https://uix.lf.technology) — kvůli foundries a stylům motivu
 - Mushroom, browser_mod — karty a popup sluneční linky
 - Lunar Phase (HACS) — východ, západ a osvětlení Měsíce pro sluneční linku; bez ní se pás Měsíce prostě nekreslí
+
+---
+
+## Podpora
+
+Pomohlo ti to? Kafe autorovi udělá radost ☕
+
+[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/matata86)
+
+**https://ko-fi.com/matata86**
