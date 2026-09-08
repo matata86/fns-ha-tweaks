@@ -87,80 +87,80 @@ uix_foundries:
       mold: card
   printer:
     element:
+      type: grid
       cards:
-      - entity: '{{ entity }}'
-        icon: '{{ icon }}'
+      - type: heading
+        heading: '{{ nadpis }}'
+        heading_style: subtitle
+        icon: '{{ nadpis_ikona }}'
+      - type: custom:mushroom-entity-card
+        entity: '{{ entity }}'
         name: '{{ name }}'
+        icon: '{{ icon }}'
         tap_action:
           action: more-info
-        type: custom:mushroom-entity-card
-      - cards:
-        - type: custom:uix-forge
-          foundry: level_tile
-          forge:
-            billets:
-              entity: '{{ t1 }}'
-              name: '{{ n1 }}'
-              icon: '{{ i1 }}'
-              color: '{{ c1 }}'
-              rgb: '{{ r1 }}'
-              alfa: '{{ alfa }}'
-        - type: custom:uix-forge
-          foundry: level_tile
-          forge:
-            billets:
-              entity: '{{ t2 }}'
-              name: '{{ n2 }}'
-              icon: '{{ i2 }}'
-              color: '{{ c2 }}'
-              rgb: '{{ r2 }}'
-              alfa: '{{ alfa }}'
-        - type: custom:uix-forge
-          foundry: level_tile
-          forge:
-            billets:
-              entity: '{{ t3 }}'
-              name: '{{ n3 }}'
-              icon: '{{ i3 }}'
-              color: '{{ c3 }}'
-              rgb: '{{ r3 }}'
-              alfa: '{{ alfa }}'
-        - type: custom:uix-forge
-          foundry: level_tile
-          forge:
-            billets:
-              entity: '{{ t4 }}'
-              name: '{{ n4 }}'
-              icon: '{{ i4 }}'
-              color: '{{ c4 }}'
-              rgb: '{{ r4 }}'
-              alfa: '{{ alfa }}'
-        - type: custom:uix-forge
-          foundry: level_tile
-          forge:
-            billets:
-              entity: '{{ t5 }}'
-              name: '{{ n5 }}'
-              icon: '{{ i5 }}'
-              color: '{{ c5 }}'
-              rgb: '{{ r5 }}'
-              alfa: '{{ alfa }}'
-        - type: custom:uix-forge
-          foundry: level_tile
-          forge:
-            billets:
-              entity: '{{ t6 }}'
-              name: '{{ n6 }}'
-              icon: '{{ i6 }}'
-              color: '{{ c6 }}'
-              rgb: '{{ r6 }}'
-              alfa: '{{ alfa }}'
-        columns: '{{ columns }}'
-        square: false
-        type: grid
-      columns: 1
-      square: false
-      type: grid
+        grid_options:
+          columns: full
+      - type: custom:uix-forge
+        foundry: level_tile
+        forge:
+          billets:
+            entity: '{{ t1 }}'
+            name: '{{ n1 }}'
+            icon: '{{ i1 }}'
+            color: '{{ c1 }}'
+            rgb: '{{ r1 }}'
+            alfa: '{{ alfa }}'
+      - type: custom:uix-forge
+        foundry: level_tile
+        forge:
+          billets:
+            entity: '{{ t2 }}'
+            name: '{{ n2 }}'
+            icon: '{{ i2 }}'
+            color: '{{ c2 }}'
+            rgb: '{{ r2 }}'
+            alfa: '{{ alfa }}'
+      - type: custom:uix-forge
+        foundry: level_tile
+        forge:
+          billets:
+            entity: '{{ t3 }}'
+            name: '{{ n3 }}'
+            icon: '{{ i3 }}'
+            color: '{{ c3 }}'
+            rgb: '{{ r3 }}'
+            alfa: '{{ alfa }}'
+      - type: custom:uix-forge
+        foundry: level_tile
+        forge:
+          billets:
+            entity: '{{ t4 }}'
+            name: '{{ n4 }}'
+            icon: '{{ i4 }}'
+            color: '{{ c4 }}'
+            rgb: '{{ r4 }}'
+            alfa: '{{ alfa }}'
+      - type: custom:uix-forge
+        foundry: level_tile
+        forge:
+          billets:
+            entity: '{{ t5 }}'
+            name: '{{ n5 }}'
+            icon: '{{ i5 }}'
+            color: '{{ c5 }}'
+            rgb: '{{ r5 }}'
+            alfa: '{{ alfa }}'
+      - type: custom:uix-forge
+        foundry: level_tile
+        forge:
+          billets:
+            entity: '{{ t6 }}'
+            name: '{{ n6 }}'
+            icon: '{{ i6 }}'
+            color: '{{ c6 }}'
+            rgb: '{{ r6 }}'
+            alfa: '{{ alfa }}'
     forge:
       billets:
         alfa: '.22'
@@ -170,7 +170,6 @@ uix_foundries:
         c4: grey
         c5: grey
         c6: grey
-        columns: 4
         entity:
         i1: mdi:water
         i2: mdi:water
@@ -198,7 +197,9 @@ uix_foundries:
         t4: ''
         t5: ''
         t6: ''
-      mold: card
+        nadpis: Tiskárny
+        nadpis_ikona: mdi:printer-outline
+      mold: section
   threshold_tile:
     element:
       entity: '{{ entity }}'
