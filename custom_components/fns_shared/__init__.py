@@ -42,8 +42,11 @@ SUN_CARD_MARKER = "Slunce a měsíc"
 
 SERVICE_DEPLOY_SUN_CARD = "deploy_sun_card"
 
-EDITOR_FILE = "www/fns_forge_editor.js"
-EDITOR_URL = "/fns_shared/fns_forge_editor.js"
+# Frontendové moduly: (soubor v integraci, adresa, pod kterou se servírují)
+FRONTEND_MODULES = (
+    ("www/fns_forge_editor.js", "/fns_shared/fns_forge_editor.js"),
+    ("www/fns_sun_line.js", "/fns_shared/fns_sun_line.js"),
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -138,22 +141,24 @@ def _replace_sun_card(config: dict[str, Any], card: dict[str, Any]) -> str:
     return "přidána na konec prvního pohledu"
 
 
-async def _register_editor(hass: HomeAssistant) -> None:
-    """Naservíruje modul s grafickým editorem karet uix-forge a načte ho ve frontendu."""
-    path = os.path.join(os.path.dirname(__file__), EDITOR_FILE)
+async def _register_frontend(hass: HomeAssistant) -> None:
+    """Naservíruje frontendové moduly integrace a načte je v prohlížeči."""
+    base = os.path.dirname(__file__)
     version = "0"
     try:
-        with open(os.path.join(os.path.dirname(__file__), "manifest.json"), encoding="utf-8") as fh:
+        with open(os.path.join(base, "manifest.json"), encoding="utf-8") as fh:
             version = json.load(fh).get("version", "0")
     except OSError:
         pass
-    try:
-        await hass.http.async_register_static_paths(
-            [StaticPathConfig(EDITOR_URL, path, True)]
-        )
-    except Exception as err:  # starší HA nebo opakovaná registrace
-        _LOGGER.debug("%s: statická cesta editoru: %s", DOMAIN, err)
-    add_extra_js_url(hass, f"{EDITOR_URL}?v={version}")
+    for soubor, adresa in FRONTEND_MODULES:
+        try:
+            await hass.http.async_register_static_paths(
+                [StaticPathConfig(adresa, os.path.join(base, soubor), True)]
+            )
+        except Exception as err:  # starší HA nebo opakovaná registrace
+            _LOGGER.debug("%s: statická cesta %s: %s", DOMAIN, adresa, err)
+        # verze v dotazu shodí cache prohlížeče, jakmile se integrace aktualizuje
+        add_extra_js_url(hass, f"{adresa}?v={version}")
 
 
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
@@ -209,7 +214,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
         _LOGGER.info("%s: karta slunce %s", DOMAIN, await _sync_sun_card())
 
     hass.services.async_register(DOMAIN, SERVICE_DEPLOY_SUN_CARD, _deploy_sun_card)
-    await _register_editor(hass)
+    await _register_frontend(hass)
 
     if hass.state is CoreState.running:  # reload integrace za chodu
         await _apply()
