@@ -2,6 +2,9 @@
 
 [![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/matata86)
 
+[![Otevřít repozitář v HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=matata86&repository=fns-ha-tweaks&category=integration)
+[![Otevřít nastavení YAML](https://my.home-assistant.io/badges/developer_yaml.svg)](https://my.home-assistant.io/redirect/developer_yaml/)
+
 Sdílený vzhled pro víc instancí Home Assistantu v jedné HACS integraci. Nainstaluješ, přidáš jeden řádek do `configuration.yaml`, restartuješ — a je to. Další verze se pak nabízí k aktualizaci přímo v HACS.
 
 ## Co integrace přinese
@@ -17,14 +20,14 @@ Vlastní foundries instance zůstávají tam, kde byly (`uix/foundries.yaml`); i
 
 ## Instalace
 
-1. HACS → tři tečky → **Custom repositories** → `matata86/fns-ha-tweaks`, kategorie **Integration**.
+1. HACS → tři tečky → **Custom repositories** → `matata86/fns-ha-tweaks`, kategorie **Integration** (nebo [![Otevřít repozitář v HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=matata86&repository=fns-ha-tweaks&category=integration)).
 2. **Download**.
 3. Do `configuration.yaml` přidat řádek:
 
    ```yaml
    fns_shared:
    ```
-4. Restart Home Assistantu.
+4. Restart Home Assistantu ([![Otevřít nastavení YAML](https://my.home-assistant.io/badges/developer_yaml.svg)](https://my.home-assistant.io/redirect/developer_yaml/) → *Restartovat*).
 
 Motiv se pak vybere v profilu uživatele (**Motiv → fns_mushroom**), foundries jsou hned k dispozici.
 
