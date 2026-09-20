@@ -75,6 +75,36 @@ def _load_sun_card() -> dict[str, Any]:
         return json.load(fh)
 
 
+# Entity Lunar Phase mají v názvu jméno lokace, proto je šablony karty hledají regulárem přes
+# `states.sensor`. Taková šablona ale poslouchá celou doménu sensor a HA ji přerenderuje při každé
+# změně kteréhokoli senzoru (u 12 kB stylu na výchozím dashboardu i několikrát za sekundu).
+# Proto se entity dosadí natvrdo už při nasazení karty; hledání zůstává jen jako záloha,
+# když integrace Lunar Phase na instanci není.
+SUN_CARD_LOOKUPS = {
+    "e_mr": "_moon_rise",
+    "e_ms": "_moon_set",
+    "e_il": "_moon_illumination_fraction",
+}
+
+
+def _resolve_sun_card_entities(hass: HomeAssistant, card: dict[str, Any]) -> dict[str, Any]:
+    text = json.dumps(card, ensure_ascii=False)
+    for var, suffix in SUN_CARD_LOOKUPS.items():
+        entity_id = next(
+            (state.entity_id for state in hass.states.async_all("sensor")
+             if state.entity_id.endswith(suffix)),
+            None,
+        )
+        if entity_id is None:
+            continue
+        lookup = (
+            f"{{% set {var} = states.sensor | selectattr('entity_id', 'search', '{suffix}$')"
+            " | map(attribute='entity_id') | first | default('', true) %}"
+        )
+        text = text.replace(json.dumps(lookup, ensure_ascii=False)[1:-1], f"{{% set {var} = '{entity_id}' %}}")
+    return json.loads(text)
+
+
 async def _load_default_dashboard(hass: HomeAssistant):
     """Vrátí (úložiště, konfigurace) výchozího dashboardu napříč verzemi HA."""
     lovelace = hass.data.get("lovelace")
@@ -201,7 +231,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
 
     async def _sync_sun_card(only_if_present: bool = False) -> str:
         store, dashboard = await _load_default_dashboard(hass)
-        card = await hass.async_add_executor_job(_load_sun_card)
+        card = _resolve_sun_card_entities(hass, await hass.async_add_executor_job(_load_sun_card))
         if only_if_present:
             # Při startu kartu nikam nevnucujeme — jen aktualizujeme tu, která už v dashboardu je,
             # a to jen když se liší, ať se dashboard zbytečně nepřepisuje.
