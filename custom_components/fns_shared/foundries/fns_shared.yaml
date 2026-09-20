@@ -57,9 +57,7 @@ uix_foundries:
         name: '{{ show_name }}'
         state: '{{ state }}'
       type: custom:mini-graph-card
-      uix:
-        class: '{{ css_class }}'
-        style: '{{ card_style }}'
+      update_interval: 300
     forge:
       billets:
         c1: '#3b82f6'

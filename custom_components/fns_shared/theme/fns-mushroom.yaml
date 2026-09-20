@@ -528,6 +528,11 @@ fns_mushroom:
       :host(.type-custom-mini-graph-card) ha-card .states { padding: 0px 12px 16px 12px; }
       :host(.type-custom-mini-graph-card) ha-card .info { font-size: 10px; padding: 0px 12px 12px 12px; }
       :host(.type-custom-mini-graph-card.no-name) ha-card .icon { position: absolute; top: 9px; right: 5px; }
+      /* 2026-09-20: kompaktní varianta i bez třídy .no-name — mini-graph bez jména (show.name: false) nemá .name;
+         nahrazuje dřívější card_style/css_class billets foundry mini_graph (per-prvek uix držel v paměti zombie instance) */
+      :host(.type-custom-mini-graph-card) ha-card:not(:has(.name)) { padding-top: 0; }
+      :host(.type-custom-mini-graph-card) ha-card:not(:has(.name)) .icon { position: absolute; top: 9px; right: 5px; }
+      :host(.type-custom-mini-graph-card) ha-card:not(:has(.name)) path.line { stroke-width: 2px; stroke-linecap: round; stroke-linejoin: round; }
 
       /* --- HEADING --- */
       :host(.type-heading) ha-card:has(.subtitle) { padding-top: 10px }
