@@ -141,15 +141,19 @@ def _replace_sun_card(config: dict[str, Any], card: dict[str, Any]) -> str:
     return "přidána na konec prvního pohledu"
 
 
+def _read_manifest_version(base: str) -> str:
+    """Přečte verzi z manifestu integrace (běží v executoru, ne ve smyčce)."""
+    try:
+        with open(os.path.join(base, "manifest.json"), encoding="utf-8") as fh:
+            return json.load(fh).get("version", "0")
+    except OSError:
+        return "0"
+
+
 async def _register_frontend(hass: HomeAssistant) -> None:
     """Naservíruje frontendové moduly integrace a načte je v prohlížeči."""
     base = os.path.dirname(__file__)
-    version = "0"
-    try:
-        with open(os.path.join(base, "manifest.json"), encoding="utf-8") as fh:
-            version = json.load(fh).get("version", "0")
-    except OSError:
-        pass
+    version = await hass.async_add_executor_job(_read_manifest_version, base)
     for soubor, adresa in FRONTEND_MODULES:
         try:
             await hass.http.async_register_static_paths(
