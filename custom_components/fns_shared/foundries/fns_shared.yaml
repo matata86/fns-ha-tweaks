@@ -25,19 +25,12 @@ uix_foundries:
         rows: 2
       mold: card
   mini_graph:
+    # 2026-09-20: každý `{{ billet }}` v element = jedna render_template subscription
+    # a po dokončení jeden plný reload kované karty. Proto co nejméně šablon:
+    # prahy a show jsou jedna šablona vracející list/dict (HA vrací nativní typ).
     element:
       animate: true
-      color_thresholds:
-      - color: '{{ c1 }}'
-        value: '{{ v1 }}'
-      - color: '{{ c2 }}'
-        value: '{{ v2 }}'
-      - color: '{{ c3 }}'
-        value: '{{ v3 }}'
-      - color: '{{ c4 }}'
-        value: '{{ v4 }}'
-      - color: '{{ c5 }}'
-        value: '{{ v5 }}'
+      color_thresholds: "{{ [{'color': c1, 'value': v1}, {'color': c2, 'value': v2}, {'color': c3, 'value': v3}, {'color': c4, 'value': v4}, {'color': c5, 'value': v5}] }}"
       color_thresholds_transition: hard
       entities:
       - '{{ entity }}'
@@ -46,16 +39,7 @@ uix_foundries:
       hours_to_show: '{{ hours }}'
       name: '{{ name }}'
       points_per_hour: '{{ pph }}'
-      show:
-        average: true
-        extrema: true
-        fill: '{{ fill }}'
-        icon: '{{ icon }}'
-        icon_adaptive_color: true
-        labels: false
-        legend: '{{ legend }}'
-        name: '{{ show_name }}'
-        state: '{{ state }}'
+      show: "{{ {'average': true, 'extrema': true, 'labels': false, 'icon_adaptive_color': true, 'fill': fill, 'icon': icon, 'legend': legend, 'name': show_name, 'state': state} }}"
       type: custom:mini-graph-card
       update_interval: 300
     forge:
@@ -65,8 +49,6 @@ uix_foundries:
         c3: '#ef4444'
         c4: '#ef4444'
         c5: '#ef4444'
-        card_style: ''
-        css_class: ''
         entity:
         fill: true
         font_size: 100
