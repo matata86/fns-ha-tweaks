@@ -186,7 +186,6 @@ uix_foundries:
       features_position: '{{ features_position }}'
       icon: '{{ icon }}'
       name: '{{ name }}'
-      state_content: '{{ state_content }}'
       type: tile
       uix:
         style:
@@ -209,7 +208,6 @@ uix_foundries:
         info_unit: ''
         name:
         sgn: 1
-        state_content: state
         t1:
         t2:
         vertical: false
