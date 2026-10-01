@@ -157,6 +157,8 @@ fns_mushroom:
   ha-heading-card-title-font-weight: 700
   ha-heading-card-subtitle-font-size: 11px
   ha-heading-card-subtitle-font-weight: 600
+  # 2026-10-01: velikost textu odznaků v nadpisech proměnnou místo podřízeného klíče v uix-card-yaml (ten UIX hledal v každé kartě)
+  ha-heading-badge-font-size: 12px
 
   # --- Hlavička (glass) a sidebar --------------------------------------------
   app-header-background-color: "var(--fns-header-bg)"
@@ -482,10 +484,6 @@ fns_mushroom:
           height: 8px !important;
           border-radius: 50px !important;
         }
-
-    hui-entity-heading-badge:
-      $: |
-        ha-heading-badge state-display { font-size: 12px !important; }
 
     .: |
       /* 2026-09-05 pohyb: (4) přechod stavu — jen transform a barvy, box-shadow záměrně bez přechodu (stack-in-card) */
