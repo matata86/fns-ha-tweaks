@@ -10,7 +10,7 @@
  * pointer-events: none.
  */
 
-const ZNACKA = "_moon_rise$";          // podle čeho poznáme kartu sluneční linky
+const ZNACKA = "Slunce a měsíc";       // podle čeho poznáme kartu sluneční linky (= SUN_CARD_MARKER)
 const SENZOR = "sensor.pocasi_predpoved_2h";
 const PRESAH = 14;                     // o kolik px nad a pod linku ještě reagovat
 
@@ -121,12 +121,12 @@ function skryj() {
 }
 
 let karty = [];
-let posledniHledani = 0;
+let posledniHledani = -Infinity;
 
 document.addEventListener("pointermove", (udalost) => {
   if (udalost.pointerType === "touch") return;      // na dotyku bublina nedává smysl
   const ted = performance.now();
-  if (!karty.length || ted - posledniHledani > 3000) {
+  if (ted - posledniHledani > 3000) {            // nejvýš 1× za 3 s, i když karta na stránce není
     karty = najdiKarty();                            // karta se po překreslení pohledu vymění
     posledniHledani = ted;
   }
