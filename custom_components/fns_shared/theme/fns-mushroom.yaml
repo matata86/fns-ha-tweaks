@@ -507,14 +507,9 @@ fns_mushroom:
   # - 2026-10-01 smazáno jako mrtvé: :host(.no-padding) (0 použití Home i Office), stisk pro custom-button-card
   #   (odinstalovaná na obou instancích), pravidla .type-custom-mini-graph-card.no-name (kryje :not(:has(.name)))
   #   a zdvojený path.line.
+  # - 2026-10-01 pruhy custom:datetime-card (8px, zaoblené) přesunuty do uix.style té jediné karty (Domov / Akvárium):
+  #   podřízený klíč tady UIX hledá v každé kartě (až 7 pokusů a 1,5 s časovačů na kartu).
   uix-card-yaml: |
-    datetime-bar:
-      $: |
-        .external-bar, .internal-bar {
-          height: 8px !important;
-          border-radius: 50px !important;
-        }
-
     .: |
       ha-card { transition: transform 90ms ease, background-color 200ms ease, color 200ms ease !important; }
       ha-tile-icon, .icon-container, mushroom-shape-icon .shape, ha-state-icon {
