@@ -444,52 +444,69 @@ fns_mushroom:
       }
 
   # --- ROW MOD ---
+  # 2026-10-01: ploché klíče místo zanoření hui-generic-entity-row → $ → state-badge → $ → ha-state-icon → $
+  # (UIX z každé úrovně dělal vlastní uzel s MutationObserverem, 7 na řádek). Media query pro mobil nastavovala
+  # stejné top: -1px, proto pryč.
   uix-row-yaml: |
-    hui-generic-entity-row:
-      $:
-        state-badge:
-          $:
-            ha-state-icon:
-              $: |
-                ha-icon { display: block; }
-                ha-icon, ha-svg-icon {
-                  height: 22px !important;
-                  position: relative;
-                  top: -1px;
-                }
-                @media screen and (max-width: 800px) {
-                  ha-icon, ha-svg-icon { top: -1px !important; }
-                }
-        .: |
-          state-badge {
-            color: rgba(var(--mush-rgb-state), 1);
-            background: rgba(var(--mush-rgb-state), .14);
-            background-size: cover;
-            background-position: center;
-            border-radius: 12px !important;
-            margin: 0 15px 0 0;
-            --mdc-icon-size: 22px;
-          }
-          /* V popupech (browser_mod / more-info) je ikona bez podkladoveho ctverce
-             — tinta patri jen radkum na dashboardech. */
-          :host-context(browser-mod-popup) state-badge,
-          :host-context(ha-dialog) state-badge {
-            background: none !important;
-            border-radius: 0 !important;
-          }
-          .secondary {
-              overflow: unset !important;
-              white-space: normal !important;
-              font-size: 12px !important;
-          }
-          .info {
-            margin-left: 0px !important;
-            font-weight: 600;
-            padding: 16px 0 !important;
-            position: relative;
-          }
+    hui-generic-entity-row $: |
+      state-badge {
+        color: rgba(var(--mush-rgb-state), 1);
+        background: rgba(var(--mush-rgb-state), .14);
+        background-size: cover;
+        background-position: center;
+        border-radius: 12px !important;
+        margin: 0 15px 0 0;
+        --mdc-icon-size: 22px;
+      }
+      /* V popupech (browser_mod / more-info) je ikona bez podkladoveho ctverce
+         — tinta patri jen radkum na dashboardech. */
+      :host-context(browser-mod-popup) state-badge,
+      :host-context(ha-dialog) state-badge {
+        background: none !important;
+        border-radius: 0 !important;
+      }
+      .secondary {
+          overflow: unset !important;
+          white-space: normal !important;
+          font-size: 12px !important;
+      }
+      .info {
+        margin-left: 0px !important;
+        font-weight: 600;
+        padding: 16px 0 !important;
+        position: relative;
+      }
+    hui-generic-entity-row $ state-badge $ ha-state-icon $: |
+      ha-icon { display: block; }
+      ha-icon, ha-svg-icon {
+        height: 22px !important;
+        position: relative;
+        top: -1px;
+      }
 
   # --- CARD MOD ---
+  # Poznámky k uix-card-yaml. 2026-10-01 přesunuté sem z CSS: '.' motivu se předřazuje před styl každé karty
+  # a karta s Jinja šablonou ho celý posílá serveru při každém renderu, komentáře tam jen zabíraly místo.
+  # - Pohyb (2026-09-05): (4) přechod stavu — jen transform a barvy, box-shadow záměrně bez přechodu (stack-in-card);
+  #   (3) odezva na stisk — dlaždice, tlačítka, mushroom; (8) vstup karty zrušen: při načítání stránky karty naskakují
+  #   postupně a animace každé z nich dělala „poskakování“; (2) pulz error alertů je v uix.style foundry alert_row
+  #   (řádky jdou přes auto-entities, třída z motivu se na ně nepropíše); (5) prefers-reduced-motion respektuje telefon.
+  # - Pomocná třída no-shadow (uix class) — karta bez stínu, např. vnořená ve stack-in-card.
+  # - Mini graph: kompaktní varianta podle ha-card:not(:has(.name)) — mini-graph bez jména (show.name: false) nemá .name.
+  #   2026-09-20 nahradila billety card_style/css_class foundry mini_graph (per-prvek uix držel v paměti zombie instance).
+  #   Čáry jednotně pro všechny grafy + foundries: line_width je option karty (default 5), ale SVG atribut stroke-width
+  #   přebije CSS vlastnost, takže to jde globálně odsud.
+  # - Heading: titulek těsnější, podtitulek jako malý štítek (uppercase, prostrkaný). Nadpis uprostřed sekce má mít shora
+  #   stejný odstup jako mezera mezi sekcemi: --ha-section-grid-row-gap (8px) + 16px = 24px = --ha-view-sections-row-gap.
+  #   První nadpis v sekci se vynechá (odstup dělá mezisekční mezera). Musí to být padding, ne margin — margin v gridu
+  #   sekce nezvětší výšku buňky a karta se překryje. Mobil: 18px mezisekční mezera − 6px mezera v sekci = 12px.
+  # - Picture-elements (půdorys): state-badge má pevných 40px a ikona 24px, ale obrázek se roztahuje podle šířky karty.
+  #   Na užší kartě (mobil ~339px vs. desktop ~442px) ikony zabírají relativně víc a prvky u okraje vylezou ven (krb na
+  #   top: 3%). Navázáním na cqw se ikony zmenšují s obrázkem; min() drží horní hranici, široké obrazovky se nemění.
+  # - @keyframes rotation: sdílené keyframes, samotný trigger má karta přes uix.style.
+  # - 2026-10-01 smazáno jako mrtvé: :host(.no-padding) (0 použití Home i Office), stisk pro custom-button-card
+  #   (odinstalovaná na obou instancích), pravidla .type-custom-mini-graph-card.no-name (kryje :not(:has(.name)))
+  #   a zdvojený path.line.
   uix-card-yaml: |
     datetime-bar:
       $: |
@@ -499,56 +516,34 @@ fns_mushroom:
         }
 
     .: |
-      /* 2026-09-05 pohyb: (4) přechod stavu — jen transform a barvy, box-shadow záměrně bez přechodu (stack-in-card) */
       ha-card { transition: transform 90ms ease, background-color 200ms ease, color 200ms ease !important; }
       ha-tile-icon, .icon-container, mushroom-shape-icon .shape, ha-state-icon {
         transition: color 200ms ease, background-color 200ms ease, transform 200ms ease;
       }
-      /* (3) odezva na stisk — dlaždice, tlačítka, mushroom */
-      :host(.type-tile) ha-card:active, :host(.type-button) ha-card:active, :host(.type-custom-button-card) ha-card:active,
+      :host(.type-tile) ha-card:active, :host(.type-button) ha-card:active,
       :host(.type-custom-mushroom-template-card) ha-card:active, :host(.type-custom-mushroom-entity-card) ha-card:active,
       :host(.type-custom-mushroom-light-card) ha-card:active, :host(.type-custom-mushroom-media-player-card) ha-card:active {
         transform: scale(.97);
       }
-      /* (8) vstup karty zrušen 2026-09-05: při načítání stránky karty naskakují postupně a animace každé z nich dělala "poskakování" */
-      /* (2) alerty na Přehledu: vstup + pulz error typu je v uix.style foundry alert_row (řádky jdou přes auto-entities, třída z motivu se na ně nepropíše) */
-      /* (5) respektovat nastavení telefonu */
       @media (prefers-reduced-motion: reduce) {
         :host, ha-card, ha-card * { animation: none !important; transition: none !important; }
       }
 
-      /* --- POMOCNÉ TŘÍDY --- */
-      :host(.no-padding) ha-card, ha-card.no-padding {
-        border: none;
-        background: transparent;
-        box-shadow: none;
-      }
-      :host(.no-padding) ha-card #states, ha-card.no-padding #states {
-        padding: 0 !important;
-      }
       :host(.no-shadow) ha-card, ha-card.no-shadow {
         box-shadow: none !important;
       }
 
-      /* --- MINI GRAPH CARD --- */
-      :host(.type-custom-mini-graph-card.no-name) ha-card { padding-top: 0; }
       :host(.type-custom-mini-graph-card) ha-card .state__value { font-size: 14px !important; font-weight: bold; }
       :host(.type-custom-mini-graph-card) ha-card .state__uom { font-size: 14px; position: relative; top: -4px; }
       :host(.type-custom-mini-graph-card) ha-card .ellipsis { font-size: 14px; }
       :host(.type-custom-mini-graph-card) ha-card .header { padding: 0px 12px 12px 12px; }
       :host(.type-custom-mini-graph-card) ha-card .states { padding: 0px 12px 16px 12px; }
       :host(.type-custom-mini-graph-card) ha-card .info { font-size: 10px; padding: 0px 12px 12px 12px; }
-      :host(.type-custom-mini-graph-card.no-name) ha-card .icon { position: absolute; top: 9px; right: 5px; }
-      /* 2026-09-20: kompaktní varianta i bez třídy .no-name — mini-graph bez jména (show.name: false) nemá .name;
-         nahrazuje dřívější card_style/css_class billets foundry mini_graph (per-prvek uix držel v paměti zombie instance) */
       :host(.type-custom-mini-graph-card) ha-card:not(:has(.name)) { padding-top: 0; }
       :host(.type-custom-mini-graph-card) ha-card:not(:has(.name)) .icon { position: absolute; top: 9px; right: 5px; }
-      :host(.type-custom-mini-graph-card) ha-card:not(:has(.name)) path.line { stroke-width: 2px; stroke-linecap: round; stroke-linejoin: round; }
 
-      /* --- HEADING --- */
       :host(.type-heading) ha-card:has(.subtitle) { padding-top: 10px }
 
-      /* Titulek těsnější, podtitulek jako malý štítek (uppercase, prostrkaný) */
       :host(.type-heading) .content.title { letter-spacing: -0.01em; }
       :host(.type-heading) .content.subtitle {
         text-transform: uppercase;
@@ -556,32 +551,17 @@ fns_mushroom:
         opacity: .9;
       }
 
-      /* Nadpis uprostřed sekce má mít shora stejný odstup jako mezera mezi
-         sekcemi: --ha-section-grid-row-gap (8px) + 16px = 24px, což je
-         --ha-view-sections-row-gap. První nadpis v sekci se vynechá — tam ten
-         odstup dělá už mezisekční mezera. Musí to být padding, ne margin;
-         margin v gridu sekce nezvětší výšku buňky a karta se překryje. */
       :host(.type-heading:not(:first-child)) ha-card { padding-top: 16px; }
-      /* Mobil: 18px mezisekční mezera − 6px mezera v sekci = 12px */
       @media (max-width: 600px) {
         :host(.type-heading:not(:first-child)) ha-card { padding-top: 12px; }
       }
 
-      /* --- MINI GRAPH: jednotné čáry pro všech 21 grafů + foundries ---
-         line_width je option karty (default 5), ale SVG atribut stroke-width
-         přebije CSS vlastnost, takže to jde globálně odsud. */
       :host(.type-custom-mini-graph-card) ha-card path.line {
         stroke-width: 2px;
         stroke-linecap: round;
         stroke-linejoin: round;
       }
 
-      /* --- PICTURE-ELEMENTS (půdorys) --- */
-      /* state-badge má pevných 40px a ikona uvnitř 24px, ale obrázek půdorysu se
-         roztahuje podle šířky karty. Na užší kartě (mobil ~339px vs. desktop ~442px)
-         tak ikony zabírají relativně víc a prvky u okraje vylezou ven — třeba krb
-         na top: 3%. Navázáním na cqw se ikony zmenšují spolu s obrázkem; min()
-         drží horní hranici na dnešní velikosti, takže široké obrazovky se nemění. */
       :host(.type-picture-elements) ha-card { container-type: inline-size; }
       :host(.type-picture-elements) state-badge {
         width: min(40px, 9cqw);
@@ -589,7 +569,6 @@ fns_mushroom:
         --mdc-icon-size: min(24px, 5.4cqw);
       }
 
-      /* Rotační animace — samotný trigger má karta přes uix.style, keyframes sdílené */
       @keyframes rotation {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
