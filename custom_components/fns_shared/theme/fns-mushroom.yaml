@@ -366,7 +366,7 @@ fns_mushroom:
           radial-gradient(30vw 18vh at 62% 8%, rgba(var(--fns-cloud-rgb), .26), transparent 70%),
           radial-gradient(34vw 20vh at 88% 34%, rgba(var(--fns-cloud-rgb), .22), transparent 70%);
         background-size: 240% 100%; background-repeat: repeat-x;
-        animation: fns-clouds-a {{ (150 / wind) | round(0) | int }}s linear infinite{{ ' reverse' if sg < 0 else '' }};
+        animation: fns-clouds-a {{ (150 / wind) | round(0) | int }}s steps({{ ((150 / wind) | round(0) | int) * 6 }}) infinite{{ ' reverse' if sg < 0 else '' }};
       }
       #view::after {
         left: 0; top: 0; width: 100vw; height: 100vh; opacity: .7;
@@ -374,7 +374,7 @@ fns_mushroom:
           radial-gradient(26vw 14vh at 40% 60%, rgba(var(--fns-cloud-rgb), .20), transparent 70%),
           radial-gradient(22vw 12vh at 80% 78%, rgba(var(--fns-cloud-rgb), .16), transparent 70%);
         background-size: 260% 100%; background-repeat: repeat-x;
-        animation: fns-clouds-b {{ (230 / wind) | round(0) | int }}s linear infinite{{ ' reverse' if sg < 0 else '' }};
+        animation: fns-clouds-b {{ (230 / wind) | round(0) | int }}s steps({{ ((230 / wind) | round(0) | int) * 6 }}) infinite{{ ' reverse' if sg < 0 else '' }};
       }
       @keyframes fns-clouds-a { from { background-position: 0 0; } to { background-position: 240vw 0; } }
       @keyframes fns-clouds-b { from { background-position: 0 0; } to { background-position: 260vw 0; } }
@@ -389,7 +389,7 @@ fns_mushroom:
           radial-gradient(45vw 24vh at 45% 70%, rgba(var(--fns-overcast-rgb), .14), transparent 70%),
           linear-gradient(rgba(var(--fns-overcast-rgb), .12), rgba(var(--fns-overcast-rgb), .12));
         background-size: 250% 100%, 250% 100%, 250% 100%, 100% 100%; background-repeat: repeat-x, repeat-x, repeat-x, no-repeat;
-        animation: fns-overcast {{ (260 / wind) | round(0) | int }}s linear infinite{{ ' reverse' if sg < 0 else '' }};
+        animation: fns-overcast {{ (260 / wind) | round(0) | int }}s steps({{ ((260 / wind) | round(0) | int) * 6 }}) infinite{{ ' reverse' if sg < 0 else '' }};
       }
       @keyframes fns-overcast { from { background-position: 0 0, 0 0, 0 0, 0 0; } to { background-position: 250vw 0, 250vw 0, 250vw 0, 0 0; } }
       {% endif %}
