@@ -109,6 +109,7 @@ fns_mushroom:
   state-sensor-battery-medium-color: "var(--orange-color)"
   state-update-installing-color: "var(--orange-color)"
   state-vacuum-active-color: "var(--state-active-color)"
+  state-vacuum-docked-color: "var(--green-color)"
 
   # --- Mushroom -------------------------------------------------------------
   # Aliasy na --fns-rgb-* — jeden zdroj pravdy pro HA i mushroom
