@@ -1,21 +1,21 @@
 fns_mushroom:
   # ==========================================================================
-  # FNS Mushroom — modernizace 2026-09-02
-  # Základ: vlastní akcentová modř (indigo) místo HA cyan, dva odstíny
-  # povrchů (stránka / karta / sidebar), hairline okraje karet, měkké
-  # vrstvené stíny, glass hlavička a dialogy, ambientní záře pozadí,
-  # squircle ikony (12px) u tile i mushroom, silnější typografie.
-  # Barvy v modes: dole. Načítá se přes frontend.reload_themes.
+  # FNS Mushroom — modernisation 2026-09-02
+  # Base: custom accent blue (indigo) instead of HA cyan, two surface
+  # shades (page / card / sidebar), hairline card borders, soft
+  # layered shadows, glass header and dialogs, ambient background glow,
+  # squircle icons (12px) on tile and mushroom, heavier typography.
+  # Colours are in modes: below. Loaded via frontend.reload_themes.
   # ==========================================================================
 
-  # --- Typografie -----------------------------------------------------------
+  # --- Typography -----------------------------------------------------------
   ha-font-family-body: 'Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif'
   ha-font-family-heading: "var(--ha-font-family-body)"
   ha-font-weight-heading: 700
   ha-font-weight-action: 600
 
-  # --- Akcent (indigo) — škála přebíjí HA primary tokeny, takže ji
-  #     převezmou i nové komponenty (switch, tlačítka, chipy, odkazy) ------
+  # --- Accent (indigo) — the scale overrides HA primary tokens, so newer
+  #     components pick it up too (switch, buttons, chips, links) ------
   ha-color-primary-05: "#070d24"
   ha-color-primary-10: "#0d1740"
   ha-color-primary-20: "#14245f"
@@ -32,9 +32,9 @@ fns_mushroom:
   text-primary-color: "#ffffff"
   theme-amber: "var(--amber-color)"
 
-  # --- Barevná sada (nahrazuje Material 2014 defaulty HA) -------------------
-  # 2026-09-06: hodnoty jsou v modes: light / dark jako --fns-*. Tady zůstávají jen aliasy,
-  # aby existující tokeny HA i mushroom braly barvu z jednoho místa.
+  # --- Colour set (replaces HA's Material 2014 defaults) --------------------
+  # 2026-09-06: the values live in modes: light / dark as --fns-*. Only aliases stay here,
+  # so that existing HA and mushroom tokens take their colour from a single place.
   red-color: "var(--fns-red)"
   pink-color: "var(--fns-pink)"
   purple-color: "var(--fns-purple)"
@@ -83,7 +83,7 @@ fns_mushroom:
   rgb-success-color: "var(--fns-rgb-success)"
   rgb-info-color: "var(--fns-rgb-info)"
 
-  # --- State barvy (formát state-<domain>-<stav>-color) ---------------------
+  # --- State colours (format state-<domain>-<state>-color) -----------------
   state-alarm_control_panel-disarmed-color: "var(--green-color)"
   state-alarm_control_panel-armed_away-color: "var(--red-color)"
   state-alarm_control_panel-arming-color: "var(--orange-color)"
@@ -112,7 +112,7 @@ fns_mushroom:
   state-vacuum-docked-color: "var(--green-color)"
 
   # --- Mushroom -------------------------------------------------------------
-  # Aliasy na --fns-rgb-* — jeden zdroj pravdy pro HA i mushroom
+  # Aliases to --fns-rgb-* — one source of truth for HA and mushroom
   mush-rgb-blue: "var(--fns-rgb-blue)"
   mush-rgb-red: "var(--fns-rgb-red)"
   mush-rgb-orange: "var(--fns-rgb-orange)"
@@ -128,7 +128,7 @@ fns_mushroom:
   mush-rgb-deep-orange: "var(--fns-rgb-deep-orange)"
   mush-rgb-light-blue: "var(--fns-rgb-light-blue)"
   mush-rgb-indigo: "var(--fns-rgb-indigo)"
-  # mush-rgb-state = akcent, definován v modes (světlý/tmavý odstín)
+  # mush-rgb-state = accent, defined in modes (light/dark shade)
   mush-spacing: 12px
   mush-icon-size: 40px
   mush-icon-border-radius: 12px
@@ -139,29 +139,29 @@ fns_mushroom:
   mush-title-font-weight: 700
   mush-title-letter-spacing: "-0.4px"
 
-  # --- Karty ----------------------------------------------------------------
+  # --- Cards ----------------------------------------------------------------
   ha-card-border-radius: 16px
-  # Okraj karty je 0 — vnitřní karty ve stack-in-card by jinak měly každá
-  # svůj rámeček (dvojité linky). Hairline dělá první vrstva box-shadow
-  # (0 0 0 1px), kterou stack-in-card i třída no-shadow u vnitřních karet zruší.
+  # Card border is 0 — inner cards in a stack-in-card would otherwise each have
+  # their own frame (double lines). The hairline is the first box-shadow layer
+  # (0 0 0 1px), which stack-in-card and the no-shadow class on inner cards remove.
   ha-card-border-width: 0px
   ha-card-box-shadow: "var(--box-shadow)"
   ha-card-features-border-radius: 12px
 
-  # Tile (nativní) — squircle ikona, výraznější primární text
+  # Tile (native) — squircle icon, stronger primary text
   ha-tile-icon-border-radius: 12px
   ha-tile-info-primary-font-weight: 600
   ha-tile-info-primary-letter-spacing: "-0.1px"
 
-  # Heading karta — titulek těžší, podtitulek jako malý štítek (uppercase v CSS níže)
+  # Heading card — heavier title, subtitle as a small label (uppercase in CSS below)
   ha-heading-card-title-font-size: 18px
   ha-heading-card-title-font-weight: 700
   ha-heading-card-subtitle-font-size: 11px
   ha-heading-card-subtitle-font-weight: 600
-  # 2026-10-01: velikost textu odznaků v nadpisech proměnnou místo podřízeného klíče v uix-card-yaml (ten UIX hledal v každé kartě)
+  # 2026-10-01: badge text size in headings via a variable instead of a child key in uix-card-yaml (UIX looked it up in every card)
   ha-heading-badge-font-size: 12px
 
-  # --- Hlavička (glass) a sidebar --------------------------------------------
+  # --- Header (glass) and sidebar --------------------------------------------
   app-header-background-color: "var(--fns-header-bg)"
   app-header-text-color: "var(--primary-text-color)"
   app-header-backdrop-filter: "blur(18px) saturate(160%)"
@@ -173,27 +173,27 @@ fns_mushroom:
   sidebar-selected-text-color: "var(--primary-color)"
   sidebar-selected-icon-color: "var(--primary-color)"
 
-  # --- Dialogy / popupy (glass) ------------------------------------------------
+  # --- Dialogs / popups (glass) ------------------------------------------------
   ha-dialog-border-radius: 24px
   ha-dialog-surface-background: "var(--card-background-color)"
-  # 2026-10-01: scrim bez blur — rozmazání celé obrazovky se přepočítávalo s každým snímkem animovaného pozadí; zatmavení dává fns-scrim
+  # 2026-10-01: scrim without blur — blurring the whole screen was recomputed on every frame of the animated background; fns-scrim provides the dimming
   ha-dialog-scrim-backdrop-filter: "none"
   mdc-dialog-scrim-color: "var(--fns-scrim)"
 
-  # browser_mod popup se size: wide dává obsahu šířku --popup-wide-width
-  # (default 90vw), zatímco plocha dialogu je na mobilu přes celou obrazovku.
-  # Obsah není vycentrovaný, takže těch chybějících 10 % zbyde jako prázdno
-  # vpravo. 100% = obsah vyplní plochu dialogu, symetricky na mobilu i desktopu.
+  # browser_mod popup with size: wide gives the content a width of --popup-wide-width
+  # (default 90vw), while the dialog surface covers the whole screen on mobile.
+  # The content is not centred, so the missing 10 % is left as empty space
+  # on the right. 100% = content fills the dialog surface, symmetric on mobile and desktop.
   popup-wide-width: "100%"
 
-  # Pozadí view = statická denní záře (fns-ambient per mód) hned při načtení; uix-root-yaml ji pak
-  # přepíše cirkadiánní/počasím (stejné rozměry a polohy, takže nic neblikne). Dřív transparent → bílý záblesk.
+  # View background = static daytime glow (fns-ambient per mode) right on load; uix-root-yaml then
+  # overrides it with the circadian/weather one (same sizes and positions, so nothing flickers). Previously transparent → white flash.
   lovelace-background: "var(--fns-ambient)"
 
-  # Částice vrstev počasí (box-shadow seznamy z generátoru pocasi_vrstvy.py, seed 7): rain/snow near+far, hvězdy a/b.
-  # 2026-10-01: jsou to proměnné motivu, ne text v uix-root-yaml — šablona se tím zmenšila o 77 kB a render za deště
-  # nebo sněhu má ~2 kB místo 30–38 kB. var(--fns-*-rgb) uvnitř se dosadí na <html>, kde jsou i barvy z modes,
-  # takže světlý a tmavý režim fungují dál. Šablona je jen použije: box-shadow: var(--fns-rain-near-shadow).
+  # Weather layer particles (box-shadow lists from the pocasi_vrstvy.py generator, seed 7): rain/snow near+far, stars a/b.
+  # 2026-10-01: these are theme variables, not text in uix-root-yaml — the template shrank by 77 kB and a render during rain
+  # or snow is ~2 kB instead of 30–38 kB. var(--fns-*-rgb) inside resolves on <html>, where the modes colours live too,
+  # so light and dark mode keep working. The template only uses them: box-shadow: var(--fns-rain-near-shadow).
   fns-rain-near-shadow: "1126px 308px rgba(var(--fns-rain-rgb), 0.46), 1126px 1608px rgba(var(--fns-rain-rgb), 0.46), -3px 148px rgba(var(--fns-rain-rgb), 0.58), -3px 1448px rgba(var(--fns-rain-rgb), 0.58), 185px 748px rgba(var(--fns-rain-rgb), 0.52), 185px 2048px rgba(var(--fns-rain-rgb), 0.52), 1878px 439px rgba(var(--fns-rain-rgb), 0.37), 1878px 1739px rgba(var(--fns-rain-rgb), 0.37), 1576px 856px rgba(var(--fns-rain-rgb), 0.37), 1576px 2156px rgba(var(--fns-rain-rgb), 0.37), 171px 1128px rgba(var(--fns-rain-rgb), 0.46), 171px 2428px rgba(var(--fns-rain-rgb), 0.46), 2116px 253px rgba(var(--fns-rain-rgb), 0.62), 2116px 1553px rgba(var(--fns-rain-rgb), 0.62), 2187px 126px rgba(var(--fns-rain-rgb), 0.51), 2187px 1426px rgba(var(--fns-rain-rgb), 0.51), 1424px 101px rgba(var(--fns-rain-rgb), 0.63), 1424px 1401px rgba(var(--fns-rain-rgb), 0.63), -10px 1140px rgba(var(--fns-rain-rgb), 0.59), -10px 2440px rgba(var(--fns-rain-rgb), 0.59), 986px 858px rgba(var(--fns-rain-rgb), 0.39), 986px 2158px rgba(var(--fns-rain-rgb), 0.39), 282px 1169px rgba(var(--fns-rain-rgb), 0.44), 282px 2469px rgba(var(--fns-rain-rgb), 0.44), 540px 211px rgba(var(--fns-rain-rgb), 0.52), 540px 1511px rgba(var(--fns-rain-rgb), 0.52), 569px 762px rgba(var(--fns-rain-rgb), 0.38), 569px 2062px rgba(var(--fns-rain-rgb), 0.38), 57px 1155px rgba(var(--fns-rain-rgb), 0.37), 57px 2455px rgba(var(--fns-rain-rgb), 0.37), 643px 1016px rgba(var(--fns-rain-rgb), 0.55), 643px 2316px rgba(var(--fns-rain-rgb), 0.55), 1551px 643px rgba(var(--fns-rain-rgb), 0.48), 1551px 1943px rgba(var(--fns-rain-rgb), 0.48), 1656px 740px rgba(var(--fns-rain-rgb), 0.44), 1656px 2040px rgba(var(--fns-rain-rgb), 0.44), 536px 499px rgba(var(--fns-rain-rgb), 0.37), 536px 1799px rgba(var(--fns-rain-rgb), 0.37), 1029px 1075px rgba(var(--fns-rain-rgb), 0.49), 1029px 2375px rgba(var(--fns-rain-rgb), 0.49), 1206px 919px rgba(var(--fns-rain-rgb), 0.44), 1206px 2219px rgba(var(--fns-rain-rgb), 0.44), 99px 241px rgba(var(--fns-rain-rgb), 0.49), 99px 1541px rgba(var(--fns-rain-rgb), 0.49), 475px 700px rgba(var(--fns-rain-rgb), 0.39), 475px 2000px rgba(var(--fns-rain-rgb), 0.39), 1802px 863px rgba(var(--fns-rain-rgb), 0.37), 1802px 2163px rgba(var(--fns-rain-rgb), 0.37), 117px 1142px rgba(var(--fns-rain-rgb), 0.51), 117px 2442px rgba(var(--fns-rain-rgb), 0.51), 1085px 696px rgba(var(--fns-rain-rgb), 0.55), 1085px 1996px rgba(var(--fns-rain-rgb), 0.55), 1834px 1187px rgba(var(--fns-rain-rgb), 0.58), 1834px 2487px rgba(var(--fns-rain-rgb), 0.58), 81px 191px rgba(var(--fns-rain-rgb), 0.62), 81px 1491px rgba(var(--fns-rain-rgb), 0.62), 1741px 133px rgba(var(--fns-rain-rgb), 0.37), 1741px 1433px rgba(var(--fns-rain-rgb), 0.37), 1068px 1183px rgba(var(--fns-rain-rgb), 0.63), 1068px 2483px rgba(var(--fns-rain-rgb), 0.63), 1625px 582px rgba(var(--fns-rain-rgb), 0.55), 1625px 1882px rgba(var(--fns-rain-rgb), 0.55), 1221px 46px rgba(var(--fns-rain-rgb), 0.62), 1221px 1346px rgba(var(--fns-rain-rgb), 0.62), 1255px 344px rgba(var(--fns-rain-rgb), 0.52), 1255px 1644px rgba(var(--fns-rain-rgb), 0.52), 1822px 120px rgba(var(--fns-rain-rgb), 0.41), 1822px 1420px rgba(var(--fns-rain-rgb), 0.41), 977px 264px rgba(var(--fns-rain-rgb), 0.56), 977px 1564px rgba(var(--fns-rain-rgb), 0.56), 1429px 800px rgba(var(--fns-rain-rgb), 0.6), 1429px 2100px rgba(var(--fns-rain-rgb), 0.6), 1833px 165px rgba(var(--fns-rain-rgb), 0.39), 1833px 1465px rgba(var(--fns-rain-rgb), 0.39), 1445px 1125px rgba(var(--fns-rain-rgb), 0.42), 1445px 2425px rgba(var(--fns-rain-rgb), 0.42), 360px 881px rgba(var(--fns-rain-rgb), 0.59), 360px 2181px rgba(var(--fns-rain-rgb), 0.59), 940px 850px rgba(var(--fns-rain-rgb), 0.63), 940px 2150px rgba(var(--fns-rain-rgb), 0.63), 1358px 472px rgba(var(--fns-rain-rgb), 0.39), 1358px 1772px rgba(var(--fns-rain-rgb), 0.39), 521px 309px rgba(var(--fns-rain-rgb), 0.41), 521px 1609px rgba(var(--fns-rain-rgb), 0.41), 755px 24px rgba(var(--fns-rain-rgb), 0.49), 755px 1324px rgba(var(--fns-rain-rgb), 0.49), 546px 538px rgba(var(--fns-rain-rgb), 0.42), 546px 1838px rgba(var(--fns-rain-rgb), 0.42), 396px 858px rgba(var(--fns-rain-rgb), 0.51), 396px 2158px rgba(var(--fns-rain-rgb), 0.51), 2119px 652px rgba(var(--fns-rain-rgb), 0.62), 2119px 1952px rgba(var(--fns-rain-rgb), 0.62), 1911px 1264px rgba(var(--fns-rain-rgb), 0.53), 1911px 2564px rgba(var(--fns-rain-rgb), 0.53), 21px 935px rgba(var(--fns-rain-rgb), 0.6), 21px 2235px rgba(var(--fns-rain-rgb), 0.6), 2090px 803px rgba(var(--fns-rain-rgb), 0.46), 2090px 2103px rgba(var(--fns-rain-rgb), 0.46), 1414px 212px rgba(var(--fns-rain-rgb), 0.49), 1414px 1512px rgba(var(--fns-rain-rgb), 0.49), 1440px 127px rgba(var(--fns-rain-rgb), 0.41), 1440px 1427px rgba(var(--fns-rain-rgb), 0.41), 655px 902px rgba(var(--fns-rain-rgb), 0.39), 655px 2202px rgba(var(--fns-rain-rgb), 0.39), 1192px 1230px rgba(var(--fns-rain-rgb), 0.37), 1192px 2530px rgba(var(--fns-rain-rgb), 0.37), -200px 1160px rgba(var(--fns-rain-rgb), 0.39), -200px 2460px rgba(var(--fns-rain-rgb), 0.39), 215px 744px rgba(var(--fns-rain-rgb), 0.52), 215px 2044px rgba(var(--fns-rain-rgb), 0.52), 88px 425px rgba(var(--fns-rain-rgb), 0.52), 88px 1725px rgba(var(--fns-rain-rgb), 0.52), 408px 1299px rgba(var(--fns-rain-rgb), 0.42), 408px 2599px rgba(var(--fns-rain-rgb), 0.42), 1222px 1233px rgba(var(--fns-rain-rgb), 0.45), 1222px 2533px rgba(var(--fns-rain-rgb), 0.45), 303px 236px rgba(var(--fns-rain-rgb), 0.59), 303px 1536px rgba(var(--fns-rain-rgb), 0.59), 1708px 983px rgba(var(--fns-rain-rgb), 0.49), 1708px 2283px rgba(var(--fns-rain-rgb), 0.49), 151px 295px rgba(var(--fns-rain-rgb), 0.38), 151px 1595px rgba(var(--fns-rain-rgb), 0.38), 1203px 542px rgba(var(--fns-rain-rgb), 0.48), 1203px 1842px rgba(var(--fns-rain-rgb), 0.48), 461px 1057px rgba(var(--fns-rain-rgb), 0.35), 461px 2357px rgba(var(--fns-rain-rgb), 0.35), 1963px 740px rgba(var(--fns-rain-rgb), 0.39), 1963px 2040px rgba(var(--fns-rain-rgb), 0.39), 2024px 55px rgba(var(--fns-rain-rgb), 0.56), 2024px 1355px rgba(var(--fns-rain-rgb), 0.56), 1020px 186px rgba(var(--fns-rain-rgb), 0.55), 1020px 1486px rgba(var(--fns-rain-rgb), 0.55), 869px 1061px rgba(var(--fns-rain-rgb), 0.45), 869px 2361px rgba(var(--fns-rain-rgb), 0.45), 484px 728px rgba(var(--fns-rain-rgb), 0.56), 484px 2028px rgba(var(--fns-rain-rgb), 0.56), 1981px 1109px rgba(var(--fns-rain-rgb), 0.58), 1981px 2409px rgba(var(--fns-rain-rgb), 0.58), 1150px 456px rgba(var(--fns-rain-rgb), 0.52), 1150px 1756px rgba(var(--fns-rain-rgb), 0.52), 599px 490px rgba(var(--fns-rain-rgb), 0.58), 599px 1790px rgba(var(--fns-rain-rgb), 0.58), 728px 409px rgba(var(--fns-rain-rgb), 0.49), 728px 1709px rgba(var(--fns-rain-rgb), 0.49), 1256px 59px rgba(var(--fns-rain-rgb), 0.63), 1256px 1359px rgba(var(--fns-rain-rgb), 0.63), 944px 967px rgba(var(--fns-rain-rgb), 0.42), 944px 2267px rgba(var(--fns-rain-rgb), 0.42), 1210px 915px rgba(var(--fns-rain-rgb), 0.58), 1210px 2215px rgba(var(--fns-rain-rgb), 0.58), 1231px 746px rgba(var(--fns-rain-rgb), 0.37), 1231px 2046px rgba(var(--fns-rain-rgb), 0.37), 218px 464px rgba(var(--fns-rain-rgb), 0.48), 218px 1764px rgba(var(--fns-rain-rgb), 0.48), 1183px 418px rgba(var(--fns-rain-rgb), 0.49), 1183px 1718px rgba(var(--fns-rain-rgb), 0.49), -193px 981px rgba(var(--fns-rain-rgb), 0.6), -193px 2281px rgba(var(--fns-rain-rgb), 0.6), 1209px 173px rgba(var(--fns-rain-rgb), 0.59), 1209px 1473px rgba(var(--fns-rain-rgb), 0.59), 291px 795px rgba(var(--fns-rain-rgb), 0.58), 291px 2095px rgba(var(--fns-rain-rgb), 0.58), 616px 979px rgba(var(--fns-rain-rgb), 0.6), 616px 2279px rgba(var(--fns-rain-rgb), 0.6), 1577px 680px rgba(var(--fns-rain-rgb), 0.38), 1577px 1980px rgba(var(--fns-rain-rgb), 0.38), 1421px 948px rgba(var(--fns-rain-rgb), 0.46), 1421px 2248px rgba(var(--fns-rain-rgb), 0.46), 147px 325px rgba(var(--fns-rain-rgb), 0.39), 147px 1625px rgba(var(--fns-rain-rgb), 0.39), 320px 56px rgba(var(--fns-rain-rgb), 0.39), 320px 1356px rgba(var(--fns-rain-rgb), 0.39), 1706px 299px rgba(var(--fns-rain-rgb), 0.52), 1706px 1599px rgba(var(--fns-rain-rgb), 0.52), 1742px 717px rgba(var(--fns-rain-rgb), 0.39), 1742px 2017px rgba(var(--fns-rain-rgb), 0.39), 2045px 268px rgba(var(--fns-rain-rgb), 0.35), 2045px 1568px rgba(var(--fns-rain-rgb), 0.35), 220px 1078px rgba(var(--fns-rain-rgb), 0.56), 220px 2378px rgba(var(--fns-rain-rgb), 0.56), 370px 888px rgba(var(--fns-rain-rgb), 0.63), 370px 2188px rgba(var(--fns-rain-rgb), 0.63), 597px 432px rgba(var(--fns-rain-rgb), 0.35), 597px 1732px rgba(var(--fns-rain-rgb), 0.35), 671px 599px rgba(var(--fns-rain-rgb), 0.49), 671px 1899px rgba(var(--fns-rain-rgb), 0.49), 1135px 531px rgba(var(--fns-rain-rgb), 0.51), 1135px 1831px rgba(var(--fns-rain-rgb), 0.51), 336px 124px rgba(var(--fns-rain-rgb), 0.6), 336px 1424px rgba(var(--fns-rain-rgb), 0.6), 1249px 938px rgba(var(--fns-rain-rgb), 0.53), 1249px 2238px rgba(var(--fns-rain-rgb), 0.53), 1916px 861px rgba(var(--fns-rain-rgb), 0.58), 1916px 2161px rgba(var(--fns-rain-rgb), 0.58), 1854px 267px rgba(var(--fns-rain-rgb), 0.51), 1854px 1567px rgba(var(--fns-rain-rgb), 0.51), 1944px 1045px rgba(var(--fns-rain-rgb), 0.35), 1944px 2345px rgba(var(--fns-rain-rgb), 0.35), 1602px 375px rgba(var(--fns-rain-rgb), 0.52), 1602px 1675px rgba(var(--fns-rain-rgb), 0.52), 413px 352px rgba(var(--fns-rain-rgb), 0.39), 413px 1652px rgba(var(--fns-rain-rgb), 0.39), 292px 1139px rgba(var(--fns-rain-rgb), 0.37), 292px 2439px rgba(var(--fns-rain-rgb), 0.37), 1923px 1086px rgba(var(--fns-rain-rgb), 0.51), 1923px 2386px rgba(var(--fns-rain-rgb), 0.51), 234px 1147px rgba(var(--fns-rain-rgb), 0.37), 234px 2447px rgba(var(--fns-rain-rgb), 0.37), 583px 567px rgba(var(--fns-rain-rgb), 0.37), 583px 1867px rgba(var(--fns-rain-rgb), 0.37), 200px 1039px rgba(var(--fns-rain-rgb), 0.48), 200px 2339px rgba(var(--fns-rain-rgb), 0.48), -86px 129px rgba(var(--fns-rain-rgb), 0.48), -86px 1429px rgba(var(--fns-rain-rgb), 0.48), 1870px 1241px rgba(var(--fns-rain-rgb), 0.49), 1870px 2541px rgba(var(--fns-rain-rgb), 0.49), 935px 926px rgba(var(--fns-rain-rgb), 0.49), 935px 2226px rgba(var(--fns-rain-rgb), 0.49), 1758px 1039px rgba(var(--fns-rain-rgb), 0.62), 1758px 2339px rgba(var(--fns-rain-rgb), 0.62)"
   fns-rain-far-shadow: "1943px 531px rgba(var(--fns-rain-rgb), 0.38), 1943px 1831px rgba(var(--fns-rain-rgb), 0.38), 629px 916px rgba(var(--fns-rain-rgb), 0.24), 629px 2216px rgba(var(--fns-rain-rgb), 0.24), 298px 803px rgba(var(--fns-rain-rgb), 0.3), 298px 2103px rgba(var(--fns-rain-rgb), 0.3), 97px 492px rgba(var(--fns-rain-rgb), 0.3), 97px 1792px rgba(var(--fns-rain-rgb), 0.3), 671px 620px rgba(var(--fns-rain-rgb), 0.35), 671px 1920px rgba(var(--fns-rain-rgb), 0.35), 432px 749px rgba(var(--fns-rain-rgb), 0.24), 432px 2049px rgba(var(--fns-rain-rgb), 0.24), 362px 957px rgba(var(--fns-rain-rgb), 0.25), 362px 2257px rgba(var(--fns-rain-rgb), 0.25), 185px 815px rgba(var(--fns-rain-rgb), 0.38), 185px 2115px rgba(var(--fns-rain-rgb), 0.38), 466px 458px rgba(var(--fns-rain-rgb), 0.24), 466px 1758px rgba(var(--fns-rain-rgb), 0.24), 1567px 1055px rgba(var(--fns-rain-rgb), 0.28), 1567px 2355px rgba(var(--fns-rain-rgb), 0.28), 1525px 400px rgba(var(--fns-rain-rgb), 0.28), 1525px 1700px rgba(var(--fns-rain-rgb), 0.28), 177px 749px rgba(var(--fns-rain-rgb), 0.23), 177px 2049px rgba(var(--fns-rain-rgb), 0.23), 2069px 939px rgba(var(--fns-rain-rgb), 0.3), 2069px 2239px rgba(var(--fns-rain-rgb), 0.3), -126px 787px rgba(var(--fns-rain-rgb), 0.28), -126px 2087px rgba(var(--fns-rain-rgb), 0.28), 1010px 1049px rgba(var(--fns-rain-rgb), 0.39), 1010px 2349px rgba(var(--fns-rain-rgb), 0.39), 262px 468px rgba(var(--fns-rain-rgb), 0.39), 262px 1768px rgba(var(--fns-rain-rgb), 0.39), 229px 172px rgba(var(--fns-rain-rgb), 0.27), 229px 1472px rgba(var(--fns-rain-rgb), 0.27), -38px 371px rgba(var(--fns-rain-rgb), 0.27), -38px 1671px rgba(var(--fns-rain-rgb), 0.27), 330px 864px rgba(var(--fns-rain-rgb), 0.37), 330px 2164px rgba(var(--fns-rain-rgb), 0.37), 859px 831px rgba(var(--fns-rain-rgb), 0.24), 859px 2131px rgba(var(--fns-rain-rgb), 0.24), 1908px 1168px rgba(var(--fns-rain-rgb), 0.31), 1908px 2468px rgba(var(--fns-rain-rgb), 0.31), 1139px 183px rgba(var(--fns-rain-rgb), 0.27), 1139px 1483px rgba(var(--fns-rain-rgb), 0.27), 550px 871px rgba(var(--fns-rain-rgb), 0.38), 550px 2171px rgba(var(--fns-rain-rgb), 0.38), 901px 34px rgba(var(--fns-rain-rgb), 0.32), 901px 1334px rgba(var(--fns-rain-rgb), 0.32), 867px 171px rgba(var(--fns-rain-rgb), 0.32), 867px 1471px rgba(var(--fns-rain-rgb), 0.32), 710px 136px rgba(var(--fns-rain-rgb), 0.27), 710px 1436px rgba(var(--fns-rain-rgb), 0.27), 298px 929px rgba(var(--fns-rain-rgb), 0.23), 298px 2229px rgba(var(--fns-rain-rgb), 0.23), 2065px 855px rgba(var(--fns-rain-rgb), 0.38), 2065px 2155px rgba(var(--fns-rain-rgb), 0.38), 897px 1273px rgba(var(--fns-rain-rgb), 0.24), 897px 2573px rgba(var(--fns-rain-rgb), 0.24), 1958px 488px rgba(var(--fns-rain-rgb), 0.38), 1958px 1788px rgba(var(--fns-rain-rgb), 0.38), 461px 536px rgba(var(--fns-rain-rgb), 0.23), 461px 1836px rgba(var(--fns-rain-rgb), 0.23), 626px 638px rgba(var(--fns-rain-rgb), 0.32), 626px 1938px rgba(var(--fns-rain-rgb), 0.32), 1975px 421px rgba(var(--fns-rain-rgb), 0.27), 1975px 1721px rgba(var(--fns-rain-rgb), 0.27), 1848px 364px rgba(var(--fns-rain-rgb), 0.27), 1848px 1664px rgba(var(--fns-rain-rgb), 0.27), -126px 512px rgba(var(--fns-rain-rgb), 0.23), -126px 1812px rgba(var(--fns-rain-rgb), 0.23), -125px 1035px rgba(var(--fns-rain-rgb), 0.31), -125px 2335px rgba(var(--fns-rain-rgb), 0.31), 576px 1053px rgba(var(--fns-rain-rgb), 0.3), 576px 2353px rgba(var(--fns-rain-rgb), 0.3), 1631px 217px rgba(var(--fns-rain-rgb), 0.34), 1631px 1517px rgba(var(--fns-rain-rgb), 0.34), 1570px 1013px rgba(var(--fns-rain-rgb), 0.31), 1570px 2313px rgba(var(--fns-rain-rgb), 0.31), 1410px 1037px rgba(var(--fns-rain-rgb), 0.27), 1410px 2337px rgba(var(--fns-rain-rgb), 0.27), 681px 470px rgba(var(--fns-rain-rgb), 0.28), 681px 1770px rgba(var(--fns-rain-rgb), 0.28), 372px 828px rgba(var(--fns-rain-rgb), 0.39), 372px 2128px rgba(var(--fns-rain-rgb), 0.39), 22px 265px rgba(var(--fns-rain-rgb), 0.23), 22px 1565px rgba(var(--fns-rain-rgb), 0.23), 846px 882px rgba(var(--fns-rain-rgb), 0.24), 846px 2182px rgba(var(--fns-rain-rgb), 0.24), 146px 780px rgba(var(--fns-rain-rgb), 0.37), 146px 2080px rgba(var(--fns-rain-rgb), 0.37), 954px 1226px rgba(var(--fns-rain-rgb), 0.25), 954px 2526px rgba(var(--fns-rain-rgb), 0.25), 1000px 92px rgba(var(--fns-rain-rgb), 0.3), 1000px 1392px rgba(var(--fns-rain-rgb), 0.3), 445px 550px rgba(var(--fns-rain-rgb), 0.3), 445px 1850px rgba(var(--fns-rain-rgb), 0.3), 878px 745px rgba(var(--fns-rain-rgb), 0.39), 878px 2045px rgba(var(--fns-rain-rgb), 0.39), 2040px 662px rgba(var(--fns-rain-rgb), 0.25), 2040px 1962px rgba(var(--fns-rain-rgb), 0.25), 1067px 446px rgba(var(--fns-rain-rgb), 0.28), 1067px 1746px rgba(var(--fns-rain-rgb), 0.28), -196px 686px rgba(var(--fns-rain-rgb), 0.28), -196px 1986px rgba(var(--fns-rain-rgb), 0.28), 1744px 571px rgba(var(--fns-rain-rgb), 0.31), 1744px 1871px rgba(var(--fns-rain-rgb), 0.31), 623px 508px rgba(var(--fns-rain-rgb), 0.31), 623px 1808px rgba(var(--fns-rain-rgb), 0.31), -180px 186px rgba(var(--fns-rain-rgb), 0.27), -180px 1486px rgba(var(--fns-rain-rgb), 0.27), 167px 294px rgba(var(--fns-rain-rgb), 0.28), 167px 1594px rgba(var(--fns-rain-rgb), 0.28), -30px 806px rgba(var(--fns-rain-rgb), 0.23), -30px 2106px rgba(var(--fns-rain-rgb), 0.23), 1046px 1289px rgba(var(--fns-rain-rgb), 0.25), 1046px 2589px rgba(var(--fns-rain-rgb), 0.25), 2198px 1083px rgba(var(--fns-rain-rgb), 0.37), 2198px 2383px rgba(var(--fns-rain-rgb), 0.37), 435px 1221px rgba(var(--fns-rain-rgb), 0.28), 435px 2521px rgba(var(--fns-rain-rgb), 0.28), 1135px 1012px rgba(var(--fns-rain-rgb), 0.24), 1135px 2312px rgba(var(--fns-rain-rgb), 0.24), 392px 89px rgba(var(--fns-rain-rgb), 0.37), 392px 1389px rgba(var(--fns-rain-rgb), 0.37), 1901px 1284px rgba(var(--fns-rain-rgb), 0.3), 1901px 2584px rgba(var(--fns-rain-rgb), 0.3), 1870px 285px rgba(var(--fns-rain-rgb), 0.38), 1870px 1585px rgba(var(--fns-rain-rgb), 0.38), 1865px 1164px rgba(var(--fns-rain-rgb), 0.37), 1865px 2464px rgba(var(--fns-rain-rgb), 0.37), -135px 1196px rgba(var(--fns-rain-rgb), 0.35), -135px 2496px rgba(var(--fns-rain-rgb), 0.35), 741px 174px rgba(var(--fns-rain-rgb), 0.23), 741px 1474px rgba(var(--fns-rain-rgb), 0.23), 345px 738px rgba(var(--fns-rain-rgb), 0.38), 345px 2038px rgba(var(--fns-rain-rgb), 0.38), 1342px 924px rgba(var(--fns-rain-rgb), 0.31), 1342px 2224px rgba(var(--fns-rain-rgb), 0.31), -123px 1282px rgba(var(--fns-rain-rgb), 0.31), -123px 2582px rgba(var(--fns-rain-rgb), 0.31), 801px 1002px rgba(var(--fns-rain-rgb), 0.27), 801px 2302px rgba(var(--fns-rain-rgb), 0.27), 1671px 143px rgba(var(--fns-rain-rgb), 0.35), 1671px 1443px rgba(var(--fns-rain-rgb), 0.35), 1860px 1096px rgba(var(--fns-rain-rgb), 0.24), 1860px 2396px rgba(var(--fns-rain-rgb), 0.24), 1954px 135px rgba(var(--fns-rain-rgb), 0.35), 1954px 1435px rgba(var(--fns-rain-rgb), 0.35), 1740px 516px rgba(var(--fns-rain-rgb), 0.37), 1740px 1816px rgba(var(--fns-rain-rgb), 0.37), 887px 480px rgba(var(--fns-rain-rgb), 0.35), 887px 1780px rgba(var(--fns-rain-rgb), 0.35), 640px 472px rgba(var(--fns-rain-rgb), 0.35), 640px 1772px rgba(var(--fns-rain-rgb), 0.35), 1685px 1011px rgba(var(--fns-rain-rgb), 0.37), 1685px 2311px rgba(var(--fns-rain-rgb), 0.37), 114px 981px rgba(var(--fns-rain-rgb), 0.38), 114px 2281px rgba(var(--fns-rain-rgb), 0.38), 976px 95px rgba(var(--fns-rain-rgb), 0.32), 976px 1395px rgba(var(--fns-rain-rgb), 0.32), 612px 158px rgba(var(--fns-rain-rgb), 0.32), 612px 1458px rgba(var(--fns-rain-rgb), 0.32), 1158px 520px rgba(var(--fns-rain-rgb), 0.34), 1158px 1820px rgba(var(--fns-rain-rgb), 0.34), 1046px 1272px rgba(var(--fns-rain-rgb), 0.32), 1046px 2572px rgba(var(--fns-rain-rgb), 0.32), -149px 987px rgba(var(--fns-rain-rgb), 0.23), -149px 2287px rgba(var(--fns-rain-rgb), 0.23), 900px 203px rgba(var(--fns-rain-rgb), 0.34), 900px 1503px rgba(var(--fns-rain-rgb), 0.34), 1805px 595px rgba(var(--fns-rain-rgb), 0.34), 1805px 1895px rgba(var(--fns-rain-rgb), 0.34), 969px 951px rgba(var(--fns-rain-rgb), 0.3), 969px 2251px rgba(var(--fns-rain-rgb), 0.3), 285px 1124px rgba(var(--fns-rain-rgb), 0.25), 285px 2424px rgba(var(--fns-rain-rgb), 0.25), 151px 968px rgba(var(--fns-rain-rgb), 0.23), 151px 2268px rgba(var(--fns-rain-rgb), 0.23), 1679px 156px rgba(var(--fns-rain-rgb), 0.37), 1679px 1456px rgba(var(--fns-rain-rgb), 0.37), 1640px 550px rgba(var(--fns-rain-rgb), 0.28), 1640px 1850px rgba(var(--fns-rain-rgb), 0.28), 663px 152px rgba(var(--fns-rain-rgb), 0.32), 663px 1452px rgba(var(--fns-rain-rgb), 0.32), 380px 1073px rgba(var(--fns-rain-rgb), 0.27), 380px 2373px rgba(var(--fns-rain-rgb), 0.27), 1272px 271px rgba(var(--fns-rain-rgb), 0.32), 1272px 1571px rgba(var(--fns-rain-rgb), 0.32), 1883px 572px rgba(var(--fns-rain-rgb), 0.38), 1883px 1872px rgba(var(--fns-rain-rgb), 0.38), 1295px 473px rgba(var(--fns-rain-rgb), 0.31), 1295px 1773px rgba(var(--fns-rain-rgb), 0.31), 1791px 807px rgba(var(--fns-rain-rgb), 0.23), 1791px 2107px rgba(var(--fns-rain-rgb), 0.23), -186px 1006px rgba(var(--fns-rain-rgb), 0.34), -186px 2306px rgba(var(--fns-rain-rgb), 0.34), 1460px 618px rgba(var(--fns-rain-rgb), 0.35), 1460px 1918px rgba(var(--fns-rain-rgb), 0.35), 1504px 704px rgba(var(--fns-rain-rgb), 0.28), 1504px 2004px rgba(var(--fns-rain-rgb), 0.28), 295px 678px rgba(var(--fns-rain-rgb), 0.21), 295px 1978px rgba(var(--fns-rain-rgb), 0.21), 1185px 815px rgba(var(--fns-rain-rgb), 0.24), 1185px 2115px rgba(var(--fns-rain-rgb), 0.24), 601px 24px rgba(var(--fns-rain-rgb), 0.38), 601px 1324px rgba(var(--fns-rain-rgb), 0.38), 987px 518px rgba(var(--fns-rain-rgb), 0.28), 987px 1818px rgba(var(--fns-rain-rgb), 0.28), 1409px 799px rgba(var(--fns-rain-rgb), 0.39), 1409px 2099px rgba(var(--fns-rain-rgb), 0.39), 112px 738px rgba(var(--fns-rain-rgb), 0.38), 112px 2038px rgba(var(--fns-rain-rgb), 0.38), 927px 98px rgba(var(--fns-rain-rgb), 0.27), 927px 1398px rgba(var(--fns-rain-rgb), 0.27), 11px 584px rgba(var(--fns-rain-rgb), 0.32), 11px 1884px rgba(var(--fns-rain-rgb), 0.32), 409px 510px rgba(var(--fns-rain-rgb), 0.39), 409px 1810px rgba(var(--fns-rain-rgb), 0.39), 1586px 1046px rgba(var(--fns-rain-rgb), 0.27), 1586px 2346px rgba(var(--fns-rain-rgb), 0.27), 1329px 876px rgba(var(--fns-rain-rgb), 0.38), 1329px 2176px rgba(var(--fns-rain-rgb), 0.38), 1438px 1134px rgba(var(--fns-rain-rgb), 0.31), 1438px 2434px rgba(var(--fns-rain-rgb), 0.31), 130px 101px rgba(var(--fns-rain-rgb), 0.38), 130px 1401px rgba(var(--fns-rain-rgb), 0.38), 1482px 923px rgba(var(--fns-rain-rgb), 0.32), 1482px 2223px rgba(var(--fns-rain-rgb), 0.32), 367px 586px rgba(var(--fns-rain-rgb), 0.31), 367px 1886px rgba(var(--fns-rain-rgb), 0.31), 2053px 260px rgba(var(--fns-rain-rgb), 0.25), 2053px 1560px rgba(var(--fns-rain-rgb), 0.25), 1499px 703px rgba(var(--fns-rain-rgb), 0.27), 1499px 2003px rgba(var(--fns-rain-rgb), 0.27), 847px 532px rgba(var(--fns-rain-rgb), 0.3), 847px 1832px rgba(var(--fns-rain-rgb), 0.3), 777px 616px rgba(var(--fns-rain-rgb), 0.3), 777px 1916px rgba(var(--fns-rain-rgb), 0.3), 1415px 245px rgba(var(--fns-rain-rgb), 0.25), 1415px 1545px rgba(var(--fns-rain-rgb), 0.25), 462px 153px rgba(var(--fns-rain-rgb), 0.25), 462px 1453px rgba(var(--fns-rain-rgb), 0.25), 1836px 1127px rgba(var(--fns-rain-rgb), 0.25), 1836px 2427px rgba(var(--fns-rain-rgb), 0.25), 1163px 921px rgba(var(--fns-rain-rgb), 0.3), 1163px 2221px rgba(var(--fns-rain-rgb), 0.3), 2043px 394px rgba(var(--fns-rain-rgb), 0.25), 2043px 1694px rgba(var(--fns-rain-rgb), 0.25), 515px 700px rgba(var(--fns-rain-rgb), 0.31), 515px 2000px rgba(var(--fns-rain-rgb), 0.31), 1107px 489px rgba(var(--fns-rain-rgb), 0.28), 1107px 1789px rgba(var(--fns-rain-rgb), 0.28), 2133px 413px rgba(var(--fns-rain-rgb), 0.38), 2133px 1713px rgba(var(--fns-rain-rgb), 0.38), 1490px 784px rgba(var(--fns-rain-rgb), 0.3), 1490px 2084px rgba(var(--fns-rain-rgb), 0.3), 1946px 430px rgba(var(--fns-rain-rgb), 0.28), 1946px 1730px rgba(var(--fns-rain-rgb), 0.28), 1185px 127px rgba(var(--fns-rain-rgb), 0.31), 1185px 1427px rgba(var(--fns-rain-rgb), 0.31), 2152px 737px rgba(var(--fns-rain-rgb), 0.24), 2152px 2037px rgba(var(--fns-rain-rgb), 0.24), 1861px 1083px rgba(var(--fns-rain-rgb), 0.32), 1861px 2383px rgba(var(--fns-rain-rgb), 0.32), 684px 189px rgba(var(--fns-rain-rgb), 0.27), 684px 1489px rgba(var(--fns-rain-rgb), 0.27), 817px 787px rgba(var(--fns-rain-rgb), 0.28), 817px 2087px rgba(var(--fns-rain-rgb), 0.28), 1626px 884px rgba(var(--fns-rain-rgb), 0.38), 1626px 2184px rgba(var(--fns-rain-rgb), 0.38), -111px 260px rgba(var(--fns-rain-rgb), 0.23), -111px 1560px rgba(var(--fns-rain-rgb), 0.23), 1738px 1202px rgba(var(--fns-rain-rgb), 0.31), 1738px 2502px rgba(var(--fns-rain-rgb), 0.31), 99px 801px rgba(var(--fns-rain-rgb), 0.38), 99px 2101px rgba(var(--fns-rain-rgb), 0.38), 1962px 958px rgba(var(--fns-rain-rgb), 0.39), 1962px 2258px rgba(var(--fns-rain-rgb), 0.39), 817px 223px rgba(var(--fns-rain-rgb), 0.25), 817px 1523px rgba(var(--fns-rain-rgb), 0.25), 422px 1069px rgba(var(--fns-rain-rgb), 0.39), 422px 2369px rgba(var(--fns-rain-rgb), 0.39), 246px 936px rgba(var(--fns-rain-rgb), 0.23), 246px 2236px rgba(var(--fns-rain-rgb), 0.23), -39px 2px rgba(var(--fns-rain-rgb), 0.35), -39px 1302px rgba(var(--fns-rain-rgb), 0.35), 752px 1166px rgba(var(--fns-rain-rgb), 0.38), 752px 2466px rgba(var(--fns-rain-rgb), 0.38), 1044px 262px rgba(var(--fns-rain-rgb), 0.32), 1044px 1562px rgba(var(--fns-rain-rgb), 0.32), 1963px 895px rgba(var(--fns-rain-rgb), 0.34), 1963px 2195px rgba(var(--fns-rain-rgb), 0.34), 259px 203px rgba(var(--fns-rain-rgb), 0.23), 259px 1503px rgba(var(--fns-rain-rgb), 0.23), 1948px 1193px rgba(var(--fns-rain-rgb), 0.25), 1948px 2493px rgba(var(--fns-rain-rgb), 0.25), 868px 457px rgba(var(--fns-rain-rgb), 0.35), 868px 1757px rgba(var(--fns-rain-rgb), 0.35), -196px 21px rgba(var(--fns-rain-rgb), 0.31), -196px 1321px rgba(var(--fns-rain-rgb), 0.31), 1686px 570px rgba(var(--fns-rain-rgb), 0.38), 1686px 1870px rgba(var(--fns-rain-rgb), 0.38), 792px 973px rgba(var(--fns-rain-rgb), 0.31), 792px 2273px rgba(var(--fns-rain-rgb), 0.31), 2040px 505px rgba(var(--fns-rain-rgb), 0.23), 2040px 1805px rgba(var(--fns-rain-rgb), 0.23), 1486px 629px rgba(var(--fns-rain-rgb), 0.23), 1486px 1929px rgba(var(--fns-rain-rgb), 0.23), 595px 1020px rgba(var(--fns-rain-rgb), 0.38), 595px 2320px rgba(var(--fns-rain-rgb), 0.38), 1520px 166px rgba(var(--fns-rain-rgb), 0.27), 1520px 1466px rgba(var(--fns-rain-rgb), 0.27), 1538px 758px rgba(var(--fns-rain-rgb), 0.25), 1538px 2058px rgba(var(--fns-rain-rgb), 0.25), -61px 692px rgba(var(--fns-rain-rgb), 0.34), -61px 1992px rgba(var(--fns-rain-rgb), 0.34), 1284px 811px rgba(var(--fns-rain-rgb), 0.25), 1284px 2111px rgba(var(--fns-rain-rgb), 0.25), 996px 1033px rgba(var(--fns-rain-rgb), 0.23), 996px 2333px rgba(var(--fns-rain-rgb), 0.23), 1830px 410px rgba(var(--fns-rain-rgb), 0.27), 1830px 1710px rgba(var(--fns-rain-rgb), 0.27), 594px 472px rgba(var(--fns-rain-rgb), 0.3), 594px 1772px rgba(var(--fns-rain-rgb), 0.3), 885px 604px rgba(var(--fns-rain-rgb), 0.24), 885px 1904px rgba(var(--fns-rain-rgb), 0.24), 1830px 1249px rgba(var(--fns-rain-rgb), 0.25), 1830px 2549px rgba(var(--fns-rain-rgb), 0.25), 714px 993px rgba(var(--fns-rain-rgb), 0.3), 714px 2293px rgba(var(--fns-rain-rgb), 0.3), 31px 1218px rgba(var(--fns-rain-rgb), 0.24), 31px 2518px rgba(var(--fns-rain-rgb), 0.24), 1411px 111px rgba(var(--fns-rain-rgb), 0.25), 1411px 1411px rgba(var(--fns-rain-rgb), 0.25), 381px 850px rgba(var(--fns-rain-rgb), 0.23), 381px 2150px rgba(var(--fns-rain-rgb), 0.23), 46px 377px rgba(var(--fns-rain-rgb), 0.28), 46px 1677px rgba(var(--fns-rain-rgb), 0.28), 1086px 231px rgba(var(--fns-rain-rgb), 0.39), 1086px 1531px rgba(var(--fns-rain-rgb), 0.39), 478px 674px rgba(var(--fns-rain-rgb), 0.25), 478px 1974px rgba(var(--fns-rain-rgb), 0.25), 1949px 957px rgba(var(--fns-rain-rgb), 0.23), 1949px 2257px rgba(var(--fns-rain-rgb), 0.23), 1350px 765px rgba(var(--fns-rain-rgb), 0.39), 1350px 2065px rgba(var(--fns-rain-rgb), 0.39), 1612px 346px rgba(var(--fns-rain-rgb), 0.24), 1612px 1646px rgba(var(--fns-rain-rgb), 0.24), 120px 573px rgba(var(--fns-rain-rgb), 0.23), 120px 1873px rgba(var(--fns-rain-rgb), 0.23), 1521px 253px rgba(var(--fns-rain-rgb), 0.31), 1521px 1553px rgba(var(--fns-rain-rgb), 0.31), 649px 778px rgba(var(--fns-rain-rgb), 0.28), 649px 2078px rgba(var(--fns-rain-rgb), 0.28), 1064px 885px rgba(var(--fns-rain-rgb), 0.24), 1064px 2185px rgba(var(--fns-rain-rgb), 0.24), 1739px 400px rgba(var(--fns-rain-rgb), 0.28), 1739px 1700px rgba(var(--fns-rain-rgb), 0.28), 1628px 395px rgba(var(--fns-rain-rgb), 0.27), 1628px 1695px rgba(var(--fns-rain-rgb), 0.27), 1743px 62px rgba(var(--fns-rain-rgb), 0.32), 1743px 1362px rgba(var(--fns-rain-rgb), 0.32), 815px 1280px rgba(var(--fns-rain-rgb), 0.35), 815px 2580px rgba(var(--fns-rain-rgb), 0.35), -34px 769px rgba(var(--fns-rain-rgb), 0.23), -34px 2069px rgba(var(--fns-rain-rgb), 0.23), 56px 126px rgba(var(--fns-rain-rgb), 0.27), 56px 1426px rgba(var(--fns-rain-rgb), 0.27), 57px 1240px rgba(var(--fns-rain-rgb), 0.28), 57px 2540px rgba(var(--fns-rain-rgb), 0.28), 915px 686px rgba(var(--fns-rain-rgb), 0.38), 915px 1986px rgba(var(--fns-rain-rgb), 0.38), -22px 536px rgba(var(--fns-rain-rgb), 0.35), -22px 1836px rgba(var(--fns-rain-rgb), 0.35), 1096px 564px rgba(var(--fns-rain-rgb), 0.27), 1096px 1864px rgba(var(--fns-rain-rgb), 0.27), 67px 49px rgba(var(--fns-rain-rgb), 0.37), 67px 1349px rgba(var(--fns-rain-rgb), 0.37), 239px 973px rgba(var(--fns-rain-rgb), 0.34), 239px 2273px rgba(var(--fns-rain-rgb), 0.34), 1707px 791px rgba(var(--fns-rain-rgb), 0.35), 1707px 2091px rgba(var(--fns-rain-rgb), 0.35), 1561px 1010px rgba(var(--fns-rain-rgb), 0.24), 1561px 2310px rgba(var(--fns-rain-rgb), 0.24), 1833px 374px rgba(var(--fns-rain-rgb), 0.23), 1833px 1674px rgba(var(--fns-rain-rgb), 0.23), 1042px 309px rgba(var(--fns-rain-rgb), 0.32), 1042px 1609px rgba(var(--fns-rain-rgb), 0.32), 1142px 654px rgba(var(--fns-rain-rgb), 0.3), 1142px 1954px rgba(var(--fns-rain-rgb), 0.3), 123px 1048px rgba(var(--fns-rain-rgb), 0.25), 123px 2348px rgba(var(--fns-rain-rgb), 0.25), 455px 506px rgba(var(--fns-rain-rgb), 0.3), 455px 1806px rgba(var(--fns-rain-rgb), 0.3), -62px 986px rgba(var(--fns-rain-rgb), 0.31), -62px 2286px rgba(var(--fns-rain-rgb), 0.31), 1134px 329px rgba(var(--fns-rain-rgb), 0.39), 1134px 1629px rgba(var(--fns-rain-rgb), 0.39), 230px 147px rgba(var(--fns-rain-rgb), 0.27), 230px 1447px rgba(var(--fns-rain-rgb), 0.27)"
   fns-snow-near-shadow: "144px 426px rgba(var(--fns-snow-rgb), 0.5), 144px 1726px rgba(var(--fns-snow-rgb), 0.5), 1841px 915px rgba(var(--fns-snow-rgb), 0.53), 1841px 2215px rgba(var(--fns-snow-rgb), 0.53), 344px 853px rgba(var(--fns-snow-rgb), 0.64), 344px 2153px rgba(var(--fns-snow-rgb), 0.64), 762px 1102px rgba(var(--fns-snow-rgb), 0.79), 762px 2402px rgba(var(--fns-snow-rgb), 0.79), 296px 601px rgba(var(--fns-snow-rgb), 0.58), 296px 1901px rgba(var(--fns-snow-rgb), 0.58), 2121px 548px rgba(var(--fns-snow-rgb), 0.61), 2121px 1848px rgba(var(--fns-snow-rgb), 0.61), 866px 407px rgba(var(--fns-snow-rgb), 0.64), 866px 1707px rgba(var(--fns-snow-rgb), 0.64), 560px 502px rgba(var(--fns-snow-rgb), 0.56), 560px 1802px rgba(var(--fns-snow-rgb), 0.56), 952px 1184px rgba(var(--fns-snow-rgb), 0.54), 952px 2484px rgba(var(--fns-snow-rgb), 0.54), 65px 811px rgba(var(--fns-snow-rgb), 0.56), 65px 2111px rgba(var(--fns-snow-rgb), 0.56), 807px 1039px rgba(var(--fns-snow-rgb), 0.67), 807px 2339px rgba(var(--fns-snow-rgb), 0.67), 211px 950px rgba(var(--fns-snow-rgb), 0.85), 211px 2250px rgba(var(--fns-snow-rgb), 0.85), 219px 9px rgba(var(--fns-snow-rgb), 0.65), 219px 1309px rgba(var(--fns-snow-rgb), 0.65), 746px 918px rgba(var(--fns-snow-rgb), 0.82), 746px 2218px rgba(var(--fns-snow-rgb), 0.82), -35px 601px rgba(var(--fns-snow-rgb), 0.56), -35px 1901px rgba(var(--fns-snow-rgb), 0.56), 6px 388px rgba(var(--fns-snow-rgb), 0.7), 6px 1688px rgba(var(--fns-snow-rgb), 0.7), 2188px 397px rgba(var(--fns-snow-rgb), 0.82), 2188px 1697px rgba(var(--fns-snow-rgb), 0.82), 1324px 1049px rgba(var(--fns-snow-rgb), 0.8), 1324px 2349px rgba(var(--fns-snow-rgb), 0.8), 1639px 1235px rgba(var(--fns-snow-rgb), 0.57), 1639px 2535px rgba(var(--fns-snow-rgb), 0.57), -175px 216px rgba(var(--fns-snow-rgb), 0.71), -175px 1516px rgba(var(--fns-snow-rgb), 0.71), 1232px 445px rgba(var(--fns-snow-rgb), 0.48), 1232px 1745px rgba(var(--fns-snow-rgb), 0.48), 1192px 289px rgba(var(--fns-snow-rgb), 0.48), 1192px 1589px rgba(var(--fns-snow-rgb), 0.48), 844px 78px rgba(var(--fns-snow-rgb), 0.7), 844px 1378px rgba(var(--fns-snow-rgb), 0.7), 633px 23px rgba(var(--fns-snow-rgb), 0.78), 633px 1323px rgba(var(--fns-snow-rgb), 0.78), 1475px 761px rgba(var(--fns-snow-rgb), 0.54), 1475px 2061px rgba(var(--fns-snow-rgb), 0.54), 1078px 159px rgba(var(--fns-snow-rgb), 0.55), 1078px 1459px rgba(var(--fns-snow-rgb), 0.55), 1830px 1122px rgba(var(--fns-snow-rgb), 0.65), 1830px 2422px rgba(var(--fns-snow-rgb), 0.65), 1471px 207px rgba(var(--fns-snow-rgb), 0.77), 1471px 1507px rgba(var(--fns-snow-rgb), 0.77), 2053px 316px rgba(var(--fns-snow-rgb), 0.71), 2053px 1616px rgba(var(--fns-snow-rgb), 0.71), 173px 335px rgba(var(--fns-snow-rgb), 0.62), 173px 1635px rgba(var(--fns-snow-rgb), 0.62), 910px 839px rgba(var(--fns-snow-rgb), 0.85), 910px 2139px rgba(var(--fns-snow-rgb), 0.85), 1059px 855px rgba(var(--fns-snow-rgb), 0.83), 1059px 2155px rgba(var(--fns-snow-rgb), 0.83), 1079px 1160px rgba(var(--fns-snow-rgb), 0.81), 1079px 2460px rgba(var(--fns-snow-rgb), 0.81), 1496px 852px rgba(var(--fns-snow-rgb), 0.47), 1496px 2152px rgba(var(--fns-snow-rgb), 0.47), 1290px 403px rgba(var(--fns-snow-rgb), 0.62), 1290px 1703px rgba(var(--fns-snow-rgb), 0.62), 1458px 417px rgba(var(--fns-snow-rgb), 0.83), 1458px 1717px rgba(var(--fns-snow-rgb), 0.83), 1578px 320px rgba(var(--fns-snow-rgb), 0.63), 1578px 1620px rgba(var(--fns-snow-rgb), 0.63), 170px 831px rgba(var(--fns-snow-rgb), 0.69), 170px 2131px rgba(var(--fns-snow-rgb), 0.69), 1293px 943px rgba(var(--fns-snow-rgb), 0.76), 1293px 2243px rgba(var(--fns-snow-rgb), 0.76), 332px 30px rgba(var(--fns-snow-rgb), 0.49), 332px 1330px rgba(var(--fns-snow-rgb), 0.49), 383px 812px rgba(var(--fns-snow-rgb), 0.5), 383px 2112px rgba(var(--fns-snow-rgb), 0.5), 1318px 1033px rgba(var(--fns-snow-rgb), 0.53), 1318px 2333px rgba(var(--fns-snow-rgb), 0.53), 1225px 580px rgba(var(--fns-snow-rgb), 0.53), 1225px 1880px rgba(var(--fns-snow-rgb), 0.53), 503px 137px rgba(var(--fns-snow-rgb), 0.51), 503px 1437px rgba(var(--fns-snow-rgb), 0.51), 1809px 404px rgba(var(--fns-snow-rgb), 0.58), 1809px 1704px rgba(var(--fns-snow-rgb), 0.58), -22px 988px rgba(var(--fns-snow-rgb), 0.59), -22px 2288px rgba(var(--fns-snow-rgb), 0.59), 1388px 176px rgba(var(--fns-snow-rgb), 0.81), 1388px 1476px rgba(var(--fns-snow-rgb), 0.81), 456px 454px rgba(var(--fns-snow-rgb), 0.71), 456px 1754px rgba(var(--fns-snow-rgb), 0.71), 603px 968px rgba(var(--fns-snow-rgb), 0.54), 603px 2268px rgba(var(--fns-snow-rgb), 0.54), 693px 85px rgba(var(--fns-snow-rgb), 0.62), 693px 1385px rgba(var(--fns-snow-rgb), 0.62), 1921px 320px rgba(var(--fns-snow-rgb), 0.61), 1921px 1620px rgba(var(--fns-snow-rgb), 0.61), 304px 306px rgba(var(--fns-snow-rgb), 0.56), 304px 1606px rgba(var(--fns-snow-rgb), 0.56), 588px 84px rgba(var(--fns-snow-rgb), 0.81), 588px 1384px rgba(var(--fns-snow-rgb), 0.81), -44px 663px rgba(var(--fns-snow-rgb), 0.51), -44px 1963px rgba(var(--fns-snow-rgb), 0.51), 1666px 1126px rgba(var(--fns-snow-rgb), 0.79), 1666px 2426px rgba(var(--fns-snow-rgb), 0.79), 1054px 860px rgba(var(--fns-snow-rgb), 0.59), 1054px 2160px rgba(var(--fns-snow-rgb), 0.59), 820px 871px rgba(var(--fns-snow-rgb), 0.62), 820px 2171px rgba(var(--fns-snow-rgb), 0.62), 1305px 915px rgba(var(--fns-snow-rgb), 0.66), 1305px 2215px rgba(var(--fns-snow-rgb), 0.66), 532px 47px rgba(var(--fns-snow-rgb), 0.47), 532px 1347px rgba(var(--fns-snow-rgb), 0.47), 1804px 952px rgba(var(--fns-snow-rgb), 0.56), 1804px 2252px rgba(var(--fns-snow-rgb), 0.56), 1677px 367px rgba(var(--fns-snow-rgb), 0.78), 1677px 1667px rgba(var(--fns-snow-rgb), 0.78), 1439px 219px rgba(var(--fns-snow-rgb), 0.49), 1439px 1519px rgba(var(--fns-snow-rgb), 0.49), 1268px 881px rgba(var(--fns-snow-rgb), 0.61), 1268px 2181px rgba(var(--fns-snow-rgb), 0.61), 1610px 1032px rgba(var(--fns-snow-rgb), 0.66), 1610px 2332px rgba(var(--fns-snow-rgb), 0.66), -34px 83px rgba(var(--fns-snow-rgb), 0.71), -34px 1383px rgba(var(--fns-snow-rgb), 0.71), 136px 642px rgba(var(--fns-snow-rgb), 0.76), 136px 1942px rgba(var(--fns-snow-rgb), 0.76), 1895px 163px rgba(var(--fns-snow-rgb), 0.49), 1895px 1463px rgba(var(--fns-snow-rgb), 0.49), 1864px 773px rgba(var(--fns-snow-rgb), 0.72), 1864px 2073px rgba(var(--fns-snow-rgb), 0.72), 357px 52px rgba(var(--fns-snow-rgb), 0.8), 357px 1352px rgba(var(--fns-snow-rgb), 0.8), 248px 396px rgba(var(--fns-snow-rgb), 0.52), 248px 1696px rgba(var(--fns-snow-rgb), 0.52), 1814px 589px rgba(var(--fns-snow-rgb), 0.83), 1814px 1889px rgba(var(--fns-snow-rgb), 0.83), 476px 452px rgba(var(--fns-snow-rgb), 0.49), 476px 1752px rgba(var(--fns-snow-rgb), 0.49), 1237px 1250px rgba(var(--fns-snow-rgb), 0.76), 1237px 2550px rgba(var(--fns-snow-rgb), 0.76), 450px 663px rgba(var(--fns-snow-rgb), 0.81), 450px 1963px rgba(var(--fns-snow-rgb), 0.81), 926px 934px rgba(var(--fns-snow-rgb), 0.52), 926px 2234px rgba(var(--fns-snow-rgb), 0.52), 1857px 983px rgba(var(--fns-snow-rgb), 0.55), 1857px 2283px rgba(var(--fns-snow-rgb), 0.55), 876px 1261px rgba(var(--fns-snow-rgb), 0.66), 876px 2561px rgba(var(--fns-snow-rgb), 0.66), 1106px 762px rgba(var(--fns-snow-rgb), 0.48), 1106px 2062px rgba(var(--fns-snow-rgb), 0.48), 545px 826px rgba(var(--fns-snow-rgb), 0.53), 545px 2126px rgba(var(--fns-snow-rgb), 0.53), 939px 671px rgba(var(--fns-snow-rgb), 0.81), 939px 1971px rgba(var(--fns-snow-rgb), 0.81), 491px 541px rgba(var(--fns-snow-rgb), 0.51), 491px 1841px rgba(var(--fns-snow-rgb), 0.51), 1973px 99px rgba(var(--fns-snow-rgb), 0.71), 1973px 1399px rgba(var(--fns-snow-rgb), 0.71), 1273px 927px rgba(var(--fns-snow-rgb), 0.68), 1273px 2227px rgba(var(--fns-snow-rgb), 0.68), 2175px 214px rgba(var(--fns-snow-rgb), 0.56), 2175px 1514px rgba(var(--fns-snow-rgb), 0.56), 1994px 1289px rgba(var(--fns-snow-rgb), 0.8), 1994px 2589px rgba(var(--fns-snow-rgb), 0.8), 1321px 542px rgba(var(--fns-snow-rgb), 0.61), 1321px 1842px rgba(var(--fns-snow-rgb), 0.61), 1311px 1182px rgba(var(--fns-snow-rgb), 0.52), 1311px 2482px rgba(var(--fns-snow-rgb), 0.52), 1155px 166px rgba(var(--fns-snow-rgb), 0.64), 1155px 1466px rgba(var(--fns-snow-rgb), 0.64), 523px 1260px rgba(var(--fns-snow-rgb), 0.75), 523px 2560px rgba(var(--fns-snow-rgb), 0.75), -3px 606px rgba(var(--fns-snow-rgb), 0.78), -3px 1906px rgba(var(--fns-snow-rgb), 0.78), 838px 635px rgba(var(--fns-snow-rgb), 0.71), 838px 1935px rgba(var(--fns-snow-rgb), 0.71), 2199px 640px rgba(var(--fns-snow-rgb), 0.75), 2199px 1940px rgba(var(--fns-snow-rgb), 0.75), -62px 453px rgba(var(--fns-snow-rgb), 0.52), -62px 1753px rgba(var(--fns-snow-rgb), 0.52), 1570px 855px rgba(var(--fns-snow-rgb), 0.66), 1570px 2155px rgba(var(--fns-snow-rgb), 0.66), -5px 270px rgba(var(--fns-snow-rgb), 0.65), -5px 1570px rgba(var(--fns-snow-rgb), 0.65), -14px 45px rgba(var(--fns-snow-rgb), 0.49), -14px 1345px rgba(var(--fns-snow-rgb), 0.49), 2122px 726px rgba(var(--fns-snow-rgb), 0.58), 2122px 2026px rgba(var(--fns-snow-rgb), 0.58), 1942px 731px rgba(var(--fns-snow-rgb), 0.67), 1942px 2031px rgba(var(--fns-snow-rgb), 0.67), 1492px 1195px rgba(var(--fns-snow-rgb), 0.58), 1492px 2495px rgba(var(--fns-snow-rgb), 0.58), 347px 418px rgba(var(--fns-snow-rgb), 0.61), 347px 1718px rgba(var(--fns-snow-rgb), 0.61), 1745px 324px rgba(var(--fns-snow-rgb), 0.52), 1745px 1624px rgba(var(--fns-snow-rgb), 0.52), 797px 305px rgba(var(--fns-snow-rgb), 0.64), 797px 1605px rgba(var(--fns-snow-rgb), 0.64), 60px 296px rgba(var(--fns-snow-rgb), 0.8), 60px 1596px rgba(var(--fns-snow-rgb), 0.8), 904px 823px rgba(var(--fns-snow-rgb), 0.78), 904px 2123px rgba(var(--fns-snow-rgb), 0.78), -153px 114px rgba(var(--fns-snow-rgb), 0.71), -153px 1414px rgba(var(--fns-snow-rgb), 0.71), 2103px 717px rgba(var(--fns-snow-rgb), 0.69), 2103px 2017px rgba(var(--fns-snow-rgb), 0.69), 2169px 908px rgba(var(--fns-snow-rgb), 0.7), 2169px 2208px rgba(var(--fns-snow-rgb), 0.7), 1920px 1009px rgba(var(--fns-snow-rgb), 0.56), 1920px 2309px rgba(var(--fns-snow-rgb), 0.56), -199px 90px rgba(var(--fns-snow-rgb), 0.49), -199px 1390px rgba(var(--fns-snow-rgb), 0.49), -97px 831px rgba(var(--fns-snow-rgb), 0.54), -97px 2131px rgba(var(--fns-snow-rgb), 0.54), 452px 119px rgba(var(--fns-snow-rgb), 0.82), 452px 1419px rgba(var(--fns-snow-rgb), 0.82), 229px 25px rgba(var(--fns-snow-rgb), 0.7), 229px 1325px rgba(var(--fns-snow-rgb), 0.7), 607px 291px rgba(var(--fns-snow-rgb), 0.63), 607px 1591px rgba(var(--fns-snow-rgb), 0.63), 1922px 1245px rgba(var(--fns-snow-rgb), 0.71), 1922px 2545px rgba(var(--fns-snow-rgb), 0.71), 1500px 1255px rgba(var(--fns-snow-rgb), 0.53), 1500px 2555px rgba(var(--fns-snow-rgb), 0.53), 1067px 130px rgba(var(--fns-snow-rgb), 0.58), 1067px 1430px rgba(var(--fns-snow-rgb), 0.58), -2px 978px rgba(var(--fns-snow-rgb), 0.74), -2px 2278px rgba(var(--fns-snow-rgb), 0.74), -174px 768px rgba(var(--fns-snow-rgb), 0.79), -174px 2068px rgba(var(--fns-snow-rgb), 0.79), 1705px 164px rgba(var(--fns-snow-rgb), 0.75), 1705px 1464px rgba(var(--fns-snow-rgb), 0.75), 1653px 359px rgba(var(--fns-snow-rgb), 0.55), 1653px 1659px rgba(var(--fns-snow-rgb), 0.55), 231px 535px rgba(var(--fns-snow-rgb), 0.56), 231px 1835px rgba(var(--fns-snow-rgb), 0.56), -42px 252px rgba(var(--fns-snow-rgb), 0.6), -42px 1552px rgba(var(--fns-snow-rgb), 0.6), 878px 107px rgba(var(--fns-snow-rgb), 0.57), 878px 1407px rgba(var(--fns-snow-rgb), 0.57), 2068px 893px rgba(var(--fns-snow-rgb), 0.73), 2068px 2193px rgba(var(--fns-snow-rgb), 0.73), 1943px 543px rgba(var(--fns-snow-rgb), 0.58), 1943px 1843px rgba(var(--fns-snow-rgb), 0.58), 688px 174px rgba(var(--fns-snow-rgb), 0.8), 688px 1474px rgba(var(--fns-snow-rgb), 0.8), -138px 347px rgba(var(--fns-snow-rgb), 0.57), -138px 1647px rgba(var(--fns-snow-rgb), 0.57), 767px 415px rgba(var(--fns-snow-rgb), 0.83), 767px 1715px rgba(var(--fns-snow-rgb), 0.83), 1138px 393px rgba(var(--fns-snow-rgb), 0.8), 1138px 1693px rgba(var(--fns-snow-rgb), 0.8), 1145px 1231px rgba(var(--fns-snow-rgb), 0.56), 1145px 2531px rgba(var(--fns-snow-rgb), 0.56), 1996px 961px rgba(var(--fns-snow-rgb), 0.65), 1996px 2261px rgba(var(--fns-snow-rgb), 0.65), 1973px 13px rgba(var(--fns-snow-rgb), 0.8), 1973px 1313px rgba(var(--fns-snow-rgb), 0.8), 1590px 478px rgba(var(--fns-snow-rgb), 0.69), 1590px 1778px rgba(var(--fns-snow-rgb), 0.69), 1060px 434px rgba(var(--fns-snow-rgb), 0.62), 1060px 1734px rgba(var(--fns-snow-rgb), 0.62), 2197px 159px rgba(var(--fns-snow-rgb), 0.68), 2197px 1459px rgba(var(--fns-snow-rgb), 0.68), 502px 296px rgba(var(--fns-snow-rgb), 0.48), 502px 1596px rgba(var(--fns-snow-rgb), 0.48), 258px 218px rgba(var(--fns-snow-rgb), 0.71), 258px 1518px rgba(var(--fns-snow-rgb), 0.71), 462px 706px rgba(var(--fns-snow-rgb), 0.84), 462px 2006px rgba(var(--fns-snow-rgb), 0.84), -83px 63px rgba(var(--fns-snow-rgb), 0.48), -83px 1363px rgba(var(--fns-snow-rgb), 0.48), -26px 138px rgba(var(--fns-snow-rgb), 0.75), -26px 1438px rgba(var(--fns-snow-rgb), 0.75), 69px 1209px rgba(var(--fns-snow-rgb), 0.76), 69px 2509px rgba(var(--fns-snow-rgb), 0.76), 616px 1093px rgba(var(--fns-snow-rgb), 0.81), 616px 2393px rgba(var(--fns-snow-rgb), 0.81), 70px 786px rgba(var(--fns-snow-rgb), 0.51), 70px 2086px rgba(var(--fns-snow-rgb), 0.51), 642px 416px rgba(var(--fns-snow-rgb), 0.51), 642px 1716px rgba(var(--fns-snow-rgb), 0.51), -59px 1298px rgba(var(--fns-snow-rgb), 0.5), -59px 2598px rgba(var(--fns-snow-rgb), 0.5), 977px 977px rgba(var(--fns-snow-rgb), 0.51), 977px 2277px rgba(var(--fns-snow-rgb), 0.51), 200px 419px rgba(var(--fns-snow-rgb), 0.58), 200px 1719px rgba(var(--fns-snow-rgb), 0.58), 1178px 867px rgba(var(--fns-snow-rgb), 0.57), 1178px 2167px rgba(var(--fns-snow-rgb), 0.57), 1237px 525px rgba(var(--fns-snow-rgb), 0.82), 1237px 1825px rgba(var(--fns-snow-rgb), 0.82), -2px 753px rgba(var(--fns-snow-rgb), 0.82), -2px 2053px rgba(var(--fns-snow-rgb), 0.82)"
@@ -203,20 +203,20 @@ fns_mushroom:
 
   uix-theme: "fns_mushroom"
 
-  # --- ROOT (hui-root: hlavička + kontejner view) ---------------------------
-  # 2026-09-05 (6): odstín záře jde s cirkadiánem — sensor.light_color 140 mired (den) = indigo + teal,
-  # 650 (noc) = jantar + oranžová; mezi tím lineárně. Průhlednost per mód přes fns-ambient-a1/a2.
-  # 2026-09-05 (počasí 1+2): stav weather.openweathermap barvu přimíchá (zataženo šedomodrá, déšť chladná,
-  # sníh bledá, mlha šedý závoj) a násobí alfu. Slunce = vlastní třetí teplá záře (oranžová nízko, žlutá vysoko),
-  # která putuje po horním okraji podle azimuth/elevation, slábne se zataženem (1 - váha počasí) a pod obzorem
-  # (-6°) zhasne; obě základní záře zůstávají v rozích (první pokus s posunem základní záře nebyl vidět).
+  # --- ROOT (hui-root: header + view container) ----------------------------
+  # 2026-09-05 (6): the glow hue follows the circadian light — sensor.light_color 140 mired (day) = indigo + teal,
+  # 650 (night) = amber + orange; linear in between. Opacity per mode via fns-ambient-a1/a2.
+  # 2026-09-05 (weather 1+2): the weather.openweathermap state blends in a colour (cloudy blue-grey, rain cool,
+  # snow pale, fog grey veil) and multiplies the alpha. Sun = its own third warm glow (orange when low, yellow when high),
+  # which travels along the top edge by azimuth/elevation, fades with cloud cover (1 - weather weight) and goes out
+  # below the horizon (-6°); both base glows stay in the corners (a first attempt at moving the base glow was not visible).
   uix-root-yaml: |
     .: |
-      {# test denní doby (2026-09-05): input_boolean.denni_doba_test_zapnuto + input_number.denni_doba_test (0–24 h)
-         simuluje slunce (azimut 60° v 6 h → 300° v 18 h, výška 60·sin) i cirkadián (den 7:30–17:30, noc 21:30–4:00). #}
+      {# time-of-day test (2026-09-05): input_boolean.denni_doba_test_zapnuto + input_number.denni_doba_test (0–24 h)
+         simulates the sun (azimuth 60° at 6 h → 300° at 18 h, elevation 60·sin) and circadian (day 7:30–17:30, night 21:30–4:00). #}
       {% set test = is_state('input_boolean.denni_doba_test_zapnuto', 'on') %}
       {% set th = states('input_number.denni_doba_test') | float(12) %}
-      {# 2026-09-06: stejný soubor běží na Home i Office — entita počasí se hledá, cirkadián má náhradu z výšky slunce #}
+      {# 2026-09-06: the same file runs on Home and Office — the weather entity is looked up, circadian falls back to sun elevation #}
       {% set went = 'weather.openweathermap' if has_value('weather.openweathermap') else (states.weather | map(attribute='entity_id') | list | first | default('')) %}
       {% set m = states('sensor.light_color') | float(0) %}
       {% if m <= 0 %}{% set el0 = state_attr('sun.sun', 'elevation') | float(0) %}{% set m = 140 + 510 * [[(6 - el0) / 12, 0] | max, 1] | min %}{% endif %}
@@ -252,8 +252,8 @@ fns_mushroom:
       {% set hi = [[el / 45, 0] | max, 1] | min %}
       {% set sun = (255) ~ ', ' ~ ((150 + 70 * hi) / 10) | round(0) | int * 10 ~ ', ' ~ ((60 + 100 * hi) / 10) | round(0) | int * 10 %}
       {% set sa = ((1 - wg) * (1 if el > 0 else [1 + el / 6, 0] | max)) | round(1) %}
-      {# advent (2026-09-06): po soumraku teplý svíčkový nádech zdola, sytost roste s počtem zapálených svíček.
-         Mimo advent (a na instanci bez binary_sensor.advent) se nepřidá nic. #}
+      {# advent (2026-09-06): after dusk a warm candle tint from below, intensity grows with the number of lit candles.
+         Outside advent (and on an instance without binary_sensor.advent) nothing is added. #}
       {% set svicky = state_attr('binary_sensor.advent', 'svicky') | int(0) if is_state('binary_sensor.advent', 'on') else 0 %}
       {% set adv = ((0.5 + 0.22 * svicky) * ([[(2 - el) / 8, 0] | max, 1] | min)) | round(2) if svicky > 0 else 0 %}
       #view {
@@ -265,13 +265,13 @@ fns_mushroom:
           var(--primary-background-color) !important;
         transition: background 2s ease;
       }
-      {# ---- vrstvy počasí (2026-09-05 v2): částice = box-shadow na ::before/::after, pohyb jen transform (GPU).
-         Částice generuje pudorys_build sourozenec `pocasi_vrstvy.py` (seed 7, pole 2200×1300 px zdvojené v y pro plynulou smyčku).
-         Vrstva je pod kartami: #view isolate + z-index -1. Přepínač input_select.pocasi_vrstva, Auto = podle weather. #}
+      {# ---- weather layers (2026-09-05 v2): particles = box-shadow on ::before/::after, motion only via transform (GPU).
+         Particles are generated by `pocasi_vrstvy.py`, a sibling of pudorys_build (seed 7, field 2200×1300 px doubled in y for a seamless loop).
+         The layer sits below the cards: #view isolate + z-index -1. Selector input_select.pocasi_vrstva, Auto = follows weather. #}
       {% set sel = states('input_select.pocasi_vrstva') %}
       {% set auto = {'rainy': 'rain', 'pouring': 'pour', 'snowy': 'snow', 'snowy-rainy': 'snow', 'hail': 'pour', 'fog': 'fog', 'lightning': 'storm', 'lightning-rainy': 'storm', 'sunny': 'sun', 'partlycloudy': 'clouds', 'windy': 'clouds', 'windy-variant': 'clouds', 'cloudy': 'overcast', 'clear-night': 'stars'} %}
       {% set layer = {'Déšť': 'rain', 'Liják': 'pour', 'Sníh': 'snow', 'Mlha': 'fog', 'Bouřka': 'storm', 'Jasno': 'sun', 'Polojasno': 'clouds', 'Zataženo': 'overcast', 'Jasná noc': 'stars', 'Žádná': 'none'}.get(sel, auto.get(w, 'none')) %}
-      {# (5) předpověď: když do 2 h přijde déšť/sníh a teď nic nepadá, začne slabá vrstva dřív (jen v Auto) #}
+      {# (5) forecast: if rain/snow arrives within 2 h and nothing is falling now, a faint layer starts early (Auto only) #}
       {% set faint = false %}
       {% set pre = states('sensor.pocasi_predpoved_2h') %}
       {% if sel == 'Auto' and layer in ['none', 'sun', 'clouds', 'overcast', 'stars'] and pre in ['rainy', 'pouring', 'lightning-rainy', 'hail', 'snowy', 'snowy-rainy'] %}
@@ -281,7 +281,7 @@ fns_mushroom:
       {% set wb = state_attr(went, 'wind_bearing') | float(0) if went else 0 %}
       {% set sg = 1 if wb < 180 else -1 %}
       {% set tilt = (([(ws / 50 * 14 / 4) | round(0) * 4, 12] | min) * sg) | int %}
-      {# vrstvy jen na Přehledu (+ view Debug s testovacími kartami): UIX předává panel.fullUrlPath; bez proměnné (jiný kontext) nic #}
+      {# layers only on the Overview (+ Debug view with test cards): UIX passes panel.fullUrlPath; without the variable (other context) nothing #}
       {% set na_prehledu = (panel.fullUrlPath | default('') | lower) in ['lovelace', 'lovelace/prehled', 'lovelace/debug'] if panel is defined else false %}
       {% if not na_prehledu %}{% set layer = 'none' %}{% endif %}
       #view { position: relative; isolation: isolate; }
@@ -357,12 +357,12 @@ fns_mushroom:
       @keyframes fns-fog-a { from { background-position: 0% 0; } to { background-position: 100% 0; } }
       @keyframes fns-fog-b { from { background-position: 100% 0, 100% 0, 0 0; } to { background-position: 0% 0, 0% 0, 0 0; } }
       {% endif %}
-      {# 2026-10-01: vítr ve 3 třídách (km/h) — každá změna doby animaci restartuje, plynulý vítr to dělal ~2×/h #}
+      {# 2026-10-01: wind in 3 classes (km/h) — every duration change restarts the animation, continuous wind did that ~2×/h #}
       {% set wind = 1 if ws < 25 else (1.5 if ws < 45 else 2) %}
-      {# oblaky (polojasno) jen za světla — v noci v tmavém módu vypadaly jako šedý flek (uživatel 2026-09-05) #}
+      {# clouds (partly cloudy) only in daylight — at night in dark mode they looked like a grey smudge (user 2026-09-05) #}
       {% if layer == 'clouds' and el < -6 %}{% set layer = 'none' %}{% endif %}
       {% if layer == 'sun' and sa > 0.15 %}
-      {# paprsky: kuželový gradient kolem slunce, pomalá rotace kolem jeho polohy, maska do ztracena #}
+      {# rays: conic gradient around the sun, slow rotation around its position, mask fading out #}
       #view::before {
         left: 0; top: 0; width: 100vw; height: 100vh; opacity: {{ (sa * 0.9) | round(2) }};
         background: repeating-conic-gradient(from 0deg at {{ sx }}% {{ sy }}%, rgba({{ sun }}, .10) 0deg 3deg, transparent 3deg 11deg, rgba({{ sun }}, .05) 11deg 13deg, transparent 13deg 24deg);
@@ -374,7 +374,7 @@ fns_mushroom:
       @keyframes fns-rays { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
       {% endif %}
       {% if layer == 'clouds' %}
-      {# polojasno: měkké oblaky plující ve směru větru, rychlost podle wind_speed #}
+      {# partly cloudy: soft clouds drifting with the wind, speed by wind_speed #}
       #view::before {
         left: 0; top: 0; width: 100vw; height: 100vh; opacity: .9;
         background-image:
@@ -396,7 +396,7 @@ fns_mushroom:
       @keyframes fns-clouds-b { from { background-position: 0 0; } to { background-position: 260vw 0; } }
       {% endif %}
       {% if layer == 'overcast' %}
-      {# zataženo: šedý závoj + pomalu plující tmavší chuchvalce #}
+      {# overcast: grey veil + slowly drifting darker puffs #}
       #view::before {
         left: 0; top: 0; width: 100vw; height: 100vh; opacity: 1;
         background-image:
@@ -410,7 +410,7 @@ fns_mushroom:
       @keyframes fns-overcast { from { background-position: 0 0, 0 0, 0 0, 0 0; } to { background-position: 250vw 0, 250vw 0, 250vw 0, 0 0; } }
       {% endif %}
       {% if layer == 'stars' %}
-      {# jasná noc: dvě sady hvězd (box-shadow), střídavé blikání = mihotání #}
+      {# clear night: two sets of stars (box-shadow), alternating blinking = twinkle #}
       #view::before, #view::after {
         left: 0; top: 0; width: 1.6px; height: 1.6px; border-radius: 50%; background: transparent;
       }
@@ -424,8 +424,8 @@ fns_mushroom:
         font-weight: 700;
         letter-spacing: -0.01em;
       }
-      /* Kompaktnější mobil: menší mezery v sekcích i mezi nimi, těsnější
-         mushroom karty, menší nadpisy. Proměnné se z #view dědí do sekcí. */
+      /* More compact mobile: smaller gaps within and between sections, tighter
+         mushroom cards, smaller headings. Variables inherit from #view into sections. */
       @media (max-width: 600px) {
         #view {
           --ha-section-grid-row-gap: 6px;
@@ -435,7 +435,7 @@ fns_mushroom:
         }
       }
 
-  # --- SIDEBAR (ha-sidebar) — vybraná položka jako zaoblená pilulka ---------
+  # --- SIDEBAR (ha-sidebar) — selected item as a rounded pill ---------------
   uix-sidebar-yaml: |
     .: |
       ha-list-item-button { border-radius: 12px; }
@@ -445,9 +445,9 @@ fns_mushroom:
       }
 
   # --- ROW MOD ---
-  # 2026-10-01: ploché klíče místo zanoření hui-generic-entity-row → $ → state-badge → $ → ha-state-icon → $
-  # (UIX z každé úrovně dělal vlastní uzel s MutationObserverem, 7 na řádek). Media query pro mobil nastavovala
-  # stejné top: -1px, proto pryč.
+  # 2026-10-01: flat keys instead of nesting hui-generic-entity-row → $ → state-badge → $ → ha-state-icon → $
+  # (UIX made a separate node with a MutationObserver for every level, 7 per row). The mobile media query set
+  # the same top: -1px, hence removed.
   uix-row-yaml: |
     hui-generic-entity-row $: |
       state-badge {
@@ -459,8 +459,8 @@ fns_mushroom:
         margin: 0 15px 0 0;
         --mdc-icon-size: 22px;
       }
-      /* V popupech (browser_mod / more-info) je ikona bez podkladoveho ctverce
-         — tinta patri jen radkum na dashboardech. */
+      /* In popups (browser_mod / more-info) the icon has no background square
+         — the tint belongs only to rows on dashboards. */
       :host-context(browser-mod-popup) state-badge,
       :host-context(ha-dialog) state-badge {
         background: none !important;
@@ -486,30 +486,30 @@ fns_mushroom:
       }
 
   # --- CARD MOD ---
-  # Poznámky k uix-card-yaml. 2026-10-01 přesunuté sem z CSS: '.' motivu se předřazuje před styl každé karty
-  # a karta s Jinja šablonou ho celý posílá serveru při každém renderu, komentáře tam jen zabíraly místo.
-  # - Pohyb (2026-09-05): (4) přechod stavu — jen transform a barvy, box-shadow záměrně bez přechodu (stack-in-card);
-  #   (3) odezva na stisk — dlaždice, tlačítka, mushroom; (8) vstup karty zrušen: při načítání stránky karty naskakují
-  #   postupně a animace každé z nich dělala „poskakování“; (2) pulz error alertů je v uix.style foundry alert_row
-  #   (řádky jdou přes auto-entities, třída z motivu se na ně nepropíše); (5) prefers-reduced-motion respektuje telefon.
-  # - Pomocná třída no-shadow (uix class) — karta bez stínu, např. vnořená ve stack-in-card.
-  # - Mini graph: kompaktní varianta podle ha-card:not(:has(.name)) — mini-graph bez jména (show.name: false) nemá .name.
-  #   2026-09-20 nahradila billety card_style/css_class foundry mini_graph (per-prvek uix držel v paměti zombie instance).
-  #   Čáry jednotně pro všechny grafy + foundries: line_width je option karty (default 5), ale SVG atribut stroke-width
-  #   přebije CSS vlastnost, takže to jde globálně odsud.
-  # - Heading: titulek těsnější, podtitulek jako malý štítek (uppercase, prostrkaný). Nadpis uprostřed sekce má mít shora
-  #   stejný odstup jako mezera mezi sekcemi: --ha-section-grid-row-gap (8px) + 16px = 24px = --ha-view-sections-row-gap.
-  #   První nadpis v sekci se vynechá (odstup dělá mezisekční mezera). Musí to být padding, ne margin — margin v gridu
-  #   sekce nezvětší výšku buňky a karta se překryje. Mobil: 18px mezisekční mezera − 6px mezera v sekci = 12px.
-  # - Picture-elements (půdorys): state-badge má pevných 40px a ikona 24px, ale obrázek se roztahuje podle šířky karty.
-  #   Na užší kartě (mobil ~339px vs. desktop ~442px) ikony zabírají relativně víc a prvky u okraje vylezou ven (krb na
-  #   top: 3%). Navázáním na cqw se ikony zmenšují s obrázkem; min() drží horní hranici, široké obrazovky se nemění.
-  # - @keyframes rotation: sdílené keyframes, samotný trigger má karta přes uix.style.
-  # - 2026-10-01 smazáno jako mrtvé: :host(.no-padding) (0 použití Home i Office), stisk pro custom-button-card
-  #   (odinstalovaná na obou instancích), pravidla .type-custom-mini-graph-card.no-name (kryje :not(:has(.name)))
-  #   a zdvojený path.line.
-  # - 2026-10-01 pruhy custom:datetime-card (8px, zaoblené) přesunuty do uix.style té jediné karty (Domov / Akvárium):
-  #   podřízený klíč tady UIX hledá v každé kartě (až 7 pokusů a 1,5 s časovačů na kartu).
+  # Notes on uix-card-yaml. 2026-10-01 moved here from CSS: the theme's '.' is prepended to every card's style
+  # and a card with a Jinja template sends all of it to the server on every render, so comments only took up space.
+  # - Motion (2026-09-05): (4) state transition — only transform and colours, box-shadow deliberately without transition (stack-in-card);
+  #   (3) press feedback — tiles, buttons, mushroom; (8) card entry removed: on page load cards appear
+  #   one by one and animating each of them caused "jumping"; (2) the error alert pulse is in uix.style of foundry alert_row
+  #   (rows come via auto-entities, the theme class does not reach them); (5) prefers-reduced-motion is honoured on phones.
+  # - Helper class no-shadow (uix class) — card without shadow, e.g. nested in a stack-in-card.
+  # - Mini graph: compact variant via ha-card:not(:has(.name)) — a mini-graph without a name (show.name: false) has no .name.
+  #   2026-09-20 replaced the card_style/css_class billets of foundry mini_graph (per-element uix kept zombie instances in memory).
+  #   Lines are uniform for all graphs + foundries: line_width is a card option (default 5), but the SVG attribute stroke-width
+  #   is overridden by the CSS property, so it can be done globally from here.
+  # - Heading: tighter title, subtitle as a small label (uppercase, letter-spaced). A heading in the middle of a section should have
+  #   the same top spacing as the gap between sections: --ha-section-grid-row-gap (8px) + 16px = 24px = --ha-view-sections-row-gap.
+  #   The first heading in a section is skipped (the inter-section gap provides the spacing). It must be padding, not margin — margin in the section
+  #   grid does not grow the cell height and the card overlaps. Mobile: 18px inter-section gap − 6px gap within section = 12px.
+  # - Picture-elements (floor plan): state-badge has a fixed 40px and the icon 24px, but the image scales with the card width.
+  #   On a narrower card (mobile ~339px vs. desktop ~442px) the icons take relatively more space and elements near the edge spill out (fireplace at
+  #   top: 3%). Tying them to cqw makes the icons shrink with the image; min() keeps an upper bound, wide screens are unchanged.
+  # - @keyframes rotation: shared keyframes, the trigger itself is set by the card via uix.style.
+  # - 2026-10-01 removed as dead: :host(.no-padding) (0 uses on Home and Office), press effect for custom-button-card
+  #   (uninstalled on both instances), rules .type-custom-mini-graph-card.no-name (covered by :not(:has(.name)))
+  #   and the duplicated path.line.
+  # - 2026-10-01 custom:datetime-card bars (8px, rounded) moved into uix.style of that single card (Home / Aquarium):
+  #   UIX looks up a child key here in every card (up to 7 attempts and 1.5 s of timers per card).
   uix-card-yaml: |
     .: |
       ha-card { transition: transform 90ms ease, background-color 200ms ease, color 200ms ease !important; }
@@ -572,9 +572,9 @@ fns_mushroom:
 
   modes:
     light:
-      # --- Paleta light (2026-09-06 v2) — jediné místo, kde se píše hodnota barvy.
-      #     Odstín i sytost stejné jako dřív, mění se jen světlost: ve světlém režimu jsou
-      #     nejsvětlejší tóny o kousek hlubší, v tmavém se ty nejtmavší nadzvednou. Bez posunu odstínu.
+      # --- Light palette (2026-09-06 v2) — the only place where colour values are written.
+      #     Hue and saturation as before, only lightness changes: in light mode the
+      #     lightest tones are a bit deeper, in dark mode the darkest ones are lifted. No hue shift.
       fns-red: "#ef4444"
       fns-pink: "#ec4899"
       fns-purple: "#a855f7"
@@ -619,7 +619,7 @@ fns_mushroom:
       fns-rgb-light-grey: "179, 186, 198"
       fns-rgb-dark-grey: "94, 104, 120"
 
-      # sémantické role — v kartách se odkazují tyhle, ne odstíny
+      # semantic roles — cards reference these, not the shades
       fns-success: "var(--fns-green)"
       fns-rgb-success: "var(--fns-rgb-green)"
       fns-warning: "var(--fns-amber)"
@@ -630,7 +630,7 @@ fns_mushroom:
       fns-rgb-info: "var(--fns-rgb-blue)"
       fns-accent: "var(--fns-indigo)"
       fns-rgb-accent: "var(--fns-rgb-indigo)"
-      # Povrchy
+      # Surfaces
       primary-background-color: "#f3f5f9"
       secondary-background-color: "#e9edf4"
       card-background-color: "#ffffff"
@@ -656,17 +656,17 @@ fns_mushroom:
       disabled-text-color: "#a3aab5"
       rgb-primary-text-color: "17, 24, 39"
       rgb-secondary-text-color: "91, 100, 114"
-      # Akcent
+      # Accent
       primary-color: "#3f6df5"
       rgb-primary-color: "63, 109, 245"
       dark-primary-color: "#2b55d6"
       darker-primary-color: "#1d3a9a"
       light-primary-color: "#dfe6ff"
       mush-rgb-state: "63, 109, 245"
-      # Vypnuté entity: zřetelně modré, aby se lišily od šedých nedostupných (disabled-text-color)
+      # Disabled entities: clearly blue, to differ from grey unavailable ones (disabled-text-color)
       state-icon-color: "#4f6fb3"
       state-icon-unavailable-color: "#a3aab5"
-      # Linky, stíny, formuláře
+      # Lines, shadows, forms
       divider-color: "rgba(17, 24, 39, .08)"
       outline-color: "rgba(17, 24, 39, .10)"
       outline-hover-color: "rgba(17, 24, 39, .22)"
@@ -674,17 +674,17 @@ fns_mushroom:
       scrollbar-thumb-color: "#c3c9d4"
       input-fill-color: "#f3f5f9"
       box-shadow: "0 0 0 1px var(--fns-card-border), 0 1px 2px rgba(17, 24, 39, .04), 0 10px 28px -14px rgba(17, 24, 39, .14)"
-      # Půdorys — badge
+      # Floor plan — badge
       mush-rgb-disabled: "189, 189, 189"
-      # 2026-10-01: vyšší alfa místo backdrop-filter na badge půdorysu (vizuálně shodné, bez blur vrstev)
+      # 2026-10-01: higher alpha instead of backdrop-filter on the floor plan badge (visually identical, without blur layers)
       fns-badge-bg: "rgba(255,255,255,.92)"
       fns-badge-fg: "#212121"
       fns-badge-title-bg: "rgba(255,255,255,.9)"
       fns-badge-title-fg: "#444"
     dark:
-      # --- Paleta dark (2026-09-06 v2) — jediné místo, kde se píše hodnota barvy.
-      #     Odstín i sytost stejné jako dřív, mění se jen světlost: ve světlém režimu jsou
-      #     nejsvětlejší tóny o kousek hlubší, v tmavém se ty nejtmavší nadzvednou. Bez posunu odstínu.
+      # --- Dark palette (2026-09-06 v2) — the only place where colour values are written.
+      #     Hue and saturation as before, only lightness changes: in light mode the
+      #     lightest tones are a bit deeper, in dark mode the darkest ones are lifted. No hue shift.
       fns-red: "#fe5350"
       fns-pink: "#fa56a5"
       fns-purple: "#b367ff"
@@ -729,7 +729,7 @@ fns_mushroom:
       fns-rgb-light-grey: "195, 202, 214"
       fns-rgb-dark-grey: "114, 124, 141"
 
-      # sémantické role — v kartách se odkazují tyhle, ne odstíny
+      # semantic roles — cards reference these, not the shades
       fns-success: "var(--fns-green)"
       fns-rgb-success: "var(--fns-rgb-green)"
       fns-warning: "var(--fns-amber)"
@@ -740,7 +740,7 @@ fns_mushroom:
       fns-rgb-info: "var(--fns-rgb-blue)"
       fns-accent: "var(--fns-indigo)"
       fns-rgb-accent: "var(--fns-rgb-indigo)"
-      # Povrchy
+      # Surfaces
       primary-background-color: "#0b0e14"
       secondary-background-color: "#1a212c"
       card-background-color: "#151a23"
@@ -766,17 +766,17 @@ fns_mushroom:
       disabled-text-color: "#5e6878"
       rgb-primary-text-color: "232, 236, 244"
       rgb-secondary-text-color: "152, 163, 184"
-      # Akcent
+      # Accent
       primary-color: "#6b8cff"
       rgb-primary-color: "107, 140, 255"
       dark-primary-color: "#3f6df5"
       darker-primary-color: "#2b55d6"
       light-primary-color: "#14245f"
       mush-rgb-state: "107, 140, 255"
-      # Vypnuté entity: měkká modř; nedostupné zůstávají tmavě šedé
+      # Disabled entities: soft blue; unavailable ones stay dark grey
       state-icon-color: "#8fb0ec"
       state-icon-unavailable-color: "#525c6b"
-      # Linky, stíny, formuláře
+      # Lines, shadows, forms
       divider-color: "rgba(255, 255, 255, .07)"
       outline-color: "rgba(255, 255, 255, .10)"
       outline-hover-color: "rgba(255, 255, 255, .22)"
@@ -785,7 +785,7 @@ fns_mushroom:
       input-fill-color: "rgba(255, 255, 255, .05)"
       mdc-ripple-color: "#c9d3e6"
       box-shadow: "0 0 0 1px var(--fns-card-border), 0 1px 2px rgba(0, 0, 0, .40), 0 12px 32px -16px rgba(0, 0, 0, .60)"
-      # Půdorys — badge
+      # Floor plan — badge
       mush-rgb-disabled: "111, 111, 111"
       fns-badge-bg: "rgba(18,18,18,.82)"
       fns-badge-fg: "#ffffff"

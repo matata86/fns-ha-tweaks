@@ -1,5 +1,6 @@
 deploy_sun_card:
-  name: Nasadit kartu slunce
+  name: Deploy sun card
   description: >-
-    Vloží kartu sluneční linky do hlavičky výchozího dashboardu, nebo nahradí
-    tu, která tam už je. Volá se ručně, dashboard se nenasazuje automaticky.
+    Inserts the sun line card into the header of the default dashboard, or
+    replaces the one already there. Called manually; the dashboard is not
+    deployed automatically.

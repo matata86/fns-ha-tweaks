@@ -2,56 +2,76 @@
 
 [![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/matata86)
 
-[![Otevřít repozitář v HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=matata86&repository=fns-ha-tweaks&category=integration)
-[![Otevřít nastavení YAML](https://my.home-assistant.io/badges/server_controls.svg)](https://my.home-assistant.io/redirect/server_controls/)
+[![Open repository in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=matata86&repository=fns-ha-tweaks&category=integration)
+[![Open server controls](https://my.home-assistant.io/badges/server_controls.svg)](https://my.home-assistant.io/redirect/server_controls/)
 
-Sdílený vzhled pro víc instancí Home Assistantu v jedné HACS integraci. Nainstaluješ, přidáš jeden řádek do `configuration.yaml`, restartuješ — a je to. Další verze se pak nabízí k aktualizaci přímo v HACS.
+A shared look for several Home Assistant instances, packaged as one HACS integration (domain `fns_shared`). Install it, add one line to `configuration.yaml`, restart. New versions are then offered as updates directly in HACS.
 
-## Co integrace přinese
+## What it ships
 
-| Co | Kam si to sama nasadí |
+On every Home Assistant start the integration deploys the files it carries into your config directory:
+
+| What | Where it goes |
 |---|---|
-| Motiv `fns_mushroom` — globální paleta pro light i dark, cirkadiánní podbarvení, vrstvy počasí a sluneční záře | `themes/fns-mushroom/fns-mushroom.yaml`, pak načte témata |
-| UIX foundries `level_tile`, `mini_graph`, `threshold_tile` | `uix/fns_shared.yaml` a zaregistruje ho v integraci UIX |
-| Karta sluneční linky (svítání a soumrak, fáze Měsíce, srážkové sloupce, popup) | při startu se sama aktualizuje, pokud už v dashboardu je; poprvé ji tam vloží služba `fns_shared.deploy_sun_card` |
-| Grafický editor karet `custom:uix-forge` | frontend modul `/fns_shared/fns_forge_editor.js`, načte se sám |
+| Theme `fns_mushroom` — global palette for light and dark mode, circadian background tint, weather layers and a sun glow | `themes/fns-mushroom/fns-mushroom.yaml`; themes are reloaded only when the file changed |
+| UIX foundries `level_tile`, `mini_graph`, `printer`, `threshold_tile` | `uix/fns_shared.yaml`, registered in the UIX integration's `foundry_files` option |
+| Sun line card (dawn and dusk, sunrise and sunset, moon phase and moon band, precipitation bars, popup) | header of the default dashboard — inserted the first time by the `fns_shared.deploy_sun_card` service, then updated automatically on start |
+| Visual editor for `custom:uix-forge` cards | frontend module `/fns_shared/fns_forge_editor.js`, loaded automatically |
+| Cursor-following precipitation tooltip for the sun line card | frontend module `/fns_shared/fns_sun_line.js`, loaded automatically |
 
-Vlastní foundries instance zůstávají tam, kde byly (`uix/foundries.yaml`); integrace do nich nesahá, jen přidá druhý soubor vedle nich.
+Your own foundries stay where they are (`uix/foundries.yaml`). The integration never touches that file; it only adds a second file next to it.
 
-## Instalace
+## Installation
 
-1. HACS → tři tečky → **Custom repositories** → `matata86/fns-ha-tweaks`, kategorie **Integration** (nebo [![Otevřít repozitář v HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=matata86&repository=fns-ha-tweaks&category=integration)).
+1. HACS → three dots → **Custom repositories** → `matata86/fns-ha-tweaks`, category **Integration** (or use the "Open repository in HACS" button above).
 2. **Download**.
-3. Do `configuration.yaml` přidat řádek:
+3. Add this line to `configuration.yaml`:
 
    ```yaml
    fns_shared:
    ```
-4. Restart Home Assistantu ([![Otevřít nastavení YAML](https://my.home-assistant.io/badges/server_controls.svg)](https://my.home-assistant.io/redirect/server_controls/) → *Restartovat*).
 
-Motiv se pak vybere v profilu uživatele (**Motiv → fns_mushroom**), foundries jsou hned k dispozici.
+   There are no options; the integration has no config flow.
+4. Restart Home Assistant (Developer tools → YAML → Restart, or the "Open server controls" button above).
 
-Kartu slunce vloží poprvé služba **Vývojářské nástroje → Akce → `fns_shared.deploy_sun_card`**. Od té chvíle ji každá nová verze integrace při startu aktualizuje sama — přepíše se jen ta jedna karta, zbytek dashboardu zůstává.
+Then pick the theme in your user profile (**Theme → fns_mushroom**). The foundries are available right away.
 
-## Editor foundry karet
+## Sun line card
 
-UIX ke kartám `custom:uix-forge` editor nedodává, takže HA nabízí jen YAML. Integrace doplní vlastní: v editoru karty je rozbalovací seznam foundries a pod ním formulář, jehož pole se generují z billetů zvolené foundry — entita se vybírá pickerem, ikona ikonpickerem, barvy ze seznamu barev HA, čísla číselníkem. Prázdné pole znamená výchozí hodnotu z definice foundry.
+The default dashboard is stored in Home Assistant's storage, not in a file, so the card is not added on its own. Call the service once:
 
-## Aktualizace
+**Developer tools → Actions → `fns_shared.deploy_sun_card`**
 
-Nová verze se objeví v HACS jako u kterékoli jiné integrace. Po stažení a restartu se motiv i foundries přepíšou samy.
+```yaml
+action: fns_shared.deploy_sun_card
+```
 
-## Požadavky
+The service replaces an existing sun card, or inserts it into the header of the first view (or at the end of the first view's cards if there is no header). It requires the default dashboard to be in storage mode.
 
-- [UIX](https://uix.lf.technology) — kvůli foundries a stylům motivu
-- Mushroom, browser_mod — karty a popup sluneční linky
-- Lunar Phase (HACS) — východ, západ a osvětlení Měsíce pro sluneční linku; bez ní se pás Měsíce prostě nekreslí
+From then on every new version updates the card on startup by itself, but only if it is already on the dashboard and differs from the shipped one. Only that one card is rewritten; the rest of the dashboard stays as it is.
+
+## uix-forge card editor
+
+UIX does not ship an editor for `custom:uix-forge` cards, so Home Assistant only offers YAML. This integration adds one: the card editor shows a dropdown of foundries and below it a form whose fields are generated from the billets of the selected foundry — entity picker, icon picker, a list of Home Assistant colours and number fields, depending on the billet name and default value. An empty field means the default value from the foundry definition.
+
+## Updating
+
+A new version shows up in HACS like any other integration. **After downloading it, restart Home Assistant Core** — the files are deployed at startup, so the theme, foundries and sun card are refreshed on the next start.
+
+## Requirements
+
+- [UIX](https://uix.lf.technology) — foundries and theme styles
+- [Mushroom](https://github.com/piitaya/lovelace-mushroom) and [browser_mod](https://github.com/thomasloven/hass-browser_mod) — sun line card and its popup
+- [mini-graph-card](https://github.com/kalkih/mini-graph-card) — for the `mini_graph` foundry
+- Lunar Phase (HACS) — moonrise, moonset and illumination for the sun line card; without it the moon band is simply not drawn
+
+Some visual extras read optional entities and are skipped when they do not exist: `sensor.light_color` (circadian tint; falls back to sun elevation), a `weather.*` entity (weather tint and layers), `sensor.pocasi_predpoved_2h` (precipitation forecast for the sun line), `input_select.pocasi_vrstva` (manual weather layer selection), `sensor.moon_faze` (waxing/waning direction of the moon phase in the popup) and `binary_sensor.advent`.
 
 ---
 
-## Podpora
+## Support
 
-Pomohlo ti to? Kafe autorovi udělá radost ☕
+Did this help you? A coffee for the author is always appreciated ☕
 
 [![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/matata86)
 

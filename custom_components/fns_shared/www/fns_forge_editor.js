@@ -1,9 +1,9 @@
 /*
- * FNS HA Tweaks — grafický editor karet `custom:uix-forge`.
+ * FNS HA Tweaks — visual editor for `custom:uix-forge` cards.
  *
- * UIX ke svým kartám editor nedodává, takže HA nabízí jen YAML. Tenhle modul
- * doplní na třídu karty `getConfigElement()` a vykreslí formulář poskládaný
- * z billetů zvolené foundry (seznam se čte přes websocket `uix/get_foundries`).
+ * UIX does not ship an editor for its cards, so HA only offers YAML. This module
+ * adds `getConfigElement()` to the card class and renders a form built from the
+ * billets of the selected foundry (the list is read via the `uix/get_foundries` websocket).
  */
 
 const CARD = "uix-forge";
@@ -19,7 +19,7 @@ const isNumeric = (value) =>
   typeof value === "number" ||
   (typeof value === "string" && value.trim() !== "" && !isNaN(Number(value)));
 
-/** Odhadne typ pole podle názvu billetu a jeho výchozí hodnoty. */
+/** Guess the field type from the billet name and its default value. */
 function selectorFor(name, fallback) {
   const key = name.toLowerCase();
   if (key === "entity" || key.endsWith("_entity")) return { entity: {} };
@@ -58,7 +58,7 @@ class FnsForgeEditor extends HTMLElement {
       const res = await this._hass.connection.sendMessagePromise({ type: "uix/get_foundries" });
       this._foundries = res.foundries || {};
     } catch (err) {
-      this._error = `Seznam foundries se nepodařilo načíst: ${err.message || err}`;
+      this._error = `Could not load the list of foundries: ${err.message || err}`;
     }
     this._loading = false;
     this._render();
@@ -78,7 +78,7 @@ class FnsForgeEditor extends HTMLElement {
     }));
     return [
       { name: "foundry", required: true, selector: { select: { options: names, mode: "dropdown" } } },
-      ...(fields.length ? [{ type: "expandable", name: "billety", title: "Hodnoty", expanded: true, schema: fields }] : []),
+      ...(fields.length ? [{ type: "expandable", name: "billety", title: "Values", expanded: true, schema: fields }] : []),
     ];
   }
 
@@ -125,7 +125,7 @@ class FnsForgeEditor extends HTMLElement {
       this._form = document.createElement("ha-form");
       this._form.addEventListener("value-changed", (ev) => this._valueChanged(ev));
       this._form.computeLabel = (schema) =>
-        ({ foundry: "Foundry", entity: "Entita", name: "Název", icon: "Ikona", color: "Barva" }[schema.name] ||
+        ({ foundry: "Foundry", entity: "Entity", name: "Name", icon: "Icon", color: "Color" }[schema.name] ||
           schema.name);
       wrap.append(this._form, this._hint);
       this.shadowRoot.append(style, wrap);
@@ -136,8 +136,8 @@ class FnsForgeEditor extends HTMLElement {
       return;
     }
     this._hint.textContent = this._foundries
-      ? "Pole se generují z billetů zvolené foundry. Prázdné pole = výchozí hodnota z definice."
-      : "Načítám foundries…";
+      ? "Fields are generated from the billets of the selected foundry. Empty field = default value from the definition."
+      : "Loading foundries…";
     this._form.hass = this._hass;
     this._form.schema = this._schema();
     this._form.data = this._data();
@@ -146,7 +146,7 @@ class FnsForgeEditor extends HTMLElement {
 
 if (!customElements.get(EDITOR)) customElements.define(EDITOR, FnsForgeEditor);
 
-/** Doplní editor na třídu karty uix-forge, jakmile je zaregistrovaná. */
+/** Attach the editor to the uix-forge card class once it is registered. */
 function patchCard() {
   const cls = customElements.get(CARD);
   if (!cls) return false;
@@ -157,7 +157,7 @@ function patchCard() {
     cls.getStubConfig = () => ({ foundry: "", forge: { billets: {} } });
   }
   // eslint-disable-next-line no-console
-  console.info("%c FNS HA Tweaks %c editor karet uix-forge připojen ",
+  console.info("%c FNS HA Tweaks %c uix-forge card editor attached ",
     "background:#4f5bd5;color:#fff;border-radius:4px 0 0 4px;padding:2px 6px",
     "background:#eef;color:#333;border-radius:0 4px 4px 0;padding:2px 6px");
   return true;

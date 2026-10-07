@@ -1,17 +1,18 @@
-"""FNS HA Tweaks — sdílené části více instancí Home Assistantu.
+"""FNS HA Tweaks — shared parts for multiple Home Assistant instances.
 
-Integrace se instaluje přes HACS, takže se každá nová verze nabídne k
-aktualizaci jako u kteréhokoli jiného repozitáře. Sama při startu rozbalí to,
-co s sebou nese, a nastaví, co je potřeba:
+The integration is installed via HACS, so every new version is offered as an
+update like any other repository. On startup it unpacks what it ships with
+and sets up what is needed:
 
-- motiv ``fns_mushroom`` do ``themes/fns-mushroom/fns-mushroom.yaml``
-  a načte témata
-- sdílené UIX foundries do ``uix/fns_shared.yaml`` a zaregistruje je v UIX
+- the ``fns_mushroom`` theme into ``themes/fns-mushroom/fns-mushroom.yaml``
+  and reloads themes
+- shared UIX foundries into ``uix/fns_shared.yaml`` and registers them in UIX
 
-Kartu sluneční linky nasadí do hlavičky výchozího dashboardu služba
-``fns_shared.deploy_sun_card`` (dashboard není soubor, proto se nenasazuje sám).
+The sun line card is deployed into the header of the default dashboard by the
+``fns_shared.deploy_sun_card`` service (the dashboard is not a file, so it is
+not deployed automatically).
 
-Do ``configuration.yaml`` stačí řádek ``fns_shared:``.
+A single ``fns_shared:`` line in ``configuration.yaml`` is enough.
 """
 
 from __future__ import annotations
@@ -38,11 +39,11 @@ THEME_TARGET = "themes/fns-mushroom/fns-mushroom.yaml"
 FOUNDRIES_SOURCE = "foundries/fns_shared.yaml"
 FOUNDRIES_TARGET = "uix/fns_shared.yaml"
 SUN_CARD_SOURCE = "cards/sun_line.json"
-SUN_CARD_MARKER = "Slunce a měsíc"
+SUN_CARD_MARKER = "Slunce a měsíc"  # card title used to find it in live dashboards; do not change
 
 SERVICE_DEPLOY_SUN_CARD = "deploy_sun_card"
 
-# Frontendové moduly: (soubor v integraci, adresa, pod kterou se servírují)
+# Frontend modules: (file in the integration, URL it is served under)
 FRONTEND_MODULES = (
     ("www/fns_forge_editor.js", "/fns_shared/fns_forge_editor.js"),
     ("www/fns_sun_line.js", "/fns_shared/fns_sun_line.js"),
@@ -52,7 +53,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 def _deploy_file(hass: HomeAssistant, source: str, target: str) -> bool:
-    """Zkopíruje soubor z integrace do konfigurace. Vrací True při změně."""
+    """Copy a file from the integration into the config. Returns True if it changed."""
     src = os.path.join(os.path.dirname(__file__), source)
     dst = hass.config.path(target)
     if os.path.exists(dst):
@@ -61,7 +62,7 @@ def _deploy_file(hass: HomeAssistant, source: str, target: str) -> bool:
                 return False
     os.makedirs(os.path.dirname(dst), exist_ok=True)
     shutil.copyfile(src, dst)
-    _LOGGER.info("%s: aktualizováno %s", DOMAIN, target)
+    _LOGGER.info("%s: updated %s", DOMAIN, target)
     return True
 
 
@@ -75,11 +76,11 @@ def _load_sun_card() -> dict[str, Any]:
         return json.load(fh)
 
 
-# Entity Lunar Phase mají v názvu jméno lokace, proto je šablony karty hledají regulárem přes
-# `states.sensor`. Taková šablona ale poslouchá celou doménu sensor a HA ji přerenderuje při každé
-# změně kteréhokoli senzoru (u 12 kB stylu na výchozím dashboardu i několikrát za sekundu).
-# Proto se entity dosadí natvrdo už při nasazení karty; hledání zůstává jen jako záloha,
-# když integrace Lunar Phase na instanci není.
+# Lunar Phase entities carry the location name in their id, so the card templates look them up with a
+# regex over `states.sensor`. Such a template, however, listens to the whole sensor domain and HA
+# re-renders it on every change of any sensor (several times a second for a 12 kB style on the default
+# dashboard). So the entities are hard-coded when the card is deployed; the lookup stays only as a
+# fallback when the Lunar Phase integration is not present on the instance.
 SUN_CARD_LOOKUPS = {
     "e_mr": "_moon_rise",
     "e_ms": "_moon_set",
@@ -106,29 +107,29 @@ def _resolve_sun_card_entities(hass: HomeAssistant, card: dict[str, Any]) -> dic
 
 
 async def _load_default_dashboard(hass: HomeAssistant):
-    """Vrátí (úložiště, konfigurace) výchozího dashboardu napříč verzemi HA."""
+    """Return (store, config) of the default dashboard across HA versions."""
     lovelace = hass.data.get("lovelace")
     dashboards = getattr(lovelace, "dashboards", None)
     if dashboards is None and isinstance(lovelace, dict):
         dashboards = lovelace.get("dashboards")
     if not dashboards:
-        raise ValueError("lovelace není k dispozici")
+        raise ValueError("lovelace is not available")
 
-    # Podle verze HA je výchozí dashboard pod klíčem "lovelace" nebo None;
-    # ten druhý bývá automaticky generovaný a uloženou konfiguraci nemá.
+    # Depending on the HA version the default dashboard is under the key "lovelace" or None;
+    # the latter is usually auto-generated and has no stored config.
     for key in ("lovelace", None):
         store = dashboards.get(key)
         if store is None:
             continue
         try:
             return store, await store.async_load(False)
-        except Exception:  # ConfigNotFound a spol. — zkusíme další klíč
+        except Exception:  # ConfigNotFound and friends — try the next key
             continue
-    raise ValueError("výchozí dashboard nemá uloženou konfiguraci (není ve storage režimu)")
+    raise ValueError("the default dashboard has no stored config (not in storage mode)")
 
 
 def _find_sun_card(config: dict[str, Any]) -> dict[str, Any] | None:
-    """Najde kartu sluneční linky v dashboardu, nebo vrátí None."""
+    """Find the sun line card in the dashboard, or return None."""
     stack: list[Any] = [config]
     while stack:
         node = stack.pop()
@@ -145,7 +146,7 @@ def _find_sun_card(config: dict[str, Any]) -> dict[str, Any] | None:
 
 
 def _replace_sun_card(config: dict[str, Any], card: dict[str, Any]) -> str:
-    """Nahradí kartu slunce, nebo ji vloží do hlavičky prvního pohledu."""
+    """Replace the sun card, or insert it into the header of the first view."""
     stack: list[Any] = [config]
     while stack:
         node = stack.pop()
@@ -155,24 +156,24 @@ def _replace_sun_card(config: dict[str, Any], card: dict[str, Any]) -> str:
                         and str(item.get("type", "")).startswith("custom:mushroom-template")
                         and SUN_CARD_MARKER in json.dumps(item, ensure_ascii=False)):
                     node[i] = card
-                    return "nahrazena"
+                    return "replaced"
                 stack.append(item)
         elif isinstance(node, dict):
             stack.extend(node.values())
 
     views = config.get("views") or []
     if not views:
-        raise ValueError("výchozí dashboard nemá žádný pohled")
+        raise ValueError("the default dashboard has no views")
     header_cards = views[0].get("header", {}).get("card", {}).get("cards")
     if isinstance(header_cards, list):
         header_cards.append(card)
-        return "přidána do hlavičky"
+        return "added to the header"
     views[0].setdefault("cards", []).append(card)
-    return "přidána na konec prvního pohledu"
+    return "added to the end of the first view"
 
 
 def _read_manifest_version(base: str) -> str:
-    """Přečte verzi z manifestu integrace (běží v executoru, ne ve smyčce)."""
+    """Read the version from the integration manifest (runs in the executor, not the event loop)."""
     try:
         with open(os.path.join(base, "manifest.json"), encoding="utf-8") as fh:
             return json.load(fh).get("version", "0")
@@ -181,7 +182,7 @@ def _read_manifest_version(base: str) -> str:
 
 
 async def _register_frontend(hass: HomeAssistant) -> None:
-    """Naservíruje frontendové moduly integrace a načte je v prohlížeči."""
+    """Serve the integration's frontend modules and load them in the browser."""
     base = os.path.dirname(__file__)
     version = await hass.async_add_executor_job(_read_manifest_version, base)
     for soubor, adresa in FRONTEND_MODULES:
@@ -189,14 +190,14 @@ async def _register_frontend(hass: HomeAssistant) -> None:
             await hass.http.async_register_static_paths(
                 [StaticPathConfig(adresa, os.path.join(base, soubor), True)]
             )
-        except Exception as err:  # starší HA nebo opakovaná registrace
-            _LOGGER.debug("%s: statická cesta %s: %s", DOMAIN, adresa, err)
-        # verze v dotazu shodí cache prohlížeče, jakmile se integrace aktualizuje
+        except Exception as err:  # older HA or repeated registration
+            _LOGGER.debug("%s: static path %s: %s", DOMAIN, adresa, err)
+        # the version in the query busts the browser cache once the integration is updated
         add_extra_js_url(hass, f"{adresa}?v={version}")
 
 
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
-    """Nasadí sdílené soubory a zaregistruje službu pro kartu slunce."""
+    """Deploy the shared files and register the sun card service."""
 
     async def _apply(_event: Event | None = None) -> None:
         theme_changed = await hass.async_add_executor_job(
@@ -211,7 +212,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
 
         entry = _uix_entry(hass)
         if entry is None:
-            _LOGGER.warning("%s: integrace uix nenalezena, foundries nezaregistrovány", DOMAIN)
+            _LOGGER.warning("%s: uix integration not found, foundries not registered", DOMAIN)
             return
 
         files = list(entry.options.get(UIX_CONF_FOUNDRY_FILES, []))
@@ -220,37 +221,37 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
             hass.config_entries.async_update_entry(
                 entry, options={**entry.options, UIX_CONF_FOUNDRY_FILES: files}
             )
-            _LOGGER.info("%s: %s zaregistrován v UIX", DOMAIN, FOUNDRIES_TARGET)
+            _LOGGER.info("%s: %s registered in UIX", DOMAIN, FOUNDRIES_TARGET)
         elif foundries_changed:
             await hass.config_entries.async_reload(entry.entry_id)
 
         try:
-            _LOGGER.info("%s: karta slunce — %s", DOMAIN, await _sync_sun_card(only_if_present=True))
-        except Exception as err:  # dashboard nemusí být ve storage režimu
-            _LOGGER.warning("%s: kartu slunce nelze aktualizovat (%s)", DOMAIN, err)
+            _LOGGER.info("%s: sun card — %s", DOMAIN, await _sync_sun_card(only_if_present=True))
+        except Exception as err:  # the dashboard may not be in storage mode
+            _LOGGER.warning("%s: cannot update the sun card (%s)", DOMAIN, err)
 
     async def _sync_sun_card(only_if_present: bool = False) -> str:
         store, dashboard = await _load_default_dashboard(hass)
         card = _resolve_sun_card_entities(hass, await hass.async_add_executor_job(_load_sun_card))
         if only_if_present:
-            # Při startu kartu nikam nevnucujeme — jen aktualizujeme tu, která už v dashboardu je,
-            # a to jen když se liší, ať se dashboard zbytečně nepřepisuje.
+            # On startup the card is not forced anywhere — only the one already in the dashboard
+            # is updated, and only if it differs, so the dashboard is not rewritten needlessly.
             current = _find_sun_card(dashboard)
             if current is None:
-                return "v dashboardu není"
+                return "not in the dashboard"
             if current == card:
-                return "beze změny"
+                return "unchanged"
         where = _replace_sun_card(dashboard, card)
         await store.async_save(dashboard)
         return where
 
     async def _deploy_sun_card(_call: ServiceCall) -> None:
-        _LOGGER.info("%s: karta slunce %s", DOMAIN, await _sync_sun_card())
+        _LOGGER.info("%s: sun card %s", DOMAIN, await _sync_sun_card())
 
     hass.services.async_register(DOMAIN, SERVICE_DEPLOY_SUN_CARD, _deploy_sun_card)
     await _register_frontend(hass)
 
-    if hass.state is CoreState.running:  # reload integrace za chodu
+    if hass.state is CoreState.running:  # integration reloaded while running
         await _apply()
     else:
         hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STARTED, _apply)

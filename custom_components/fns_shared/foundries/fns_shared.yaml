@@ -11,7 +11,7 @@ uix_foundries:
         action: more-info
       type: custom:mushroom-template-card
       uix:
-        style: "{% if (config.entity | default('')) | trim == '' %}:host { display: none !important; }{% endif %}\n{% set v = states(config.entity) | float(0) | round(0) %}\n/* Progress zdola: plná barva do hodnoty, nad ní ještě 20 px, které přejdou do úplné průhlednosti. */\nha-card {\n  position: relative; overflow: hidden; z-index: 0;\n  background-color: var(--ha-card-background, var(--card-background-color, #fff)) !important;\n}\nha-card::before {\n  content: \"\"; position: absolute; left: 0; right: 0; bottom: 0; z-index: -1;\n  height: calc({{ v }}% + 20px);\n  background: linear-gradient(to top,\n    rgba({{ rgb }}, {{ alfa }}) 0,\n    rgba({{ rgb }}, {{ alfa }}) calc(100% - 20px),\n    rgba({{ rgb }}, 0) 100%);\n  transition: height .6s cubic-bezier(.25, .1, .25, 1);\n  {% if v <= 0 %}display: none;{% endif %}\n}\nha-card .primary { font-size: 14px !important; white-space: nowrap !important; }\nha-card .secondary { font-size: 11px !important; white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; }\n"
+        style: "{% if (config.entity | default('')) | trim == '' %}:host { display: none !important; }{% endif %}\n{% set v = states(config.entity) | float(0) | round(0) %}\n/* Progress from the bottom: solid colour up to the value, then 20 more px fading to full transparency. */\nha-card {\n  position: relative; overflow: hidden; z-index: 0;\n  background-color: var(--ha-card-background, var(--card-background-color, #fff)) !important;\n}\nha-card::before {\n  content: \"\"; position: absolute; left: 0; right: 0; bottom: 0; z-index: -1;\n  height: calc({{ v }}% + 20px);\n  background: linear-gradient(to top,\n    rgba({{ rgb }}, {{ alfa }}) 0,\n    rgba({{ rgb }}, {{ alfa }}) calc(100% - 20px),\n    rgba({{ rgb }}, 0) 100%);\n  transition: height .6s cubic-bezier(.25, .1, .25, 1);\n  {% if v <= 0 %}display: none;{% endif %}\n}\nha-card .primary { font-size: 14px !important; white-space: nowrap !important; }\nha-card .secondary { font-size: 11px !important; white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; }\n"
     forge:
       billets:
         alfa: '.22'
@@ -25,9 +25,9 @@ uix_foundries:
         rows: 2
       mold: card
   mini_graph:
-    # 2026-09-20: každý `{{ billet }}` v element = jedna render_template subscription
-    # a po dokončení jeden plný reload kované karty. Proto co nejméně šablon:
-    # prahy a show jsou jedna šablona vracející list/dict (HA vrací nativní typ).
+    # 2026-09-20: every `{{ billet }}` in element = one render_template subscription
+    # and, once resolved, one full reload of the forged card. Hence as few templates as possible:
+    # thresholds and show are a single template returning a list/dict (HA returns a native type).
     element:
       animate: true
       color_thresholds: "{{ [{'color': c1, 'value': v1}, {'color': c2, 'value': v2}, {'color': c3, 'value': v3}, {'color': c4, 'value': v4}, {'color': c5, 'value': v5}] }}"
@@ -181,11 +181,11 @@ uix_foundries:
         nadpis_ikona: mdi:printer-outline
       mold: section
   threshold_tile:
-    # Poznámky k uix.style '.' (2026-10-01 přesunuté z CSS — '.' se spojuje s '.' motivu a posílá při každém renderu):
-    # - 2026-09-07: prahy přes | float — z editoru i z YAMLu chodí jako řetězec a porovnání float > str shodí celou
-    #   šablonu (karta pak nemá ani barvu, ani progress).
-    # - 2026-09-06: barva z palety motivu (--fns-rgb-*), ne název z palety HA — 'green' byl CSS keyword #008000
-    #   a neseděl s ostatními kartami.
+    # Notes on uix.style '.' (2026-10-01 moved out of the CSS — '.' is merged with the theme's '.' and sent on every render):
+    # - 2026-09-07: thresholds go through | float — both the editor and YAML pass them as strings and a float > str comparison breaks
+    #   the whole template (the card then has neither colour nor progress).
+    # - 2026-09-06: colour from the theme palette (--fns-rgb-*), not a name from the HA palette — 'green' was the CSS keyword #008000
+    #   and did not match the other cards.
     element:
       entity: '{{ entity }}'
       features_position: '{{ features_position }}'
@@ -195,7 +195,7 @@ uix_foundries:
       uix:
         style:
           .: "ha-card {\n  {% set t1 = t1 | float(0) %}{% set t2 = t2 | float(0) %}{% set sgn = sgn | float(1) %}\n  {% if states(config.entity)|float(0) * sgn > t1 %}\n    --tile-color: rgb(var(--fns-rgb-{{ c_hi }})) !important;\n  {% elif states(config.entity)|float(0) * sgn > t2 %}\n    --tile-color: rgb(var(--fns-rgb-{{ c_mid }})) !important;\n  {% else %}\n    --tile-color: rgb(var(--fns-rgb-{{ c_lo }})) !important;\n  {% endif %}\n}\n"
-          ha-tile-container$: "/* Progress od hrany: plná barva do hodnoty, za ní 20 px přechodu do úplné průhlednosti. */\n{% set t1 = t1 | float(0) %}{% set t2 = t2 | float(0) %}{% set sgn = sgn | float(1) %}{% set fmin = fmin | float(0) %}{% set fmax = fmax | float(100) %}\n{% set pct = (states(config.entity)|float(0) - fmin) * 100 / (fmax - fmin) %}\n{% if states(config.entity)|float(0) * sgn > t1 %}{% set c = c_hi %}{% elif states(config.entity)|float(0) * sgn > t2 %}{% set c = c_mid %}{% else %}{% set c = c_lo %}{% endif %}\n.background::before {\n  content: \" \"; position: absolute; bottom: 0; pointer-events: none;\n  {% if pct <= 1 %}display: none;{% endif %}\n  transition: all 1s;\n{% if fill_prop == 'width' %}\n  height: 100%; width: calc({{ pct | round(1) }}% + 30px);\n  background: linear-gradient(90deg,\n    rgba(var(--mush-rgb-{{ c }}), .09) 0,\n    rgba(var(--mush-rgb-{{ c }}), .09) calc(100% - 30px),\n    rgba(var(--mush-rgb-{{ c }}), 0) 100%);\n{% else %}\n  width: 100%; height: calc({{ pct | round(1) }}% + 20px);\n  background: linear-gradient(0deg,\n    rgba(var(--mush-rgb-{{ c }}), .09) 0,\n    rgba(var(--mush-rgb-{{ c }}), .09) calc(100% - 20px),\n    rgba(var(--mush-rgb-{{ c }}), 0) 100%);\n{% endif %}\n}\n"
+          ha-tile-container$: "/* Progress from the edge: solid colour up to the value, then a 20 px fade to full transparency. */\n{% set t1 = t1 | float(0) %}{% set t2 = t2 | float(0) %}{% set sgn = sgn | float(1) %}{% set fmin = fmin | float(0) %}{% set fmax = fmax | float(100) %}\n{% set pct = (states(config.entity)|float(0) - fmin) * 100 / (fmax - fmin) %}\n{% if states(config.entity)|float(0) * sgn > t1 %}{% set c = c_hi %}{% elif states(config.entity)|float(0) * sgn > t2 %}{% set c = c_mid %}{% else %}{% set c = c_lo %}{% endif %}\n.background::before {\n  content: \" \"; position: absolute; bottom: 0; pointer-events: none;\n  {% if pct <= 1 %}display: none;{% endif %}\n  transition: all 1s;\n{% if fill_prop == 'width' %}\n  height: 100%; width: calc({{ pct | round(1) }}% + 30px);\n  background: linear-gradient(90deg,\n    rgba(var(--mush-rgb-{{ c }}), .09) 0,\n    rgba(var(--mush-rgb-{{ c }}), .09) calc(100% - 30px),\n    rgba(var(--mush-rgb-{{ c }}), 0) 100%);\n{% else %}\n  width: 100%; height: calc({{ pct | round(1) }}% + 20px);\n  background: linear-gradient(0deg,\n    rgba(var(--mush-rgb-{{ c }}), .09) 0,\n    rgba(var(--mush-rgb-{{ c }}), .09) calc(100% - 20px),\n    rgba(var(--mush-rgb-{{ c }}), 0) 100%);\n{% endif %}\n}\n"
           ha-tile-info$: ".secondary::after {\n{% if info_entity %}\n  visibility: visible;\n  content: \" ⸱ {{ states(info_entity) }} {{ info_unit }}\";\n  white-space: nowrap;\n  margin-left: 4px;\n{% else %}\n  content: \"\";\n{% endif %}\n}\n{% if info_entity %}\n.secondary::slotted(*) {\n  width: auto !important;\n  flex: 0 0 auto !important;\n}\n{% endif %}\n"
       vertical: '{{ vertical }}'
     forge:

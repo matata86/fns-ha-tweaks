@@ -1,18 +1,18 @@
 /*
- * FNS HA Tweaks — bublina sluneční linky, která sleduje kurzor.
+ * FNS HA Tweaks — sun line tooltip that follows the cursor.
  *
- * Samotná karta je poskládaná z vrstev pozadí, takže jednotlivé hodiny nejsou
- * prvky, na které by šlo najet myší, a CSS o poloze kurzoru neví. Tenhle modul
- * proto poslouchá pohyb myši nad linkou, spočítá si hodinu z vodorovné polohy
- * a ukáže, co je na ni v předpovědi.
+ * The card itself is built from background layers, so individual hours are not
+ * elements you could hover, and CSS does not know the cursor position. This module
+ * therefore listens to mouse movement over the line, computes the hour from the
+ * horizontal position and shows the forecast for it.
  *
- * Klikání karty se nedotýká: posluchač visí na dokumentu a bublina má
+ * Card clicks are untouched: the listener sits on the document and the tooltip has
  * pointer-events: none.
  */
 
-const ZNACKA = "Slunce a měsíc";       // podle čeho poznáme kartu sluneční linky (= SUN_CARD_MARKER)
+const ZNACKA = "Slunce a měsíc";       // how the sun line card is recognised (= SUN_CARD_MARKER)
 const SENZOR = "sensor.pocasi_predpoved_2h";
-const PRESAH = 14;                     // o kolik px nad a pod linku ještě reagovat
+const PRESAH = 14;                     // how many px above and below the line still react
 
 let bublina = null;
 let posledni = null;
@@ -59,9 +59,9 @@ function vytvorBublinu() {
   return prvek;
 }
 
-/** Srážky v dané hodině dne. Datum se schválně ignoruje: linka kreslí 0–24 h, kdežto
- *  předpověď drží příštích 24 h, takže ranní hodiny na lince patří většinou už zítřku.
- *  Ze záznamů se stejnou hodinou se bere ten časově nejbližší. */
+/** Precipitation in the given hour of the day. The date is ignored on purpose: the line draws 0–24 h,
+ *  whereas the forecast covers the next 24 h, so morning hours on the line mostly belong to tomorrow.
+ *  Of the records with the same hour, the one closest in time is taken. */
 function srazkyVHodine(hass, hodina) {
   const zaznamy = hass?.states?.[SENZOR]?.attributes?.srazky_hodiny || [];
   const ted = Date.now();
@@ -83,9 +83,9 @@ function dvojciferne(cislo) {
 function popis(hass, hodina, minuta) {
   const srazky = srazkyVHodine(hass, hodina);
   const cas = `${hodina}:${dvojciferne(Math.floor(minuta / 10) * 10)}`;
-  if (!srazky) return `${cas} — beze srážek`;
-  const zitra = srazky.t.getDate() !== new Date().getDate() ? "zítra " : "";
-  const mm = srazky.mm.toFixed(1).replace(".", ",");
+  if (!srazky) return `${cas} — no precipitation`;
+  const zitra = srazky.t.getDate() !== new Date().getDate() ? "tomorrow " : "";
+  const mm = srazky.mm.toLocaleString(hass?.locale?.language, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   return `${zitra}${cas} — ${mm} mm, ${srazky.p} %`;
 }
 
@@ -108,7 +108,7 @@ function ukaz(karta, udalost) {
     posledni = text;
   }
   bublina.style.opacity = "1";
-  // bublina se drží nad linkou; u pravého okraje se zarovná dovnitř
+  // the tooltip stays above the line; near the right edge it is aligned inwards
   const sirka = bublina.offsetWidth || 140;
   const x = Math.min(Math.max(udalost.clientX - sirka / 2, 8), window.innerWidth - sirka - 8);
   bublina.style.left = `${x}px`;
@@ -124,10 +124,10 @@ let karty = [];
 let posledniHledani = -Infinity;
 
 document.addEventListener("pointermove", (udalost) => {
-  if (udalost.pointerType === "touch") return;      // na dotyku bublina nedává smysl
+  if (udalost.pointerType === "touch") return;      // a tooltip makes no sense on touch
   const ted = performance.now();
-  if (ted - posledniHledani > 3000) {            // nejvýš 1× za 3 s, i když karta na stránce není
-    karty = najdiKarty();                            // karta se po překreslení pohledu vymění
+  if (ted - posledniHledani > 3000) {            // at most once per 3 s, even when the card is not on the page
+    karty = najdiKarty();                            // the card is replaced when the view re-renders
     posledniHledani = ted;
   }
   for (const karta of karty) {
@@ -140,6 +140,6 @@ document.addEventListener("pointerdown", skryj, { passive: true });
 window.addEventListener("blur", skryj);
 
 // eslint-disable-next-line no-console
-console.info("%c FNS HA Tweaks %c bublina sluneční linky ",
+console.info("%c FNS HA Tweaks %c sun line tooltip ",
   "background:#4f5bd5;color:#fff;border-radius:4px 0 0 4px;padding:2px 6px",
   "background:#eef;color:#333;border-radius:0 4px 4px 0;padding:2px 6px");
