@@ -489,7 +489,7 @@ fns_mushroom:
   # Notes on uix-card-yaml. 2026-10-01 moved here from CSS: the theme's '.' is prepended to every card's style
   # and a card with a Jinja template sends all of it to the server on every render, so comments only took up space.
   # - Motion (2026-09-05): (4) state transition — only transform and colours, box-shadow deliberately without transition (stack-in-card);
-  #   (3) press feedback — tiles, buttons, mushroom; (8) card entry removed: on page load cards appear
+  #   (3) press feedback (scale on :active) removed 2026-10-10 — the whole card wobbled on click; (8) card entry removed: on page load cards appear
   #   one by one and animating each of them caused "jumping"; (2) the error alert pulse is in uix.style of foundry alert_row
   #   (rows come via auto-entities, the theme class does not reach them); (5) prefers-reduced-motion is honoured on phones.
   # - Helper class no-shadow (uix class) — card without shadow, e.g. nested in a stack-in-card.
@@ -515,11 +515,6 @@ fns_mushroom:
       ha-card { transition: transform 90ms ease, background-color 200ms ease, color 200ms ease !important; }
       ha-tile-icon, .icon-container, mushroom-shape-icon .shape, ha-state-icon {
         transition: color 200ms ease, background-color 200ms ease, transform 200ms ease;
-      }
-      :host(.type-tile) ha-card:active, :host(.type-button) ha-card:active,
-      :host(.type-custom-mushroom-template-card) ha-card:active, :host(.type-custom-mushroom-entity-card) ha-card:active,
-      :host(.type-custom-mushroom-light-card) ha-card:active, :host(.type-custom-mushroom-media-player-card) ha-card:active {
-        transform: scale(.97);
       }
       @media (prefers-reduced-motion: reduce) {
         :host, ha-card, ha-card * { animation: none !important; transition: none !important; }
